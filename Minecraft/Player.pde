@@ -60,9 +60,9 @@ public class Player{
       this.zPos *= 0.7;
     }
     else{
-      this.xPos *= 0.95;
-      this.yPos *= 0.95;
-      this.zPos *= 0.95;
+      this.xPos *= 0.94;
+      this.yPos *= 0.94;
+      this.zPos *= 0.94;
     }
     
     //println((this.xPos) + this.zPos);
