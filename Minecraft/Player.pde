@@ -56,7 +56,7 @@ public class Player{
     if (! (isLeft || isRight||isUp||isDown||isShift||isSpace)){
 
       this.xPos *= 0.7;
-      this.yPos *= 0.6;
+      this.yPos *= 0.7;
       this.zPos *= 0.7;
     }
     else{
