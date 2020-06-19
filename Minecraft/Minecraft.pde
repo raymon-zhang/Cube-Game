@@ -76,6 +76,8 @@ void setup() {
   //lights();
 
   frameRate(80);
+  
+  thread("checkChunks");
 }
 
 
@@ -139,17 +141,19 @@ public void exitActual() {
 
 
 public void checkChunks(){
-  while(running){
-    if (frameCount % 100 == 0){
-       for (int x = 0; x < WORLDSIZE/2; x ++){
-          for (int y = 0; y < WORLDSIZE/2; y++){
+  while(!running){
+    //if (frameCount % 100 == 0){
+    //   for (int x = 0; x < WORLDSIZE/2; x ++){
+    //      for (int y = 0; y < WORLDSIZE/2; y++){
         
-            c.chunkMemory.add( new Chunk(playerX + (x*16), 0, playerY + (y*16), c));
-            c.chunkMemory.add( new Chunk(playerX - (x*16), 0, playerY + (y*16), c));
-            c.chunkMemory.add( new Chunk(playerX - (x*16), 0, playerY - (y*16), c));
-            c.chunkMemory.add( new Chunk(playerX + (x*16), 0, playerY - (y*16), c));
-          }
-        }
-    }
+    //        c.chunkMemory.add( new Chunk(playerX + (x*16), 0, playerY + (y*16), c));
+    //        c.chunkMemory.add( new Chunk(playerX - (x*16), 0, playerY + (y*16), c));
+    //        c.chunkMemory.add( new Chunk(playerX - (x*16), 0, playerY - (y*16), c));
+    //        c.chunkMemory.add( new Chunk(playerX + (x*16), 0, playerY - (y*16), c));
+    //      }
+    //    }
+    //}
+    println("hi");
   }
+  //println("thread done");
 }
