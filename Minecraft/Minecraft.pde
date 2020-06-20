@@ -24,7 +24,7 @@ World c;
 
 Player player;
 
-int playerX, playerY;
+int playerX, playerZ;
 //PGraphics graphics;
 
 
@@ -87,8 +87,8 @@ void draw() {
 
   //println(second());
 
-  playerX = (int)player.xPosition;
-  playerY = (int)player.yPosition;
+  //playerX = (int)player.xPosition/16;
+  //playerZ = (int)player.zPosition/16;
 
   //border
 
@@ -118,13 +118,10 @@ void draw() {
   if(frameCount %100 == 0)println("Framerate " + frameRate);
 }
 
-public void exitActual() {
-   try {
-     running = false;
-     System.exit(0);
-   } catch (SecurityException e) {
-     // don't care about applet security exceptions
-   }
+public void exit() {
+  running = false;
+  //println("hi");
+  super.exit();
 }
 
 //void mousePressed(){
@@ -141,19 +138,10 @@ public void exitActual() {
 
 
 public void checkChunks(){
-  while(!running){
-    //if (frameCount % 100 == 0){
-    //   for (int x = 0; x < WORLDSIZE/2; x ++){
-    //      for (int y = 0; y < WORLDSIZE/2; y++){
-        
-    //        c.chunkMemory.add( new Chunk(playerX + (x*16), 0, playerY + (y*16), c));
-    //        c.chunkMemory.add( new Chunk(playerX - (x*16), 0, playerY + (y*16), c));
-    //        c.chunkMemory.add( new Chunk(playerX - (x*16), 0, playerY - (y*16), c));
-    //        c.chunkMemory.add( new Chunk(playerX + (x*16), 0, playerY - (y*16), c));
-    //      }
-    //    }
-    //}
+  
+  for(;; delay(1000)){
+    
     println("hi");
   }
-  //println("thread done");
+  
 }

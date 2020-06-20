@@ -75,7 +75,7 @@ public class Player{
     strokeWeight(5);
     
     camera(this.xPosition, this.yPosition, this.zPosition, xCenter, yCenter, zCenter, 0, 1, 0);
-    perspective(PI/3, 1.777777, this.zPosition/2000, this.zPosition*10000);
+    perspective(PI/3, 1.777777, this.zPosition/2000, this.zPosition*2000);
     point(xCenter, yCenter, zCenter);
     noStroke();
   }

@@ -3,14 +3,11 @@ public class World {
   public ArrayList<Chunk> chunkMemory;
 
 
-  //public int[][] heightMap;
-  //public float[][][] caveMap;
 
   public int size;
   public String status;
   PImage texture = loadImage("texture_atlas.png");
 
-  //Hashtable<Integer, PVector[]> textureCoords = new Hashtable<Integer, PVector[]>();
   Hashtable<Integer, PVector[]> textureCoords = new Hashtable<Integer, PVector[]>();
 
   // coords are 1 + 130(x-1), 1 + 130(y-1)
@@ -24,14 +21,11 @@ public class World {
     loadStatus = "Creating world";
     println(loadStatus);
     this.size = size;
-    //int noiseseed = 431812207;
+    
 
-    //noiseSeed(noiseseed);
-    //println(noiseseed);
     chunkMemory = new ArrayList<Chunk>();
 
-    //heightMap = new int[size*16][size*16];
-    //caveMap = new float[size*16][128][size*16];
+    
 
     textureCoords.put(1, new PVector[]{new PVector(1, 1), new PVector (131, 1), new PVector(261, 1)});//grass
     textureCoords.put(2, new PVector[]{new PVector(391, 1), new PVector (391, 1), new PVector(391, 1)});//stone
@@ -44,36 +38,11 @@ public class World {
     textureCoords.put(10, new PVector[]{new PVector(1, 131), new PVector (1, 131), new PVector(1, 131)});//diamond
 
 
-    //loadStatus = "Generating height map";
-    //println(loadStatus);
-    //for (int x = 0;x < chunkMemory.length*16; x++){
-    //   for (int y = 0;y < chunkMemory.length*16; y++){
-    //      heightMap[x][y] = 128-((int) map(pow((noise(x/175.0,y/175.0) + (0.5*noise(x/50.0, y/50.0)) + 0.9), 2), 0.81, 5.76, 15, 100));
-
-    //   }
-
-    //}
+    
 
     loadStatus  = "Generating cave map";
     println(loadStatus);
-    //noiseDetail(3);
-
-    //float xOff = 0;
-    //for (int x = 0;x < chunkMemory.length*16; x++){
-    //   float yOff = 0;
-    //   for (int y = 0;y < chunkMemory.length*16; y++){
-    //     float zOff = 0;
-    //     for (int z = 0; z< 128; z++){
-    //       caveMap[x][127-z][y] = (noise(xOff, yOff, zOff)); //finish
-
-    //       zOff += 0.05;
-    //     }
-
-    //     yOff += 0.05;
-
-    //   }
-    //   xOff += 0.05;
-    //}
+    
     loadStatus = "Creating Chunks";
     println(loadStatus);
 
