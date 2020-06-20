@@ -11,7 +11,7 @@ int scl = 1;
 int w = 16;
 int h = 16;
 
-int WORLDSIZE = 10;
+int WORLDSIZE = 6;
 
 SoundFile loading;
 SoundFile grass;
@@ -142,9 +142,20 @@ public void exit() {
 public void checkChunks(){
   
   for(;; delay(100)){
-    println("hi");
-    int px = (int) player.xPosition/16;
-    int pz = (int) player.zPosition/16;
+    ArrayList<Chunk> regenerate= new ArrayList<Chunk>();
+    //println(regenerate);
+    int px = (int) player.xPosition/16 - WORLDSIZE/2;
+    int pz = (int) player.zPosition/16 - WORLDSIZE/2;
+    
+    ArrayList<Chunk> newVersion = new ArrayList<Chunk>(c.chunkMemory);
+    
+    for(Chunk chunk: newVersion){
+      if (abs(chunk.lowestXPos/16 - (px +  WORLDSIZE/2)) > WORLDSIZE/2 || abs(chunk.lowestZPos/16 - (pz + WORLDSIZE/2)) > WORLDSIZE/2){
+        c.chunkMemory.remove(chunk);
+      }
+    }
+    
+    
     for(int x = 0;x<WORLDSIZE; x++){
       for(int y = 0; y<WORLDSIZE;y++){
         try{
@@ -152,51 +163,53 @@ public void checkChunks(){
         }catch(ArrayIndexOutOfBoundsException e){
           Chunk newChunk = new Chunk((px + x)*16, 0, (pz + y)*16, c);
           newChunk.decorate();
-          newChunk.betterGenerateMesh();
+          
           
           c.chunkMemory.add(newChunk);
+          regenerate.add(newChunk);
+          //println(regenerate);
           try{
-            c.getChunkAt(px+x,pz+y-1).betterGenerateMesh();
-            
-           
-            
-          }
-          catch(ArrayIndexOutOfBoundsException f){
-            //edge
-          }
-          try{
-            c.getChunkAt(px+x+1,pz+y).betterGenerateMesh();
-            
-           
-            
-          }
-          catch(ArrayIndexOutOfBoundsException f){
-            //edge
+            Chunk chunk = c.getChunkAt(px+x,pz+y-1);
+            if(! regenerate.contains(chunk)){
+              regenerate.add(chunk);
+            }
+          }catch(ArrayIndexOutOfBoundsException exception){
+            //chunk not there
           }
           try{
-            c.getChunkAt(px+x-1,pz+y).betterGenerateMesh();
-            
-          }
-          catch(ArrayIndexOutOfBoundsException f){
-            //edge
+            Chunk chunk = c.getChunkAt(px+x,pz+y+1);
+            if(! regenerate.contains(chunk)){
+              regenerate.add(chunk);
+            }
+          }catch(ArrayIndexOutOfBoundsException exception){
+            //chunk not there
           }
           try{
-            c.getChunkAt(px+x,pz+y+1).betterGenerateMesh();
-            
+            Chunk chunk = c.getChunkAt(px+x+1,pz+y);
+            if(! regenerate.contains(chunk)){
+              regenerate.add(chunk);
+            }
+          }catch(ArrayIndexOutOfBoundsException exception){
+            //chunk not there
           }
-          catch(ArrayIndexOutOfBoundsException f){
-            //edge
+          try{
+            Chunk chunk = c.getChunkAt(px+x-1,pz+y);
+            if(! regenerate.contains(chunk)){
+              regenerate.add(chunk);
+            }
+          }catch(ArrayIndexOutOfBoundsException exception){
+            //chunk not there
           }
           
         }
        
       }
     }
-    //for(Chunk chunk: c.chunkMemory){
-    //  if (chunk.lowestXPos - player.xPosition < WORLDSIZE || chunk.lowestZPos - player.zPosition < WORLDSIZE){
-    //    c.chunkMemory.remove(chunk);
-    //  }
-    //}
+    //println(regenerate);
+    for(Chunk getRegenerated: regenerate){
+      getRegenerated.betterGenerateMesh();
+    }
+    
   }
   
 }
