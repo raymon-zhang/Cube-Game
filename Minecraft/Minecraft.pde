@@ -22,6 +22,8 @@ SoundFile diamond;
 
 World c;
 
+PShape clouds;
+
 Player player;
 
 int playerX, playerZ;
@@ -83,7 +85,7 @@ void setup() {
 
 void draw() {
   
-  background(map(hour(), 7, 20, 130, 12), map(hour(), 7, 20, 202, 9), map(hour(), 7, 20, 255, 10));
+  background(130, 202, 255);
 
   //println(second());
 
@@ -139,9 +141,62 @@ public void exit() {
 
 public void checkChunks(){
   
-  for(;; delay(1000)){
-    
+  for(;; delay(100)){
     println("hi");
+    int px = (int) player.xPosition/16;
+    int pz = (int) player.zPosition/16;
+    for(int x = 0;x<WORLDSIZE; x++){
+      for(int y = 0; y<WORLDSIZE;y++){
+        try{
+          Chunk dummy = c.getChunkAt((px) + x, (pz)+y) ;
+        }catch(ArrayIndexOutOfBoundsException e){
+          Chunk newChunk = new Chunk((px + x)*16, 0, (pz + y)*16, c);
+          newChunk.decorate();
+          newChunk.betterGenerateMesh();
+          
+          c.chunkMemory.add(newChunk);
+          try{
+            c.getChunkAt(px+x,pz+y-1).betterGenerateMesh();
+            
+           
+            
+          }
+          catch(ArrayIndexOutOfBoundsException f){
+            //edge
+          }
+          try{
+            c.getChunkAt(px+x+1,pz+y).betterGenerateMesh();
+            
+           
+            
+          }
+          catch(ArrayIndexOutOfBoundsException f){
+            //edge
+          }
+          try{
+            c.getChunkAt(px+x-1,pz+y).betterGenerateMesh();
+            
+          }
+          catch(ArrayIndexOutOfBoundsException f){
+            //edge
+          }
+          try{
+            c.getChunkAt(px+x,pz+y+1).betterGenerateMesh();
+            
+          }
+          catch(ArrayIndexOutOfBoundsException f){
+            //edge
+          }
+          
+        }
+       
+      }
+    }
+    //for(Chunk chunk: c.chunkMemory){
+    //  if (chunk.lowestXPos - player.xPosition < WORLDSIZE || chunk.lowestZPos - player.zPosition < WORLDSIZE){
+    //    c.chunkMemory.remove(chunk);
+    //  }
+    //}
   }
   
 }

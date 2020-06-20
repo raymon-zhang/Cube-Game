@@ -50,9 +50,9 @@ public class World {
     int py = ((int) player.zPosition/16)*16;
 
 
-    for (int x = 0; x < (int)size; x ++) {
-      for (int y = 0; y < (int)size; y++) {
-        chunkMemory.add(new Chunk( px + x*16, 0, py + y*16, this));
+    //for (int x = 0; x < (int)size; x ++) {
+    //  for (int y = 0; y < (int)size; y++) {
+    //    chunkMemory.add(new Chunk( px + x*16, 0, py + y*16, this));
         
         //try{
         //  Chunk test = this.getChunkAt(px + (x*16), py + (y*16));
@@ -75,8 +75,8 @@ public class World {
         //  chunkMemory.add( new Chunk(px + (y*16), 0, py - (x*16), this));
           
         //}
-      }
-    }
+      //}
+    //}
     loadStatus  = "Placing Blocks";
     println(loadStatus);
     //for (int x = 0;x < chunkMemory.length; x++){
@@ -135,28 +135,22 @@ public class World {
 
     //}
 
-    for (Chunk c : chunkMemory) {
-      for (int x = 0; x< 16; x++) {
-        for (int y = 0; y<16; y++) {
-          for (int h = 127-((int)map(noise(((c.lowestXPos+ x)/100.0), (c.lowestZPos + y)/100.0), 0, 1, 10, 100)); h<128; h++) {
-
-            c.setBlock(1, x, h, y, false);
-          }
-        }
-      }
-    }
+    //for (Chunk c : chunkMemory) {
+    //  c.decorate();
+    //}
     
-    for(Chunk c: chunkMemory){
-      println(c.string());
-    }
+    //for(Chunk c: chunkMemory){
+    //  println(c.toString());
+    //}
 
-    thread("generateMeshes");
+    //thread("generateMeshes");
   }
 
   public void drawWorld() {
-
-    for (Chunk c : chunkMemory) {
-      c.betterDrawChunk();
+    Chunk[] chunks = new Chunk[this.chunkMemory.size()];
+    this.chunkMemory.toArray(chunks);
+    for (Chunk x : chunks) {
+      x.betterDrawChunk();
     }
   }
   public PImage getTexture() {
@@ -165,8 +159,10 @@ public class World {
 
   public Chunk getChunkAt(int x, int z) throws ArrayIndexOutOfBoundsException{
     //println(this.chunkMemory);
-    for(int l = 0; l < this.chunkMemory.size(); l ++){
-      Chunk ch = this.chunkMemory.get(l);
+    Chunk[] chunks = new Chunk[this.chunkMemory.size()];
+    this.chunkMemory.toArray(chunks);
+    for(Chunk ch: chunks){
+      
       if(ch.lowestZPos == z*16){
         //println("fasfkfaj");
         if (ch.lowestXPos == x*16){

@@ -21,8 +21,8 @@ public class Block{
   
   //better
   public void drawTop(PShape shape, int x, int y, int z, PVector texture){
-    
-    shape.tint(255);
+    if( this.blockType == 1)shape.tint(210, 220, 200);
+    else shape.tint(255);
     
     
     shape.vertex(x, y, z, texture.x, texture.y);

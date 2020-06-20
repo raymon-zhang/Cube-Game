@@ -274,8 +274,18 @@ public class Chunk{
     println("Generating mesh actually took: " + (millis()-timeStamp1)+ " ms");
   }
   
-  public String string(){
+  public String toString(){
     return("Chunk at " + this.lowestXPos + ", " + this.lowestZPos);
+  }
+  public void decorate(){
+    for (int x = 0; x< 16; x++) {
+      for (int y = 0; y<16; y++) {
+        for (int h = 127-((int)map(noise(((this.lowestXPos+ x)/100.0), (this.lowestZPos + y)/100.0), 0, 1, 10, 100)); h<128; h++) {
+
+          this.setBlock(1, x, h, y, false);
+        }
+      }
+    }
   }
   
 }
