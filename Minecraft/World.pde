@@ -150,7 +150,11 @@ public class World {
     Chunk[] chunks = new Chunk[this.chunkMemory.size()];
     this.chunkMemory.toArray(chunks);
     for (Chunk x : chunks) {
-      x.betterDrawChunk();
+      try{
+        x.betterDrawChunk();
+      }catch(Exception e){
+        println(e);
+      }
     }
   }
   public PImage getTexture() {

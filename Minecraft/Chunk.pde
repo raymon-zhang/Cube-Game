@@ -263,7 +263,7 @@ public class Chunk{
             catch(ArrayIndexOutOfBoundsException e){
               block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, this.world.textureCoords.get(block.blockType)[2]); 
             }
-            newMesh.noTint();
+            //newMesh.noTint();
           }
         }
       }
@@ -280,7 +280,7 @@ public class Chunk{
   public void decorate(){
     for (int x = 0; x< 16; x++) {
       for (int y = 0; y<16; y++) {
-        for (int h = 127-((int)map(noise(((this.lowestXPos+ x)/100.0), (this.lowestZPos + y)/100.0), 0, 1, 10, 100)); h<128; h++) {
+        for (int h = 127-((int)map(noise(((this.lowestXPos+ x)/100.0), (this.lowestZPos + y)/100.0), 0, 1, 10, 30)); h<128; h++) {
 
           this.setBlock(1, x, h, y, false);
         }
