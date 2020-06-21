@@ -108,10 +108,7 @@ public class Block{
     
   }
   public boolean isTransparent(){
-    if(this.blockType == 4){
-      return true;
-    }
-    else return false;
+    return this.blockType == 4;
   }
   
   
