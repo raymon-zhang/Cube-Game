@@ -1,6 +1,8 @@
 import java.util.*;
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import processing.sound.*;
 Robot mouseControl;
 
@@ -23,29 +25,60 @@ SoundFile diamond;
 World c;
 
 PShape clouds;
+PShape clouds2;
+
+PImage cloud;
 
 Player player;
 
-int playerX, playerZ;
-//PGraphics graphics;
+Point pMouse;
+Point mouse;
 
+
+PMatrix originalMatrix;
+
+PImage gui;
 
 public String loadStatus;
+
+float f;
+
+PFont myFont;
 void setup() {
   fullScreen(P3D);
-
   
-  loading = new SoundFile(this, "load.mp3");
+  ((PGraphicsOpenGL)g).textureSampling(3);
+  
+  originalMatrix = (PMatrix) getMatrix();
+  
+  cloud = loadImage("clouds.png");
+  gui = loadImage("gui.png");
+  
+  loading = new SoundFile(this, "Loading.mp3");
   loading.play();
-  //frameRate(100);
-
-  //hint(DISABLE_TEXTURE_MIPMAPS);
-
-  //graphics = createGraphics(640, 360, P3D);
 
   running = true;
-
+  clouds = createShape();
+  clouds.beginShape();
+  clouds.noStroke();
+  clouds.tint(255, 128);
+  clouds.texture(cloud);
+  clouds.vertex(0,0,0, 0,0);
+  clouds.vertex(0, 0, 3072, 0, 256);
+  clouds.vertex(3072,0,3072, 256, 256);
+  clouds.vertex(3072,0,0,256,0);
+  clouds.endShape(CLOSE);
   
+  clouds2 = createShape();
+  clouds2.beginShape();
+  clouds2.noStroke();
+  clouds2.tint(255, 128);
+  clouds2.texture(cloud);
+  clouds2.vertex(0,0,-3072, 0,0);
+  clouds2.vertex(0, 0, 0, 0, 256);
+  clouds2.vertex(3072,0,0, 256, 256);
+  clouds2.vertex(3072,0,-3072,256,0);
+  clouds2.endShape(CLOSE);
   
   noCursor();
   cols = w/scl;
@@ -78,8 +111,12 @@ void setup() {
   //lights();
 
   frameRate(80);
-  
   thread("checkChunks");
+  myFont = createFont("Arial", 15);
+  textFont(myFont);
+
+  textSize(15);
+  textAlign(LEFT);
 }
 
 
@@ -87,38 +124,24 @@ void draw() {
   
   background(130, 202, 255);
 
-  //println(second());
-
-  //playerX = (int)player.xPosition/16;
-  //playerZ = (int)player.zPosition/16;
-
-  //border
-
-
-  //input, camera
-  //println(playerX);  
-  
-
-  
+  shape(clouds);
+  shape(clouds, -3072, 0);
+  shape(clouds2);
   //directionalLight(255, 255, 255, 1, 1, 0);
   
-  player.updateCamera();
+  
   checkKeys();
   checkMouse();
   c.drawWorld();
   
+  player.updateCamera();
   
-    
-  
-  
-  
-  //b.betterDrawChunk();
-
-  
-  
-  
-  if(frameCount %100 == 0)println("Framerate " + frameRate);
+  if(frameCount %100 == 0)f = frameRate;
+  pMouse.x = mouse.x;
+  pMouse.y = mouse.y;
 }
+
+
 
 public void exit() {
   running = false;
@@ -139,9 +162,13 @@ public void exit() {
 //}
 
 
+
+
 public void checkChunks(){
   
   for(;; delay(100)){
+    WORLDSIZE = 19;
+    
     ArrayList<Chunk> regenerate= new ArrayList<Chunk>();
     //println(regenerate);
     int px = ((int) player.xPosition/16) ;
@@ -156,7 +183,11 @@ public void checkChunks(){
         //chunk  = null;  
       }
     }
-    
+    if((player.xPos >= 0.0001) || (player.zPos >= 0.0001)){
+      WORLDSIZE = 7;
+      println(player.xPos + ", " + player.zPos);
+    }
+    else WORLDSIZE = 19;
     for(int s = 0;s<(WORLDSIZE+1)/2; s++){
       for(int x = 0; x<s+1; x++){
         int y = s-x;
@@ -362,17 +393,9 @@ public void checkChunks(){
       }
     }
       
-      
-      
-      
-      
-    
-    //println(regenerate);
     for(Chunk getRegenerated: regenerate){
       getRegenerated.betterGenerateMesh();
     }
-    //println(c.chunkMemory);
-    
     
   }
   

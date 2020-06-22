@@ -153,7 +153,7 @@ public class World {
       try{
         x.betterDrawChunk();
       }catch(Exception e){
-        println(e);
+        println(x + "chunk");
       }
     }
   }

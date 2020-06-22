@@ -37,43 +37,43 @@ boolean setMove(int k, boolean b) {
 void checkKeys(){
   if (isLeft) {
     player.xPos  += sin(PI/2-player.hDeg)/10 * playerSpeed;
-    if (player.zPosition +  cos(PI/2-player.hDeg)/10* playerSpeed >1.5){
-      player.zPos += cos(PI/2-player.hDeg)/10* playerSpeed;
+    //if (player.zPosition +  cos(PI/2-player.hDeg)/10* playerSpeed >1.5){
+    player.zPos += cos(PI/2-player.hDeg)/10* playerSpeed;
       
-    }
-    else{
+    //}
+    //else{
       
-    }
+    //}
   }
   if (isRight) {
     player.xPos  -= sin(PI/2-player.hDeg)/10* playerSpeed;
-    if (player.zPosition -cos(PI/2-player.hDeg)/10* playerSpeed>1.5){
-      player.zPos -= cos(PI/2-player.hDeg)/10* playerSpeed;
+    //if (player.zPosition -cos(PI/2-player.hDeg)/10* playerSpeed>1.5){
+    player.zPos -= cos(PI/2-player.hDeg)/10* playerSpeed;
       
-    }
-    else{
+    //}
+    //else{
       
-    }
+    //}
   }
 
   if (isUp) {
     player.xPos-= sin(player.hDeg)/10* playerSpeed;
-    if (player.zPosition +cos(player.hDeg)/10* playerSpeed>1.5){
-      player.zPos += cos(player.hDeg)/10* playerSpeed;
+    //if (player.zPosition +cos(player.hDeg)/10* playerSpeed>1.5){
+    player.zPos += cos(player.hDeg)/10* playerSpeed;
       
-    }
-    else{
+    //}
+    //else{
       
-    }
+    //}
   }
   if (isDown) {
     player.xPos +=sin(player.hDeg)/10* playerSpeed;
-    if (player.zPosition -cos(player.hDeg)/10* playerSpeed>1.5){
-      player.zPos -= cos(player.hDeg)/10* playerSpeed;
-    }
-    else{
+    //if (player.zPosition -cos(player.hDeg)/10* playerSpeed>1.5){
+    player.zPos -= cos(player.hDeg)/10* playerSpeed;
+    //}
+    //else{
       
-    }
+    //}
   }
   if (isSpace) {
     player.yPos -= 0.1* playerSpeed;
