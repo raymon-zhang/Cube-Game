@@ -147,14 +147,13 @@ public class World {
   }
 
   public void drawWorld() {
-    Chunk[] chunks = new Chunk[this.chunkMemory.size()];
-    this.chunkMemory.toArray(chunks);
+    ArrayList<Chunk> chunks= new ArrayList<Chunk>(this.chunkMemory);
+    
     for (Chunk x : chunks) {
-      try{
-        x.betterDrawChunk();
-      }catch(Exception e){
-        println(x + "chunk");
-      }
+      
+      x.betterDrawChunk();
+    
+      
     }
   }
   public PImage getTexture() {
@@ -163,16 +162,15 @@ public class World {
 
   public Chunk getChunkAt(int x, int z) throws ArrayIndexOutOfBoundsException{
     //println(this.chunkMemory);
-    Chunk[] chunks = new Chunk[this.chunkMemory.size()];
-    this.chunkMemory.toArray(chunks);
+    ArrayList<Chunk> chunks= new ArrayList<Chunk>(this.chunkMemory);
     for(Chunk ch: chunks){
       
-      if(ch.lowestZPos == z*16){
+      if(ch.lowestZPos == z*16 && ch.lowestXPos == x*16){
         //println("fasfkfaj");
-        if (ch.lowestXPos == x*16){
+        
           //println("I like cheese");
-          return ch;
-        }
+        return ch;
+        
       }
     }
 

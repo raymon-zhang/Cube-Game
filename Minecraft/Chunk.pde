@@ -122,6 +122,7 @@ public class Chunk{
   }
   public void betterGenerateMesh(){
     int timeStamp1 = millis();
+    while(drawingUI == true) delay(1);
     PShape newMesh = createShape();
     newMesh.beginShape(TRIANGLE);
     newMesh.noStroke();
@@ -271,8 +272,8 @@ public class Chunk{
     
     newMesh.endShape();
     this.mesh = newMesh;
-    //println(this);
-    //println("Generating mesh actually took: " + (millis()-timeStamp1)+ " ms");
+    
+    println("Generating mesh actually took: " + (millis()-timeStamp1)+ " ms");
     //println("------");
   }
   
@@ -282,7 +283,7 @@ public class Chunk{
   public void decorate(){
     for (int x = 0; x< 16; x++) {
       for (int y = 0; y<16; y++) {
-        for (int h = 127-((int)map(noise(((this.lowestXPos+ x)/100.0), (this.lowestZPos + y)/100.0), 0, 1, 10, 30)); h<128; h++) {
+        for (int h = 127-((int)map(noise(((this.lowestXPos+ x)/100.0), (this.lowestZPos + y)/100.0), 0, 1, 10, 50)); h<128; h++) {
 
           this.setBlock(1, x, h, y, false);
         }

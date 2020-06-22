@@ -2,38 +2,32 @@ boolean isLeft, isRight, isUp, isDown, isSpace, isShift;
 float playerSpeed = 0.1;
 
 void keyPressed() {
-  setMove(key, true);
+
+  if(key == 'w') isUp = true;  
+  if(key == 's') isDown = true; 
+  if(key == 'a') isLeft = true; 
+  if(key == 'd') isRight = true;
+  if(key == ' ') isSpace = true; 
+  
+  if(key == 'q') isShift = true; 
+  if(key == 'D')  debug = !debug;
+    
+    
+  
+  
+  
 }
  
 void keyReleased() {
-  setMove(key, false);
+  if(key == 'w') isUp = false;  
+  if(key == 's') isDown = false; 
+  if(key == 'a') isLeft = false; 
+  if(key == 'd') isRight = false;
+  if(key == ' ') isSpace = false; 
+  if(key == 'q') isShift = false; 
+  
 }
  
- 
-boolean setMove(int k, boolean b) {
-  switch (k) {
-  case 'w':
-    return isUp = b;
- 
-  case 's':
-    return isDown = b;
- 
-  case 'a':
-    return isLeft = b;
- 
-  case 'd':
-    return isRight = b;
- 
-  case ' ': 
-    return isSpace = b;
-  
-  case 'q': 
-    return isShift = b;
-  
-  default:
-    return b;
-  }
-}
 void checkKeys(){
   if (isLeft) {
     player.xPos  += sin(PI/2-player.hDeg)/10 * playerSpeed;

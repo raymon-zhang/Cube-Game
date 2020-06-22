@@ -74,19 +74,25 @@ public class Player {
     strokeWeight(5);
 
     camera(this.xPosition, this.yPosition, this.zPosition, xCenter, yCenter, zCenter, 0, 1, 0);
-
+    drawingUI = true;
     pushMatrix();
     hint(DISABLE_DEPTH_TEST);
     resetMatrix();
     applyMatrix(originalMatrix);
-    
-    text("FPS: " + f, 30, 50, 500, 600);
     image(gui, width/2-384, height-88, 768, 88);
+    
+    if(debug){
+      text("FPS: " + f, 30, 50);
+      text(this.xPosition + ", " + this.zPosition, 30, 85);
+      
+    }
+    
     point(width/2, height/2);
 
     hint(ENABLE_DEPTH_TEST);
 
     popMatrix();
+    drawingUI = false;
     noStroke();
   }
 
