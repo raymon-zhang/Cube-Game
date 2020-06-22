@@ -271,9 +271,9 @@ public class Chunk{
     
     newMesh.endShape();
     this.mesh = newMesh;
-    println(this);
-    println("Generating mesh actually took: " + (millis()-timeStamp1)+ " ms");
-    println("------");
+    //println(this);
+    //println("Generating mesh actually took: " + (millis()-timeStamp1)+ " ms");
+    //println("------");
   }
   
   public String toString(){

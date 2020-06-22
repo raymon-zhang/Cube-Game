@@ -80,7 +80,7 @@ public class Player {
     resetMatrix();
     applyMatrix(originalMatrix);
     
-    text("FPS: " + f, 50, 50);
+    text("FPS: " + f, 30, 50, 500, 600);
     image(gui, width/2-384, height-88, 768, 88);
     point(width/2, height/2);
 

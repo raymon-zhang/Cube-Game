@@ -150,14 +150,10 @@ public void exit() {
 }
 
 //void mousePressed(){
-//  if (mouseButton == LEFT){
-//    breakBlock();
+  
+//    generateMeshes();
     
-//  }
-//  else if (mouseButton == RIGHT){
-//    placeBlock();
-    
-//  }
+  
   
 //}
 
@@ -188,6 +184,7 @@ public void checkChunks(){
       println(player.xPos + ", " + player.zPos);
     }
     else WORLDSIZE = 19;
+    
     for(int s = 0;s<(WORLDSIZE+1)/2; s++){
       for(int x = 0; x<s+1; x++){
         int y = s-x;
@@ -197,9 +194,8 @@ public void checkChunks(){
           Chunk newChunk = new Chunk((px + x)*16, 0, (pz + y)*16, c);
           newChunk.decorate();
           
-          
-          c.chunkMemory.add(newChunk);
           regenerate.add(newChunk);
+          c.chunkMemory.add(newChunk);
           //println(regenerate);
           
           
@@ -247,9 +243,9 @@ public void checkChunks(){
           Chunk newChunk = new Chunk((px + y)*16, 0, (pz -x)*16, c);
           newChunk.decorate();
           
-          
-          c.chunkMemory.add(newChunk);
           regenerate.add(newChunk);
+
+          c.chunkMemory.add(newChunk);
           //println(regenerate);
           
           
@@ -299,9 +295,8 @@ public void checkChunks(){
           Chunk newChunk = new Chunk((px -x)*16, 0, (pz -y)*16, c);
           newChunk.decorate();
           
-          
-          c.chunkMemory.add(newChunk);
           regenerate.add(newChunk);
+          c.chunkMemory.add(newChunk);
           //println(regenerate);
           
           
@@ -350,9 +345,9 @@ public void checkChunks(){
           Chunk newChunk = new Chunk((px -y)*16, 0, (pz +x)*16, c);
           newChunk.decorate();
           
-          
-          c.chunkMemory.add(newChunk);
           regenerate.add(newChunk);
+          c.chunkMemory.add(newChunk);
+          
           //println(regenerate);
           
           
@@ -395,6 +390,7 @@ public void checkChunks(){
       
     for(Chunk getRegenerated: regenerate){
       getRegenerated.betterGenerateMesh();
+      //println(getRegenerated.mesh);
     }
     
   }
