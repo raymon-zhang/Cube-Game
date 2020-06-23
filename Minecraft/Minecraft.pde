@@ -425,6 +425,6 @@ public void checkChunks() {
       getRegenerated.betterGenerateMesh();
       //println(getRegenerated);
     }
-    println("-----------");
+    //println("-----------");
   }
 }
