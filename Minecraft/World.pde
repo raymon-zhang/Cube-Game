@@ -36,7 +36,7 @@ public class World {
     textureCoords.put(7, new PVector[]{new PVector(521, 131), new PVector(391, 131), new PVector(261, 1)});//snow
     textureCoords.put(8, new PVector[]{new PVector(651, 131), new PVector(651, 131), new PVector(651, 131)});//gravel
     textureCoords.put(10, new PVector[]{new PVector(1, 131), new PVector (1, 131), new PVector(1, 131)});//diamond
-
+    textureCoords.put(11, new PVector[]{new PVector(781, 131), new PVector(781, 131), new PVector(781, 131)});//leaves
 
     
 
@@ -46,37 +46,10 @@ public class World {
     loadStatus = "Creating Chunks";
     println(loadStatus);
 
-    int px = ((int) player.xPosition/16)*16;
-    int py = ((int) player.zPosition/16)*16;
+    
 
 
-    //for (int x = 0; x < (int)size; x ++) {
-    //  for (int y = 0; y < (int)size; y++) {
-    //    chunkMemory.add(new Chunk( px + x*16, 0, py + y*16, this));
-        
-        //try{
-        //  Chunk test = this.getChunkAt(px + (x*16), py + (y*16));
-        //}catch(ArrayIndexOutOfBoundsException e){
-        //  chunkMemory.add( new Chunk(px + (x*16), 0, py + (y*16), this));
-        //}
-        //try{
-        //  Chunk test = this.getChunkAt(px - (y*16), py - (x*16));
-        //}catch(ArrayIndexOutOfBoundsException e){
-        //  chunkMemory.add( new Chunk(px - (y*16), 0, py + (x*16), this));
-        //}
-        //try{
-        //  Chunk test = this.getChunkAt(px - (x*16), py - (y*16));
-        //}catch(ArrayIndexOutOfBoundsException e){
-        //  chunkMemory.add( new Chunk(px - (x*16), 0, py - (y*16), this));
-        //}
-        //try{
-        //  Chunk test = this.getChunkAt(px - (y*16), py - (x*16));
-        //}catch(ArrayIndexOutOfBoundsException e){
-        //  chunkMemory.add( new Chunk(px + (y*16), 0, py - (x*16), this));
-          
-        //}
-      //}
-    //}
+    
     loadStatus  = "Placing Blocks";
     println(loadStatus);
     //for (int x = 0;x < chunkMemory.length; x++){

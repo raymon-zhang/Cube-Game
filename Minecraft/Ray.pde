@@ -1,6 +1,5 @@
 
 public void breakBlock(){
-//  float time1 = millis();
   float yDelta = - cos(player.vDeg)/100;
   float xDelta = - sin(player.hDeg) * sin(player.vDeg)/100;
   float zDelta = + cos(player.hDeg) * sin(player.vDeg)/100;
@@ -22,20 +21,19 @@ public void breakBlock(){
     if(counter <1200){
       Chunk chunk = c.getChunkAt((int)xCenter/16,(int)zCenter/16);
       Block block = chunk.blocks[(int)((xCenter )%16)][(int)( yCenter)][(int)((zCenter)%16 )];
-//      float time2 = millis();
-//      println("Finding targeted block took: " + (time2-time1) + " ms");
-//      if (block.blockType == 1)grass.play();
-//      else if(block.blockType == 2)stone.play();
-//      else if(block.blockType == 5)sand.play();
-//      else if(block.blockType == 4)water.play();
-//      else if(block.blockType == 10)diamond.play();
-//      float time3 = millis();
-//      println("Playing sound took: " + (time3-time2) + " ms");
-      chunk.removeBlock((int)((xCenter )%16),(int)( yCenter ),(int)((zCenter)%16 ), true);    
-      //println("Rebuilding mesh took: " + (millis()-time3)+ " ms");
-      //println("Removed Block at: " +  ((int)xCenter%16 + 1) + ", " +  ((int) yCenter+1) + ", " + ((int)zCenter%16 + 1));
-      //println("In chunk: " + ((int)(xCenter /16)) + ", " + ((int)(zCenter /16 )));
-      
+
+      chunk.removeBlock((int)((xCenter )%16),(int)( yCenter ),(int)((zCenter)%16 ), true);
+      for (int x = 0; x < player.inventory.length; x++){
+        if(player.inventory[x] == null){
+          player.inventory[x] = new ItemStack(block.blockType, player);
+          return;
+        }
+        else if (player.inventory[x].itemType == block.blockType){
+          player.inventory[x].amount ++;
+          return;
+        }
+      }
+
     }
   }catch(ArrayIndexOutOfBoundsException e){
     println("Tried to acess : " + ((int)(xCenter /16.0)) + ", " + ((int)(zCenter /16.0)));
@@ -71,26 +69,22 @@ public void placeBlock(){
       
     }
     if(counter <120){
-//      float time2 = millis();
-//      //sound.play();
-//      println("Finding targeted block took: " + (time2-time1) + " ms");
+   
       Chunk chunk = c.getChunkAt((int)xCenter/16,(int)zCenter/16);
       Block block = chunk.blocks[(int)((xCenter )%16)][(int)( yCenter)][(int)((zCenter)%16 )];
-      chunk.setBlock(6, (int)((xCenter)%16),(int)( yCenter),(int)((zCenter )%16 ), true);    
-      //println("Rebuilding mesh took: " + (millis()-time2)+ " ms");
-
-//      println("Removed Block at: " +  ((int)xCenter%16 + 1) + ", " +  ((int) yCenter+1) + ", " + ((int)zCenter%16 + 1));
-//      println("In chunk: " + ((int)(xCenter /16)) + ", " + ((int)(zCenter /16 )));
+      try{
+        chunk.setBlock(player.inventory[player.selectedSlot].itemType, (int)((xCenter)%16),(int)( yCenter),(int)((zCenter )%16 ), true);   
+        if(player.inventory[player.selectedSlot].amount > 1){
+          player.inventory[player.selectedSlot].amount -= 1;
+        }
+        else player.inventory[player.selectedSlot] = null;
+      }catch(NullPointerException e){
+        
+      }
       
     }
   }catch(ArrayIndexOutOfBoundsException e){
     println("Tried to acess : " + ((int)(xCenter /16.0)) + ", " + ((int)(zCenter /16.0)));
   }
-//  //c.chunkMemory[(int)(x/16)][(int)(z/16)].betterGenerateMesh();
   
 }
-
-//public void breakThread(){
-  
-  
-//}

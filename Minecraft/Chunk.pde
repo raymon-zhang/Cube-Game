@@ -289,13 +289,82 @@ public class Chunk{
               this.setBlock(4, x, water, y, false);
             }
           }
+        if(highness < WATERLEVEL -6){
+          float random = random(0, 20);
+          //println(random);
+          if(random < 0.3){
+            int tree = highness-1;
+            for(tree = highness - 1; tree > highness -1 - random(3, 5); tree--){
+              if (tree>0)this.setBlock(3, x, tree, y, false);
+              
+            }
+            //for(int xOff = -1; xOff <2; xOff ++){
+            //  for(int yOff = -1; yOff<2; yOff ++){
+            //    for(int leaf= 3; leaf> 0; leaf--){
+            //      try{
+            //        this.setBlock(11, x + xOff, tree -leaf+1, y + yOff, false);
+            //      }catch(ArrayIndexOutOfBoundsException e){
+            //        //dont care
+            //      }
+            //    }
+            //  }
+              
+            //}
+            for(int level = 3; level > -1; level--){
+              if (level < 2){
+                for(int xOff = -2; xOff <3; xOff ++){
+                  for(int yOff = -2; yOff<3; yOff ++){
+                    try{
+                      this.setBlock(11, x + xOff, tree -level, y + yOff, false);
+                    }catch(ArrayIndexOutOfBoundsException e){
+                      //dont care
+                    }
+                  }
+                }
+              }
+              else{
+                try{
+                      this.setBlock(11, x + 1, tree -level, y , false);
+                }catch(ArrayIndexOutOfBoundsException e){
+                      //dont care
+                }
+                try{
+                      this.setBlock(11, x - 1, tree -level, y , false);
+                }catch(ArrayIndexOutOfBoundsException e){
+                      //dont care
+                }
+                try{
+                      this.setBlock(11, x , tree -level, y-1 , false);
+                }catch(ArrayIndexOutOfBoundsException e){
+                      //dont care
+                }
+                try{
+                      this.setBlock(11, x , tree -level, y +1, false);
+                }catch(ArrayIndexOutOfBoundsException e){
+                      //dont care
+                }
+                try{
+                      this.setBlock(11, x , tree -level, y, false);
+                }catch(ArrayIndexOutOfBoundsException e){
+                      //dont care
+                }
+              }
+            }
+            
+            
+          }
+        }  
         
-        for (int h = highness; h<128; h++) {
+        for (int h = highness; h<highness+3; h++) {
+          
           
           if(highness > WATERLEVEL - 6){
             this.setBlock(5, x, h, y, false);
           }
           else this.setBlock(1, x, h, y, false);
+        }
+        for(int h = highness+3; h < 128; h++){
+          this.setBlock(2, x, h, y, false);
         }
       }
     }

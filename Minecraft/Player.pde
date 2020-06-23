@@ -4,7 +4,9 @@ public class Player {
   float xPosition, yPosition, zPosition;
   
   int selectedSlot;
-
+  
+  public ItemStack[] inventory;
+  
   public Player(float xPos, float yPos, float zPos) {
     this.selectedSlot = 0;
     this.xPos = 0;
@@ -16,6 +18,8 @@ public class Player {
     this.yPosition = yPos;
     this.zPosition = zPos;
     perspective(PI/3, 1.777777, 0.01f, 1000f);
+    
+    this.inventory = new ItemStack[9];
   }
 
 
@@ -56,6 +60,10 @@ public class Player {
     applyMatrix(originalMatrix);
     image(gui, width/2-364 , height-88, 728, 88); 
     image(indicator, width/2-368 + this.selectedSlot * 80, height-92, 96, 96);
+    
+    for(int slot = 0; slot < player.inventory.length; slot ++){
+      if(player.inventory[slot] != null)player.inventory[slot].drawStack(new PVector(width/2-352 + slot * 80, height-76));
+    }
     
     if(debug){
       text("FPS: " + f, 30, 50);

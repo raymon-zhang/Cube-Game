@@ -67,8 +67,7 @@ void setup() {
   indicator = loadImage("indicator.png");
   
 
-  loading = new SoundFile(this, "Loading.mp3");
-  loading.play();
+  
 
   running = true;
   clouds = createShape();
@@ -108,12 +107,15 @@ void setup() {
 
   
   colorMode(RGB);
-
-  grass = new SoundFile(this, "grass.mp3");
-  stone = new SoundFile(this, "stone.mp3");
-  sand = new SoundFile(this, "sand.mp3");
-  water = new SoundFile(this, "water.mp3");
-  diamond = new SoundFile(this, "diamond.mp3");
+  
+  loading = new SoundFile(this, "/sounds/Loading.mp3");
+  loading.play();
+  
+  grass = new SoundFile(this, "/sounds/grass.mp3");
+  stone = new SoundFile(this, "/sounds/stone.mp3");
+  sand = new SoundFile(this, "/sounds/sand.mp3");
+  water = new SoundFile(this, "/sounds/water.mp3");
+  diamond = new SoundFile(this, "/sounds/diamond.mp3");
 
   
   player = new Player(80, 50, 80);
