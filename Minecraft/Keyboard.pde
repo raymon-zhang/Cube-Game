@@ -13,8 +13,15 @@ void keyPressed() {
   if(key == 'D')  debug = !debug;
     
     
-  
-  
+  if(key == '1') player.selectedSlot = 0;
+  if(key == '2') player.selectedSlot = 1;
+  if(key == '3') player.selectedSlot = 2;
+  if(key == '4') player.selectedSlot = 3;
+  if(key == '5') player.selectedSlot = 4;
+  if(key == '6') player.selectedSlot = 5;
+  if(key == '7') player.selectedSlot = 6;
+  if(key == '8') player.selectedSlot = 7;
+  if(key == '9') player.selectedSlot = 8;
   
 }
  
@@ -78,4 +85,16 @@ void checkKeys(){
   
   //if ( (int) (player.yPosition +1.62)
   
+}
+
+
+void mouseWheel(MouseEvent event){
+  if (event.getCount() > 0){
+    if (player.selectedSlot < 8)player.selectedSlot += 1;
+    
+  }
+  else if (event.getCount() < 0){
+    if (player.selectedSlot > 0)player.selectedSlot -= 1;
+    
+  }
 }

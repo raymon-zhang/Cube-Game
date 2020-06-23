@@ -14,6 +14,8 @@ int w = 16;
 int h = 16;
 
 int WORLDSIZE = 19;
+int WATERLEVEL = 100;
+
 
 SoundFile loading;
 SoundFile grass;
@@ -26,21 +28,23 @@ World c;
 
 PShape clouds;
 PShape clouds2;
-
 PImage cloud;
 
 Player player;
 
+
 Point pMouse;
 Point mouse;
 
-boolean drawingUI;
 
+boolean drawingUI;
 boolean debug;
+PImage gui, indicator;
+
 
 PMatrix originalMatrix;
 
-PImage gui;
+
 
 public String loadStatus;
 
@@ -60,6 +64,8 @@ void setup() {
 
   cloud = loadImage("clouds.png");
   gui = loadImage("gui.png");
+  indicator = loadImage("indicator.png");
+  
 
   loading = new SoundFile(this, "Loading.mp3");
   loading.play();
@@ -88,6 +94,7 @@ void setup() {
   clouds2.endShape(CLOSE);
 
   noCursor();
+  
   cols = w/scl;
   rows = h/scl;
 
@@ -99,6 +106,7 @@ void setup() {
     println(e);
   }
 
+  
   colorMode(RGB);
 
   grass = new SoundFile(this, "grass.mp3");
@@ -107,13 +115,16 @@ void setup() {
   water = new SoundFile(this, "water.mp3");
   diamond = new SoundFile(this, "diamond.mp3");
 
+  
   player = new Player(80, 50, 80);
 
+  
   c = new World(WORLDSIZE);
 
   noStroke();
 
   noSmooth();
+  hint(DISABLE_TEXTURE_MIPMAPS);
 
   //lights();
 
