@@ -35,10 +35,11 @@ public class Player {
       this.yPos *= 0.7;
       this.zPos *= 0.7;
     } else {
-      this.xPos *= 0.94;
-      this.yPos *= 0.94;
-      this.zPos *= 0.94;
+      this.xPos *= 0.9;
+      this.yPos *= 0.9;
+      this.zPos *= 0.9;
     }
+    //println(sqrt(pow(xPos, 2) + pow(zPos, 2)));
 
     
     

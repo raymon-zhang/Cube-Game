@@ -169,9 +169,11 @@ public void exit() {
 }
 
 void mousePressed(){
-
+  if (mouseButton == LEFT){
     breakBlock();
-
+  }else if(mouseButton == RIGHT){
+    placeBlock();
+  }
 
 
 }
