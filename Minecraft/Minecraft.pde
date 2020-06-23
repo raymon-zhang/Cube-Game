@@ -122,7 +122,6 @@ void setup() {
   c = new World(WORLDSIZE);
 
   noStroke();
-
   noSmooth();
   hint(DISABLE_TEXTURE_MIPMAPS);
 
@@ -132,8 +131,9 @@ void setup() {
   
   myFont = createFont("Arial", 30);
   textFont(myFont);
-
   textAlign(LEFT);
+  
+  
   delay(1000);
   thread("checkChunks");
 }
@@ -168,13 +168,13 @@ public void exit() {
   super.exit();
 }
 
-//void mousePressed(){
+void mousePressed(){
 
-//    generateMeshes();
+    breakBlock();
 
 
 
-//}
+}
 
 
 
