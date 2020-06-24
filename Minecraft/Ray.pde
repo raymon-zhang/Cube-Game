@@ -11,8 +11,8 @@ public void breakBlock(){
   int counter = 0;
   try{
     while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null){
-      println("Step");
-      println(floor(xCenter )-(floor(xCenter/16) )*16);
+      //println("Step");
+      //println(floor(xCenter )-(floor(xCenter/16) )*16);
       yCenter += yDelta;
       xCenter += xDelta;
       zCenter += zDelta;
@@ -58,7 +58,7 @@ public void placeBlock(){
   int counter = 0;
   try{
     while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null){
-      println("Step");
+      //println("Step");
       yCenter += yDelta;
       xCenter += xDelta;
       zCenter += zDelta;

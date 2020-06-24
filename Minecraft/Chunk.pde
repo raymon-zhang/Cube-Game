@@ -289,7 +289,7 @@ public class Chunk{
               this.setBlock(4, x, water, y, false);
             }
           }
-        if(highness < WATERLEVEL -6){
+        if(highness < WATERLEVEL -6 &&((x<14 &&x > 1) &&(y<14 && y>1))){
           float random = random(0, 20);
           //println(random);
           if(random < 0.3){
@@ -303,41 +303,49 @@ public class Chunk{
               if (level < 2){
                 for(int xOff = -2; xOff <3; xOff ++){
                   for(int yOff = -2; yOff<3; yOff ++){
-                    try{
-                      this.setBlock(11, x + xOff, tree -level, y + yOff, false);
-                    }catch(ArrayIndexOutOfBoundsException e){
-                      //dont care
-                    }
+                    
+                    this.setBlock(11, x + xOff, tree -level, y + yOff, false);
+                    
                   }
                 }
               }
               else{
-                try{
-                      this.setBlock(11, x + 1, tree -level, y , false);
-                }catch(ArrayIndexOutOfBoundsException e){
-                      //dont care
-                }
-                try{
-                      this.setBlock(11, x - 1, tree -level, y , false);
-                }catch(ArrayIndexOutOfBoundsException e){
-                      //dont care
-                }
-                try{
-                      this.setBlock(11, x , tree -level, y-1 , false);
-                }catch(ArrayIndexOutOfBoundsException e){
-                      //dont care
-                }
-                try{
-                      this.setBlock(11, x , tree -level, y +1, false);
-                }catch(ArrayIndexOutOfBoundsException e){
-                      //dont care
-                }
-                try{
-                      this.setBlock(11, x , tree -level, y, false);
-                }catch(ArrayIndexOutOfBoundsException e){
-                      //dont care
-                }
+                
+                this.setBlock(11, x + 1, tree -level, y , false);
+                
+                this.setBlock(11, x - 1, tree -level, y , false);
+                
+                this.setBlock(11, x , tree -level, y-1 , false);
+                
+                this.setBlock(11, x , tree -level, y +1, false);
+                
+                this.setBlock(11, x , tree -level, y, false);
+                
               }
+            }
+            if(random(0, 10) < 4.5){
+              this.removeBlock(x + 2, tree, y + 2, false);
+            }
+            if(random(0, 10) < 4.5){
+              this.removeBlock(x - 2, tree, y + 2, false);
+            }
+            if(random(0, 10) < 4.5){
+              this.removeBlock(x + 2, tree, y - 2, false);
+            }
+            if(random(0, 10) < 4.5){
+              this.removeBlock(x -2, tree, y - 2, false);
+            }
+            if(random(0, 10) < 4.5){
+              this.removeBlock(x + 2, tree - 1, y + 2, false);
+            }
+            if(random(0, 10) < 4.5){
+              this.removeBlock(x - 2, tree - 1, y + 2, false);
+            }
+            if(random(0, 10) < 4.5){
+              this.removeBlock(x + 2, tree-1, y - 2, false);
+            }
+            if(random(0, 10) < 4.5){
+              this.removeBlock(x -2, tree-1, y - 2, false);
             }
             
             
