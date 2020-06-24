@@ -96,27 +96,6 @@ public class World {
     //           }
 
 
-
-    //         }
-
-
-    //       }
-
-    //     }
-
-    //   }
-
-    //}
-
-    //for (Chunk c : chunkMemory) {
-    //  c.decorate();
-    //}
-    
-    //for(Chunk c: chunkMemory){
-    //  println(c.toString());
-    //}
-
-    //thread("generateMeshes");
   }
 
   public void drawWorld() {
@@ -125,10 +104,10 @@ public class World {
     for (Chunk x : chunks) {
       
       x.betterDrawChunk();
-    
       
     }
   }
+  
   public PImage getTexture() {
     return this.texture;
   }
@@ -139,19 +118,14 @@ public class World {
     for(Chunk ch: chunks){
       
       if(ch.lowestZPos == z*16 && ch.lowestXPos == x*16){
-        //println("fasfkfaj");
-        
-          //println("I like cheese");
+
         return ch;
         
       }
     }
 
-
-    //println("Hfadsfsf");
     throw new ArrayIndexOutOfBoundsException();
 
-    //return new Chunk(0,0, 0, this);
   }
 }
 
@@ -160,5 +134,253 @@ public class World {
 public void generateMeshes() {
   for (Chunk c : c.chunkMemory) {
     c.betterGenerateMesh();
+  }
+}
+
+public void checkChunks() {
+
+  for (;; delay(100)) {
+    WORLDSIZE = 19;
+
+    ArrayList<Chunk> regenerate= new ArrayList<Chunk>();
+    //println(regenerate);
+    int px = floor( player.xPosition/16) ;
+    int pz = floor( player.zPosition/16) ;
+
+
+    ArrayList<Chunk> newVersion = new ArrayList<Chunk>(c.chunkMemory);
+
+    for (Chunk chunk : newVersion) {
+      if (abs(chunk.lowestXPos/16 - px) + abs(chunk.lowestZPos/16 - pz) > (WORLDSIZE-1)/2) {
+        c.chunkMemory.remove(chunk);
+        //chunk  = null;
+      }
+    }
+    if ((player.xPos >= 0.0001) || (player.zPos >= 0.0001)) {
+      WORLDSIZE = 7;
+    } else WORLDSIZE = 19;
+
+    for (int s = 0; s<(WORLDSIZE+1)/2; s++) {
+      for (int x = 0; x<s+1; x++) {
+        int y = s-x;
+        try {
+          Chunk dummy = c.getChunkAt((px) + x, (pz)+y) ;
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+          Chunk newChunk = new Chunk((px + x)*16, 0, (pz + y)*16, c);
+          newChunk.decorate();
+
+          regenerate.add(newChunk);
+          c.chunkMemory.add(newChunk);
+          //println(regenerate);
+
+
+          try {
+            Chunk chunk = c.getChunkAt(px+x, pz+y-1);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px+x, pz+y+1);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px+x+1, pz+y);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px+x-1, pz+y);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+        }
+      }
+
+      for (int x = 0; x<s+1; x++) {
+        int y = s-x;
+        try {
+          Chunk dummy = c.getChunkAt((px) + y, (pz)-x) ;
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+          Chunk newChunk = new Chunk((px + y)*16, 0, (pz -x)*16, c);
+          newChunk.decorate();
+
+          regenerate.add(newChunk);
+
+          c.chunkMemory.add(newChunk);
+          //println(regenerate);
+
+
+          try {
+            Chunk chunk = c.getChunkAt(px+y, pz-x-1);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px+y, pz-x+1);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px+y+1, pz-x);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px+y-1, pz-x);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+        }
+      }
+
+      for (int x = 0; x<s+1; x++) {
+        int y = s-x;
+
+        try {
+          Chunk dummy = c.getChunkAt((px) -x, (pz)-y) ;
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+          Chunk newChunk = new Chunk((px -x)*16, 0, (pz -y)*16, c);
+          newChunk.decorate();
+
+          regenerate.add(newChunk);
+          c.chunkMemory.add(newChunk);
+          //println(regenerate);
+
+
+          try {
+            Chunk chunk = c.getChunkAt(px-x, pz-y-1);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px-x, pz-y+1);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px-x+1, pz-y);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px-x-1, pz-y);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+        }
+      }
+
+      for (int x = 0; x<s+1; x++) {
+        int y = s-x;
+        try {
+          Chunk dummy = c.getChunkAt((px) -y, (pz)+x) ;
+        }
+        catch(ArrayIndexOutOfBoundsException e) {
+          Chunk newChunk = new Chunk((px -y)*16, 0, (pz +x)*16, c);
+          newChunk.decorate();
+
+          regenerate.add(newChunk);
+          c.chunkMemory.add(newChunk);
+
+          //println(regenerate);
+
+
+          try {
+            Chunk chunk = c.getChunkAt(px-y, pz+x-1);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px-y, pz+x+1);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px-y+1, pz+x);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+          try {
+            Chunk chunk = c.getChunkAt(px-y-1, pz+x);
+            if (! regenerate.contains(chunk)) {
+              regenerate.add(chunk);
+            }
+          }
+          catch(ArrayIndexOutOfBoundsException exception) {
+            //chunk not there
+          }
+        }
+      }
+    }
+
+    for (Chunk getRegenerated : regenerate) {
+      getRegenerated.betterGenerateMesh();
+      //println(getRegenerated);
+    }
+    //println("-----------");
   }
 }

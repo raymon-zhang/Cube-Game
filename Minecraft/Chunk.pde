@@ -298,18 +298,7 @@ public class Chunk{
               if (tree>0)this.setBlock(3, x, tree, y, false);
               
             }
-            //for(int xOff = -1; xOff <2; xOff ++){
-            //  for(int yOff = -1; yOff<2; yOff ++){
-            //    for(int leaf= 3; leaf> 0; leaf--){
-            //      try{
-            //        this.setBlock(11, x + xOff, tree -leaf+1, y + yOff, false);
-            //      }catch(ArrayIndexOutOfBoundsException e){
-            //        //dont care
-            //      }
-            //    }
-            //  }
-              
-            //}
+            
             for(int level = 3; level > -1; level--){
               if (level < 2){
                 for(int xOff = -2; xOff <3; xOff ++){
