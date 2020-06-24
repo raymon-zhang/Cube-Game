@@ -81,9 +81,5 @@ public class Player {
   }
 
   
-  public PVector getChunkPosition() {
-    int x  = (int) this.xPosition/16;
-    int y = (int) this.yPosition/16;
-    return new PVector(x, y);
-  }
+
 }

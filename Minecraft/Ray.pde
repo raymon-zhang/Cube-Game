@@ -10,19 +10,23 @@ public void breakBlock(){
   
   int counter = 0;
   try{
-    while (c.getChunkAt((int)xCenter/16,(int)zCenter/16).blocks[(int)((xCenter )%16)][(int)( yCenter)][(int)((zCenter)%16 )] == null){
+    while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null){
       println("Step");
+      println(floor(xCenter )-(floor(xCenter/16) )*16);
       yCenter += yDelta;
       xCenter += xDelta;
       zCenter += zDelta;
+      
       counter ++;
       
     }
     if(counter <1200){
-      Chunk chunk = c.getChunkAt((int)xCenter/16,(int)zCenter/16);
-      Block block = chunk.blocks[(int)((xCenter )%16)][(int)( yCenter)][(int)((zCenter)%16 )];
+      
+      Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
+     
+      Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
 
-      chunk.removeBlock((int)((xCenter )%16),(int)( yCenter ),(int)((zCenter)%16 ), true);
+      chunk.removeBlock((floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
       for (int x = 0; x < player.inventory.length; x++){
         if(player.inventory[x] == null){
           player.inventory[x] = new ItemStack(block.blockType, player);
@@ -36,7 +40,7 @@ public void breakBlock(){
 
     }
   }catch(ArrayIndexOutOfBoundsException e){
-    println("Tried to acess : " + ((int)(xCenter /16.0)) + ", " + ((int)(zCenter /16.0)));
+    println(floor(xCenter )-(floor(xCenter/16) )*16);
   }
   
 }
@@ -53,7 +57,7 @@ public void placeBlock(){
   
   int counter = 0;
   try{
-    while (c.getChunkAt((int)xCenter/16,(int)zCenter/16).blocks[(int)((xCenter )%16)][(int)( yCenter)][(int)((zCenter)%16 )] == null){
+    while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null){
       println("Step");
       yCenter += yDelta;
       xCenter += xDelta;
@@ -61,7 +65,7 @@ public void placeBlock(){
       counter ++;
       
     }
-    while (c.getChunkAt((int)xCenter/16,(int)zCenter/16).blocks[(int)((xCenter )%16)][(int)( yCenter)][(int)((zCenter)%16 )] != null){
+    while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] != null){
       yCenter -= yDelta/100;
       xCenter -= xDelta/100;
       zCenter -= zDelta/100;
@@ -70,10 +74,10 @@ public void placeBlock(){
     }
     if(counter <120){
    
-      Chunk chunk = c.getChunkAt((int)xCenter/16,(int)zCenter/16);
-      Block block = chunk.blocks[(int)((xCenter )%16)][(int)( yCenter)][(int)((zCenter)%16 )];
+      Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
+      Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
       try{
-        chunk.setBlock(player.inventory[player.selectedSlot].itemType, (int)((xCenter)%16),(int)( yCenter),(int)((zCenter )%16 ), true);   
+        chunk.setBlock( player.inventory[player.selectedSlot].itemType,(floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
         if(player.inventory[player.selectedSlot].amount > 1){
           player.inventory[player.selectedSlot].amount -= 1;
         }
@@ -84,7 +88,7 @@ public void placeBlock(){
       
     }
   }catch(ArrayIndexOutOfBoundsException e){
-    println("Tried to acess : " + ((int)(xCenter /16.0)) + ", " + ((int)(zCenter /16.0)));
+    println(floor(xCenter )-(floor(xCenter/16) )*16);
   }
   
 }

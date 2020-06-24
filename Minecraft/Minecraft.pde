@@ -136,7 +136,6 @@ void setup() {
   textAlign(LEFT);
   
   
-  delay(1000);
   thread("checkChunks");
 }
 
@@ -148,7 +147,6 @@ void draw() {
   //shape(clouds);
   //shape(clouds, -3072, 0);
   //shape(clouds2);
-  //directionalLight(255, 255, 255, 1, 1, 0);
 
 
   checkKeys();
@@ -190,8 +188,8 @@ public void checkChunks() {
 
     ArrayList<Chunk> regenerate= new ArrayList<Chunk>();
     //println(regenerate);
-    int px = ((int) player.xPosition/16) ;
-    int pz = ((int) player.zPosition/16) ;
+    int px = floor( player.xPosition/16) ;
+    int pz = floor( player.zPosition/16) ;
 
 
     ArrayList<Chunk> newVersion = new ArrayList<Chunk>(c.chunkMemory);
