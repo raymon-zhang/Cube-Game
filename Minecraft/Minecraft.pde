@@ -6,6 +6,8 @@ import java.awt.Point;
 import processing.sound.*;
 Robot mouseControl;
 
+PShader blockShader, blockShaderUnlit, depthBufferShader;
+
 boolean running;
 
 int cols, rows;
@@ -61,6 +63,11 @@ void setup() {
   ((PGraphicsOpenGL)g).textureSampling(3);
 
   originalMatrix = (PMatrix) getMatrix();
+  
+  blockShader = loadShader("/shaders/Frag.glsl", "/shaders/Vert.glsl");
+
+  
+  
 
   cloud = loadImage("clouds.png");
   gui = loadImage("gui.png");
@@ -151,8 +158,9 @@ void draw() {
 
   checkKeys();
   checkMouse();
+  shader(blockShader);
   c.drawWorld();
-
+  resetShader();
   player.updateCamera();
 
   if (frameCount %100 == 0)f = frameRate;
