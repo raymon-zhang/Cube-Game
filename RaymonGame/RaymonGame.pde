@@ -6,7 +6,7 @@ import java.awt.Point;
 import processing.sound.*;
 Robot mouseControl;
 
-PShader blockShader, blockShaderUnlit, depthBufferShader;
+PShader blockShader;
 
 boolean running;
 
@@ -55,6 +55,9 @@ float f;
 PFont myFont;
 
 
+int total_frames;
+int time1;
+
 void setup() {
   fullScreen(P3D);
 
@@ -74,7 +77,7 @@ void setup() {
   indicator = loadImage("indicator.png");
   
 
-  
+  total_frames = 0;
 
   running = true;
   clouds = createShape();
@@ -144,12 +147,15 @@ void setup() {
   
   
   thread("checkChunks");
+  
 }
 
 
 void draw() {
-
+  total_frames += 1;
   background(130, 202, 255);
+  
+  if (time1 == 0) time1 = millis();
 
   //shape(clouds);
   //shape(clouds, -3072, 0);
@@ -158,26 +164,33 @@ void draw() {
 
   checkKeys();
   checkMouse();
-  //shader(blockShader);
+  shader(blockShader);
 
   c.drawWorld();
-  //resetShader();
+  resetShader();
   player.updateCamera();
 
   if (frameCount %100 == 0){
     f = frameRate;
+    
     println(f);
   }
   pMouse.x = mouse.x;
   pMouse.y = mouse.y;
+  
 }
 
 
 
 public void exit() {
+  int x = millis()-time1;
+  println("Total Frames: " + total_frames);
+  println("Total Seconds: " + x/1000);
+  println( total_frames /( x/1000));
   running = false;
   //println("hi");
   super.exit();
+  
 }
 
 void mousePressed(){
