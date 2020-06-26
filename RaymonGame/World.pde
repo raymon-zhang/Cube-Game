@@ -6,7 +6,7 @@ public class World {
 
   public int size;
   public String status;
-  PImage texture = loadImage("texture_atlas.png");
+  PImage texture = loadImage("/textures/texture_atlas.png");
 
   Hashtable<Integer, PVector[]> textureCoords = new Hashtable<Integer, PVector[]>();
 

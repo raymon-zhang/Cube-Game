@@ -72,9 +72,9 @@ void setup() {
 
   
 
-  cloud = loadImage("clouds.png");
-  gui = loadImage("gui.png");
-  indicator = loadImage("indicator.png");
+  cloud = loadImage("/textures/clouds.png");
+  gui = loadImage("/textures/gui/gui.png");
+  indicator = loadImage("/textures/gui/indicator.png");
   
 
   total_frames = 0;
