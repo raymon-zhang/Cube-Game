@@ -28,9 +28,9 @@ void main() {
 
     //float frag_lighting = rand(vec2(0, frag_distance));
 
-    // if(fragColor.w == 0.0f){
-    //     discard;
-    // }
+    if(fragColor.w == 0.0f){
+        discard;
+    }
     //gl_FragColor = vec4(mix(fragColor.xyz * vertex_color.xyz, sky_color, min(1.0f, frag_distance / 1000)), fragColor.w);
 
     //    float visibility = 1.0;

@@ -91,16 +91,16 @@ void setup() {
   clouds.vertex(3072, 0, 0, 256, 0);
   clouds.endShape(CLOSE);
 
-  clouds2 = createShape();
-  clouds2.beginShape();
-  clouds2.noStroke();
-  clouds2.tint(255, 128);
-  clouds2.texture(cloud);
-  clouds2.vertex(0, 0, -3072, 0, 0);
-  clouds2.vertex(0, 0, 0, 0, 256);
-  clouds2.vertex(3072, 0, 0, 256, 256);
-  clouds2.vertex(3072, 0, -3072, 256, 0);
-  clouds2.endShape(CLOSE);
+  //clouds2 = createShape();
+  //clouds2.beginShape();
+  //clouds2.noStroke();
+  //clouds2.tint(255, 128);
+  //clouds2.texture(cloud);
+  //clouds2.vertex(0, 0, -3072, 0, 0);
+  //clouds2.vertex(0, 0, 0, 0, 256);
+  //clouds2.vertex(3072, 0, 0, 256, 256);
+  //clouds2.vertex(3072, 0, -3072, 256, 0);
+  //clouds2.endShape(CLOSE);
 
   noCursor();
   
@@ -157,7 +157,7 @@ void draw() {
   
   if (time1 == 0) time1 = millis();
 
-  //shape(clouds);
+  shape(clouds);
   //shape(clouds, -3072, 0);
   //shape(clouds2);
 

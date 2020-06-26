@@ -121,6 +121,8 @@ public class Chunk{
     
   }
   public void betterGenerateMesh(){
+    
+    
     int timeStamp1 = millis();
     while(drawingUI == true) delay(1);
     PShape newMesh = createShape();
@@ -143,12 +145,15 @@ public class Chunk{
           if (blocks[x][y][z] != null){
             Block block = blocks[x][y][z];
             PVector[] texCoords = this.world.textureCoords.get(block.blockType);
+            boolean one, two, three, four, top, bottom;
+            one = two = three = four = top = bottom = false;
             
              
             try{
               
               if (blocks[x][y][z+1] == null ||(blocks[x][y][z+1].isTransparent() && ! block.isTransparent())){
-                block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                one = true;
+                //block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                 
               }
               
@@ -158,7 +163,8 @@ public class Chunk{
               //println("fadskfajsdk");
               try{
                 if (this.world.getChunkAt(lowestXPos/16, lowestZPos/16 + 1).blocks[x][y][0] == null ||(this.world.getChunkAt(lowestXPos/16, lowestZPos/16 + 1).blocks[x][y][0].isTransparent() && ! block.isTransparent())){ // neighboring chunk
-                  block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  one = true;
+                  //block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                   //println(this.world.textureCoords.get(block.blockType)[1].y);
                     
                   
@@ -173,7 +179,8 @@ public class Chunk{
             
             try{
               if (blocks[x+1][y][z] == null ||(blocks[x+1][y][z].isTransparent() && ! block.isTransparent())){
-                block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                two = true;
+                //block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
               }
               
             }
@@ -182,7 +189,8 @@ public class Chunk{
               
               try{
                 if (this.world.getChunkAt(lowestXPos/16+1, lowestZPos/16).blocks[0][y][z] == null ||(this.world.getChunkAt(lowestXPos/16+1, lowestZPos/16).blocks[0][y][z].isTransparent() && ! block.isTransparent())){
-                  block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  two = true;
+                  //block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                 }
                 
               }
@@ -196,7 +204,8 @@ public class Chunk{
             try{
               
               if (blocks[x][y][z-1] == null ||(blocks[x][y][z-1].isTransparent() && ! block.isTransparent())){
-                block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                three = true;
+                //block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
               }
               
             }
@@ -205,7 +214,8 @@ public class Chunk{
               
               try{
                 if (this.world.getChunkAt(lowestXPos/16, lowestZPos/16-1).blocks[x][y][15] == null ||(this.world.getChunkAt(lowestXPos/16, lowestZPos/16-1).blocks[x][y][15].isTransparent() && ! block.isTransparent())){
-                  block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  three = true;
+                  //block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                   
                 }
                 
@@ -219,7 +229,8 @@ public class Chunk{
             
             try{
               if (blocks[x-1][y][z] == null ||(blocks[x-1][y][z].isTransparent() && ! block.isTransparent())){
-                block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                four = true;
+                //block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
               }
               
             }
@@ -228,7 +239,8 @@ public class Chunk{
               
               try{
                 if (this.world.getChunkAt(lowestXPos/16-1, lowestZPos/16).blocks[15][y][z] == null ||(this.world.getChunkAt(lowestXPos/16-1, lowestZPos/16).blocks[15][y][z].isTransparent() && ! block.isTransparent())){
-                  block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  four = true;
+                  //block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                   
                 }
                 
@@ -244,27 +256,31 @@ public class Chunk{
             try{
               
               if (blocks[x][y-1][z] == null ||(blocks[x][y-1][z].isTransparent() && ! block.isTransparent())){
-                block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
+                top = true;
+                //block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
               }
               
             }
             
             catch(ArrayIndexOutOfBoundsException e){
               
-              block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
+              //block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
             }
             
             try{
               
               if (blocks[x][y+1][z] == null ||(blocks[x][y+1][z].isTransparent() && ! block.isTransparent())){
-                block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
+                bottom  = true;
+                //block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
               }
               
             }
             catch(ArrayIndexOutOfBoundsException e){
-              block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
+              bottom = true;
+              //block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
             }
             //newMesh.noTint();
+            block.drawShape(newMesh,this.lowestXPos + x,this.lowestYPos + y,this.lowestZPos + z,texCoords,one,two,three,four,top,bottom);
           }
         }
       }

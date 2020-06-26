@@ -27,16 +27,16 @@ public class World {
 
     
 
-    textureCoords.put(1, new PVector[]{new PVector(1, 1), new PVector (131, 1), new PVector(261, 1)});//grass
-    textureCoords.put(2, new PVector[]{new PVector(391, 1), new PVector (391, 1), new PVector(391, 1)});//stone
-    textureCoords.put(3, new PVector[]{new PVector(651, 1), new PVector(521, 1), new PVector(651, 1)});//log
-    textureCoords.put(4, new PVector[]{new PVector(781, 1), new PVector(781, 1), new PVector(781, 1)});//water
-    textureCoords.put(5, new PVector[]{new PVector(131, 131), new PVector(131, 131), new PVector(131, 131)});//sand
-    textureCoords.put(6, new PVector[]{new PVector(261, 131), new PVector(261, 131), new PVector(261, 131)});//oakplank
-    textureCoords.put(7, new PVector[]{new PVector(521, 131), new PVector(391, 131), new PVector(261, 1)});//snow
-    textureCoords.put(8, new PVector[]{new PVector(651, 131), new PVector(651, 131), new PVector(651, 131)});//gravel
-    textureCoords.put(10, new PVector[]{new PVector(1, 131), new PVector (1, 131), new PVector(1, 131)});//diamond
-    textureCoords.put(11, new PVector[]{new PVector(781, 131), new PVector(781, 131), new PVector(781, 131)});//leaves
+    textureCoords.put(1, new PVector[]{new PVector(0, 0), new PVector (16, 0), new PVector(32, 0)});//grass
+    textureCoords.put(2, new PVector[]{new PVector(48, 0), new PVector (48, 0), new PVector(48, 0)});//stone
+    textureCoords.put(3, new PVector[]{new PVector(80, 0), new PVector(64, 0), new PVector(80, 0)});//log
+    textureCoords.put(4, new PVector[]{new PVector(96, 0), new PVector(96, 0), new PVector(96, 0)});//water
+    textureCoords.put(5, new PVector[]{new PVector(16, 16), new PVector(16, 16), new PVector(16, 16)});//sand
+    textureCoords.put(6, new PVector[]{new PVector(32, 16), new PVector(32, 16), new PVector(32, 16)});//oakplank
+    textureCoords.put(7, new PVector[]{new PVector(48, 16), new PVector(64, 16), new PVector(32, 0)});//snow
+    textureCoords.put(8, new PVector[]{new PVector(80, 16), new PVector(80, 16), new PVector(80, 16)});//gravel
+    textureCoords.put(10, new PVector[]{new PVector(0, 16), new PVector (0, 16), new PVector(0, 16)});//diamond
+    textureCoords.put(11, new PVector[]{new PVector(96, 16), new PVector(96, 16), new PVector(96, 16)});//leaves
 
     
 
@@ -112,7 +112,7 @@ public class World {
     return this.texture;
   }
 
-  public Chunk getChunkAt(int x, int z) throws ArrayIndexOutOfBoundsException{
+  public Chunk getChunkAt(int x, int z) {
     //println(this.chunkMemory);
     ArrayList<Chunk> chunks= new ArrayList<Chunk>(this.chunkMemory);
     for(Chunk ch: chunks){
