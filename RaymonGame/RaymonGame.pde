@@ -60,6 +60,7 @@ int time1;
 
 void setup() {
   fullScreen(P3D);
+    
 
   debug = false;
   
