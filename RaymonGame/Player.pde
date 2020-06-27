@@ -19,7 +19,7 @@ public class Player {
     this.zPosition = zPos;
     perspective(PI/3, 1.777777, 0.01f, 1000f);
     
-    this.inventory = new ItemStack[9];
+    this.inventory = new ItemStack[36];
   }
 
 
@@ -58,10 +58,22 @@ public class Player {
     hint(DISABLE_DEPTH_TEST);
     resetMatrix();
     applyMatrix(originalMatrix);
+    
+    
+    drawGui();
+
+    hint(ENABLE_DEPTH_TEST);
+
+    popMatrix();
+    drawingUI = false;
+    noStroke();
+  }
+  
+  public void drawGui(){
     image(gui, width/2-364 , height-88, 728, 88); 
     image(indicator, width/2-368 + this.selectedSlot * 80, height-92, 96, 96);
     
-    for(int slot = 0; slot < player.inventory.length; slot ++){
+    for(int slot = 0; slot < 9; slot ++){
       if(player.inventory[slot] != null)player.inventory[slot].drawStack(new PVector(width/2-352 + slot * 80, height-76));
     }
     
@@ -72,14 +84,19 @@ public class Player {
       
     }
     
-    point(width/2, height/2);
-
-    hint(ENABLE_DEPTH_TEST);
-
-    popMatrix();
-    drawingUI = false;
-    noStroke();
+    if(drawingInventory){
+      image(overlay, 0, 0, width, width);
+      image(inventoryImage, width/2-352, height/2 - 332, 704, 664);
+      
+    }
+    
+    else point(width/2, height/2);
+    
+    
+    
   }
+  
+  
 
   
 

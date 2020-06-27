@@ -33,7 +33,8 @@ public void breakBlock(){
           return;
         }
         else if (player.inventory[x].itemType == block.blockType){
-          player.inventory[x].amount ++;
+          if(player.inventory[x].amount<64)player.inventory[x].amount ++;
+          else continue;
           return;
         }
       }

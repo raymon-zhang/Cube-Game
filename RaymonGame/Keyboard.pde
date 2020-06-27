@@ -1,6 +1,7 @@
 boolean isLeft, isRight, isUp, isDown, isSpace, isShift; 
 float playerSpeed = 0.06;
 
+
 void keyPressed() {
 
   if(key == 'w') isUp = true;  
@@ -22,6 +23,22 @@ void keyPressed() {
   if(key == '7') player.selectedSlot = 6;
   if(key == '8') player.selectedSlot = 7;
   if(key == '9') player.selectedSlot = 8;
+  if(key == 'e'){
+    
+    drawingInventory = !drawingInventory;
+    if(drawingInventory){
+      cursor(CROSS);
+      mouseControl.mouseMove(0, 0);
+      
+      
+      
+    }
+    else {
+      
+      
+      noCursor();
+    }
+  }
   
 }
  

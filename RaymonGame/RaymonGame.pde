@@ -41,7 +41,9 @@ Point mouse;
 
 boolean drawingUI;
 boolean debug;
-PImage gui, indicator;
+boolean drawingInventory;
+
+PImage gui, indicator, inventoryImage, overlay;
 
 
 PMatrix originalMatrix;
@@ -63,6 +65,7 @@ void setup() {
     
 
   debug = false;
+  drawingInventory = false;
   
   ((PGraphicsOpenGL)g).textureSampling(3);
 
@@ -76,6 +79,8 @@ void setup() {
   cloud = loadImage("/textures/clouds.png");
   gui = loadImage("/textures/gui/gui.png");
   indicator = loadImage("/textures/gui/indicator.png");
+  inventoryImage = loadImage("textures/gui/inventory.png");
+  overlay = loadImage("textures/gui/overlay.png");
   
 
   total_frames = 0;
@@ -148,7 +153,7 @@ void setup() {
   
   
   thread("checkChunks");
-  
+  time1 = millis();
 }
 
 
@@ -156,9 +161,9 @@ void draw() {
   total_frames += 1;
   background(130, 202, 255);
   
-  if (time1 == 0) time1 = millis();
+  //if (time1 == 0) time1 = millis();
 
-  shape(clouds);
+  //shape(clouds);
   //shape(clouds, -3072, 0);
   //shape(clouds2);
 
@@ -171,11 +176,11 @@ void draw() {
   resetShader();
   player.updateCamera();
 
-  if (frameCount %100 == 0){
-    f = frameRate;
+  
+  f = frameRate;
     
-    println(f);
-  }
+   
+  
   pMouse.x = mouse.x;
   pMouse.y = mouse.y;
   
