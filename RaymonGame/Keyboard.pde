@@ -24,7 +24,7 @@ void keyPressed() {
   if(key == '8') player.selectedSlot = 7;
   if(key == '9') player.selectedSlot = 8;
   if(key == 'e'){
-    
+    mouseclicked = false;
     drawingInventory = !drawingInventory;
     if(drawingInventory){
       cursor();

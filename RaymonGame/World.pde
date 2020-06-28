@@ -139,7 +139,7 @@ public void generateMeshes() {
 
 public void checkChunks() {
 
-  for (;; delay(100)) {
+  for (;; delay(50)) {
     WORLDSIZE = 19;
 
     ArrayList<Chunk> regenerate= new ArrayList<Chunk>();
@@ -156,9 +156,7 @@ public void checkChunks() {
         //chunk  = null;
       }
     }
-    if ((player.xPos >= 0.0001) || (player.zPos >= 0.0001)) {
-      WORLDSIZE = 7;
-    } else WORLDSIZE = 19;
+    
 
     for (int s = 0; s<(WORLDSIZE+1)/2; s++) {
       for (int x = 0; x<s+1; x++) {

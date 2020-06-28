@@ -45,6 +45,8 @@ boolean drawingInventory;
 
 PImage gui, indicator, inventoryImage, overlay;
 
+boolean mouseclicked;
+
 
 PMatrix originalMatrix;
 

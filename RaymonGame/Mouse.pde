@@ -41,7 +41,7 @@ public void checkMouse(){
 
 public void checkMouseClicked(){
   for(;;delay(100)){
-    if(mousePressed){ 
+    if(mousePressed&& !drawingInventory){ 
       if (mouseButton == LEFT){
         breakBlock();
       }else if(mouseButton == RIGHT){
@@ -49,4 +49,21 @@ public void checkMouseClicked(){
       }
     }
   }
+}
+
+public int getInventorySlot(){
+  if(mouseX>=width/2-320 && mouseX<=width/2+320){ 
+   if(mouseY>=height/2+236 && mouseY<=height/2+300){
+     return (int)(  (mouseX-(width/2-320))/72);
+   }
+   else if(mouseY>=height/2+4){
+     return ((int)((mouseY-(height/2+4))/72) + 1)*9 + (int)(  (mouseX-(width/2-320))/72);
+   }
+  }
+  return -1;
+}
+
+void mouseClicked(){
+  mouseclicked = true;
+  
 }

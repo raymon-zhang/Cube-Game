@@ -84,7 +84,7 @@ public class Player {
     if(debug){
       text("FPS: " + f, 30, 50);
       text(this.xPosition + ", " + this.yPosition + ", " +this.zPosition, 30, 85);
-      text("Speed: " + (sqrt(this.xPos * this.xPos + this.zPos * this.zPos)), 30, 120);
+      text("Speed: " + (sqrt(this.xPos * this.xPos + this.zPos * this.zPos)*f), 30, 120);
       
     }
     
@@ -101,12 +101,49 @@ public class Player {
     image(overlay, 0, 0, width, width);
     image(inventoryImage, width/2-352, height/2 - 332, 704, 664);
     for(int slot = 0; slot <9; slot ++){
-      if(player.inventory[slot] != null)player.inventory[slot].drawStack(new PVector(width/2-320 + 72*slot, height/2+236));
+      if(this.inventory[slot] != null)this.inventory[slot].drawStack(new PVector(width/2-320 + 72*slot, height/2+236));
     }
     for(int slot = 9; slot <36; slot ++){
-      if(player.inventory[slot] != null)player.inventory[slot].drawStack(new PVector(width/2-320 + 72*(slot%9), height/2+4 + (72*(int)((slot-9)/9))));
+      if(this.inventory[slot] != null)this.inventory[slot].drawStack(new PVector(width/2-320 + 72*(slot%9), height/2+4 + (72*(int)((slot-9)/9))));
     }
-    if(holding != null)holding.drawStack(new PVector(mouseX-32, mouseY-32));
+    if(holding != null){
+      holding.drawStack(new PVector(mouseX-32, mouseY-32));
+      if(mouseclicked){
+        int slot = getInventorySlot();
+        if(slot>-1){
+          if(this.inventory[slot]!=null){
+            if(this.inventory[slot].itemType == holding.itemType){
+              if(this.inventory[slot].amount + holding.amount<=64){
+                this.inventory[slot].amount += holding.amount;
+                holding =null;
+              }
+            }
+            else{
+              ItemStack stack = new ItemStack(this.inventory[slot].itemType, this);
+              stack.amount = this.inventory[slot].amount;
+              this.inventory[slot] = holding;
+              holding = stack;
+            }
+          }
+          else{
+            this.inventory[slot] = holding;
+            holding =null;
+          }
+          
+          mouseclicked = false;
+        }
+      }
+    }
+    else{
+      if(mouseclicked){
+        int slot = getInventorySlot();
+        if(slot>-1){
+          holding =this.inventory[slot];
+          this.inventory[slot] = null;
+          mouseclicked = false;
+        }
+      }
+    }
   }
   
   
