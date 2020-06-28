@@ -43,7 +43,7 @@ boolean drawingUI;
 boolean debug;
 boolean drawingInventory;
 
-PImage gui, indicator, inventoryImage, overlay;
+PImage gui, indicator, inventoryImage, overlay, highlight;
 
 boolean mouseclicked;
 
@@ -83,6 +83,7 @@ void setup() {
   indicator = loadImage("/textures/gui/indicator.png");
   inventoryImage = loadImage("textures/gui/inventory.png");
   overlay = loadImage("textures/gui/overlay.png");
+  highlight = loadImage("textures/gui/highlight.png");
   
 
   total_frames = 0;

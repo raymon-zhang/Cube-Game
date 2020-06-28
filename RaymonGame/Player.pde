@@ -102,10 +102,15 @@ public class Player {
     image(inventoryImage, width/2-352, height/2 - 332, 704, 664);
     for(int slot = 0; slot <9; slot ++){
       if(this.inventory[slot] != null)this.inventory[slot].drawStack(new PVector(width/2-320 + 72*slot, height/2+236));
+      
+      if(getInventorySlot() == slot)image(highlight, width/2-320 + 72*slot, height/2+236, 64, 64);
     }
     for(int slot = 9; slot <36; slot ++){
       if(this.inventory[slot] != null)this.inventory[slot].drawStack(new PVector(width/2-320 + 72*(slot%9), height/2+4 + (72*(int)((slot-9)/9))));
+      
+      if(getInventorySlot() == slot)image(highlight, width/2-320 + 72*(slot%9), height/2+4 + (72*(int)((slot-9)/9)), 64, 64);
     }
+    
     if(holding != null){
       holding.drawStack(new PVector(mouseX-32, mouseY-32));
       if(mouseclicked){
