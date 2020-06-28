@@ -7,6 +7,8 @@ public class Player {
   
   public ItemStack[] inventory;
   
+  public ItemStack holding = new ItemStack(1, this);
+  
   public Player(float xPos, float yPos, float zPos) {
     this.selectedSlot = 0;
     this.xPos = 0;
@@ -20,6 +22,8 @@ public class Player {
     perspective(PI/3, 1.777777, 0.01f, 1000f);
     
     this.inventory = new ItemStack[36];
+    this.inventory[10] = new ItemStack(1, this);
+    
   }
 
 
@@ -60,7 +64,7 @@ public class Player {
     applyMatrix(originalMatrix);
     
     
-    drawGui();
+    this.drawGui();
 
     hint(ENABLE_DEPTH_TEST);
 
@@ -85,15 +89,24 @@ public class Player {
     }
     
     if(drawingInventory){
-      image(overlay, 0, 0, width, width);
-      image(inventoryImage, width/2-352, height/2 - 332, 704, 664);
-      
+      drawInventory();
     }
     
     else point(width/2, height/2);
     
     
     
+  }
+  public void drawInventory(){
+    image(overlay, 0, 0, width, width);
+    image(inventoryImage, width/2-352, height/2 - 332, 704, 664);
+    for(int slot = 0; slot <9; slot ++){
+      if(player.inventory[slot] != null)player.inventory[slot].drawStack(new PVector(width/2-320 + 72*slot, height/2+236));
+    }
+    for(int slot = 9; slot <36; slot ++){
+      if(player.inventory[slot] != null)player.inventory[slot].drawStack(new PVector(width/2-320 + 72*(slot%9), height/2+4 + (72*(int)((slot-9)/9))));
+    }
+    if(holding != null)holding.drawStack(new PVector(mouseX-32, mouseY-32));
   }
   
   

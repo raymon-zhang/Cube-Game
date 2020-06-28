@@ -153,6 +153,8 @@ void setup() {
   
   
   thread("checkChunks");
+  thread("checkMouseClicked");
+  
   time1 = millis();
 }
 
@@ -199,12 +201,12 @@ public void exit() {
   
 }
 
-void mousePressed(){
-  if (mouseButton == LEFT){
-    breakBlock();
-  }else if(mouseButton == RIGHT){
-    placeBlock();
-  }
+//void mousePressed(){
+//  if (mouseButton == LEFT){
+//    breakBlock();
+//  }else if(mouseButton == RIGHT){
+//    placeBlock();
+//  }
 
 
-}
+//}

@@ -27,7 +27,7 @@ void keyPressed() {
     
     drawingInventory = !drawingInventory;
     if(drawingInventory){
-      cursor(CROSS);
+      cursor();
       mouseControl.mouseMove(0, 0);
       
       

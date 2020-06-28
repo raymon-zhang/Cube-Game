@@ -38,3 +38,15 @@ public void checkMouse(){
   }
   
 }
+
+public void checkMouseClicked(){
+  for(;;delay(100)){
+    if(mousePressed){ 
+      if (mouseButton == LEFT){
+        breakBlock();
+      }else if(mouseButton == RIGHT){
+        placeBlock();
+      }
+    }
+  }
+}

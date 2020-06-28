@@ -145,142 +145,131 @@ public class Chunk{
           if (blocks[x][y][z] != null){
             Block block = blocks[x][y][z];
             PVector[] texCoords = this.world.textureCoords.get(block.blockType);
-            boolean one, two, three, four, top, bottom;
-            one = two = three = four = top = bottom = false;
             
+            if((x<15 && x>0) && (z<15 && z>0) && (y<127 & y>0)){
              
-            try{
               
               if (blocks[x][y][z+1] == null ||(blocks[x][y][z+1].isTransparent() && ! block.isTransparent())){
-                one = true;
-                //block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                 
               }
-              
-            }
-            
-            catch(ArrayIndexOutOfBoundsException e){
-              //println("fadskfajsdk");
-              try{
-                if (this.world.getChunkAt(lowestXPos/16, lowestZPos/16 + 1).blocks[x][y][0] == null ||(this.world.getChunkAt(lowestXPos/16, lowestZPos/16 + 1).blocks[x][y][0].isTransparent() && ! block.isTransparent())){ // neighboring chunk
-                  one = true;
-                  //block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
-                  //println(this.world.textureCoords.get(block.blockType)[1].y);
-                    
-                  
-                }
                 
-              }
-              catch(ArrayIndexOutOfBoundsException f){
-                //block.drawSide1(this.mesh); 
-              }
-              
-            }
-            
-            try{
+                          
               if (blocks[x+1][y][z] == null ||(blocks[x+1][y][z].isTransparent() && ! block.isTransparent())){
-                two = true;
-                //block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
               }
-              
-            }
-            
-            catch(ArrayIndexOutOfBoundsException e){
-              
-              try{
-                if (this.world.getChunkAt(lowestXPos/16+1, lowestZPos/16).blocks[0][y][z] == null ||(this.world.getChunkAt(lowestXPos/16+1, lowestZPos/16).blocks[0][y][z].isTransparent() && ! block.isTransparent())){
-                  two = true;
-                  //block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
-                }
                 
-              }
-              catch(ArrayIndexOutOfBoundsException f){
-                //block.drawSide2(this.mesh); 
+    
+              
                 
-              }
-              
-            }  
-            
-            try{
-              
               if (blocks[x][y][z-1] == null ||(blocks[x][y][z-1].isTransparent() && ! block.isTransparent())){
-                three = true;
-                //block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
               }
-              
-            }
-            
-            catch(ArrayIndexOutOfBoundsException e){
-              
-              try{
-                if (this.world.getChunkAt(lowestXPos/16, lowestZPos/16-1).blocks[x][y][15] == null ||(this.world.getChunkAt(lowestXPos/16, lowestZPos/16-1).blocks[x][y][15].isTransparent() && ! block.isTransparent())){
-                  three = true;
-                  //block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
-                  
-                }
                 
-                
-              }
-              catch(ArrayIndexOutOfBoundsException f){
-                //block.drawSide3(this.mesh); 
-              }
-            }
-            
-            
-            try{
+              
+              
+              
               if (blocks[x-1][y][z] == null ||(blocks[x-1][y][z].isTransparent() && ! block.isTransparent())){
-                four = true;
-                //block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+              }
+                
+              
+              
+                
+              if (blocks[x][y-1][z] == null ||(blocks[x][y-1][z].isTransparent() && ! block.isTransparent())){
+                block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
+              }
+                
+             
+                
+              if (blocks[x][y+1][z] == null ||(blocks[x][y+1][z].isTransparent() && ! block.isTransparent())){
+                block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
+              }
+            
+            }
+            else{
+              if(x == 0){
+                
+                Chunk chunk = this.world.getChunkAt(lowestXPos/16 -1, lowestZPos/16);
+                if(chunk != null){
+                  if(chunk.blocks[15][y][z] == null ||(chunk.blocks[15][y][z].isTransparent() && ! block.isTransparent())){
+                    block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  }
+                }
+              }
+              else if(x == 15){
+                Chunk chunk = this.world.getChunkAt(lowestXPos/16 +1, lowestZPos/16);
+                if(chunk != null){
+                  if(chunk.blocks[0][y][z] == null ||(chunk.blocks[0][y][z].isTransparent() && ! block.isTransparent())){
+                    block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  }
+                }
               }
               
-            }
-            
-            catch(ArrayIndexOutOfBoundsException e){
+              if(z == 15){
+                Chunk chunk = this.world.getChunkAt(lowestXPos/16 , lowestZPos/16+1);
+                if(chunk != null){
+                  if(chunk.blocks[x][y][0] == null ||(chunk.blocks[x][y][0].isTransparent() && ! block.isTransparent())){
+                    block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  }
+                }
+              }
+              else if(z == 0){
+                Chunk chunk = this.world.getChunkAt(lowestXPos/16, lowestZPos/16-1);
+                if(chunk != null){
+                  if(chunk.blocks[x][y][15] == null ||(chunk.blocks[x][y][15].isTransparent() && ! block.isTransparent())){
+                    block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  }
+                }
+              }
               
-              try{
-                if (this.world.getChunkAt(lowestXPos/16-1, lowestZPos/16).blocks[15][y][z] == null ||(this.world.getChunkAt(lowestXPos/16-1, lowestZPos/16).blocks[15][y][z].isTransparent() && ! block.isTransparent())){
-                  four = true;
-                  //block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+              if(y == 0){
+                block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
+              }
+              else if(y == 127){
+                block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
+              }
+              if(y!= 0 ){
+                if (blocks[x][y-1][z] == null ||(blocks[x][y-1][z].isTransparent() && ! block.isTransparent())){
+                  block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
+                }
+              }
+              
+              if(y!= 127 ){
+                if (blocks[x][y+1][z] == null ||(blocks[x][y+1][z].isTransparent() && ! block.isTransparent())){
+                  block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
+                }
+              }
+              
+              if(z != 15){
+                if (blocks[x][y][z+1] == null ||(blocks[x][y][z+1].isTransparent() && ! block.isTransparent())){
+                  block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                   
                 }
-                
-                
-                
               }
-              catch(ArrayIndexOutOfBoundsException f){
-                //block.drawSide4(this.mesh);
+                          
+              if(x != 15){
+                if (blocks[x+1][y][z] == null ||(blocks[x+1][y][z].isTransparent() && ! block.isTransparent())){
+                  block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                }
+              }
+                
+              if(z != 0){
+                if (blocks[x][y][z-1] == null ||(blocks[x][y][z-1].isTransparent() && ! block.isTransparent())){
+                  block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                }
+              }
+              
+              
+              if(x != 0){
+                if (blocks[x-1][y][z] == null ||(blocks[x-1][y][z].isTransparent() && ! block.isTransparent())){
+                  block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                }
               }
               
             }
             
-            try{
-              
-              if (blocks[x][y-1][z] == null ||(blocks[x][y-1][z].isTransparent() && ! block.isTransparent())){
-                top = true;
-                //block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
-              }
-              
-            }
             
-            catch(ArrayIndexOutOfBoundsException e){
-              
-              //block.drawTop(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[0]); 
-            }
-            
-            try{
-              
-              if (blocks[x][y+1][z] == null ||(blocks[x][y+1][z].isTransparent() && ! block.isTransparent())){
-                bottom  = true;
-                //block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
-              }
-              
-            }
-            catch(ArrayIndexOutOfBoundsException e){
-              bottom = true;
-              //block.drawBottom(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[2]); 
-            }
-            //newMesh.noTint();
-            block.drawShape(newMesh,this.lowestXPos + x,this.lowestYPos + y,this.lowestZPos + z,texCoords,one,two,three,four,top,bottom);
           }
         }
       }
