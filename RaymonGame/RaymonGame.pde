@@ -5,6 +5,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import processing.sound.*;
 Robot mouseControl;
+import java.io.*;
 
 PShader blockShader;
 
@@ -128,7 +129,7 @@ void setup() {
   colorMode(RGB);
   
   loading = new SoundFile(this, "/sounds/Loading.mp3");
-  loading.play();
+  //loading.play();
   
   grass = new SoundFile(this, "/sounds/grass.mp3");
   stone = new SoundFile(this, "/sounds/stone.mp3");
@@ -136,8 +137,8 @@ void setup() {
   water = new SoundFile(this, "/sounds/water.mp3");
   diamond = new SoundFile(this, "/sounds/diamond.mp3");
 
-  
   player = new Player(80, 50, 80);
+  
 
   
   c = new World(WORLDSIZE);
@@ -148,7 +149,7 @@ void setup() {
 
   //lights();
 
-  frameRate(120);
+  frameRate(80);
   
   myFont = createFont("Arial", 30);
   textFont(myFont);
@@ -203,13 +204,3 @@ public void exit() {
   super.exit();
   
 }
-
-//void mousePressed(){
-//  if (mouseButton == LEFT){
-//    breakBlock();
-//  }else if(mouseButton == RIGHT){
-//    placeBlock();
-//  }
-
-
-//}

@@ -1,4 +1,3 @@
-
 public class Chunk{
   public int lowestXPos, lowestYPos, lowestZPos;
 
@@ -299,7 +298,7 @@ public class Chunk{
           //println(random);
           if(random < 0.3){
             int tree = highness-1;
-            for(tree = highness - 1; tree > highness -1 - random(3, 5); tree--){
+            for(tree = highness - 1; tree > highness -1 - random(2, 7); tree--){
               if (tree>0)this.setBlock(3, x, tree, y, false);
               
             }

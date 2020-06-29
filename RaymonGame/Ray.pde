@@ -40,7 +40,7 @@ public void breakBlock(){
       }
 
     }
-  }catch(ArrayIndexOutOfBoundsException e){
+  }catch(Exception e){
     println(floor(xCenter )-(floor(xCenter/16) )*16);
   }
   
@@ -88,7 +88,7 @@ public void placeBlock(){
       }
       
     }
-  }catch(ArrayIndexOutOfBoundsException e){
+  }catch(Exception  e){
     println(floor(xCenter )-(floor(xCenter/16) )*16);
   }
   

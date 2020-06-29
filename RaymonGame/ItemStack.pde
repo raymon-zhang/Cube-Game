@@ -13,19 +13,27 @@ public class ItemStack{
     this.amount = 1;
     this.icon = loadImage("/icons/" + this.itemType + ".png");
   }
+  public ItemStack(int itemType, int amount, Player player){
+    this.itemType = itemType;
+    this.player = player;
+    this.amount = amount;
+    this.icon = loadImage("/icons/" + this.itemType + ".png");
+  }
   
   public void drawStack(PVector coords){
     pushStyle();
-    try{
-      image(this.icon, coords.x, coords.y , 64, 64);
-    }catch(NullPointerException e){
-       
-    }
+    if(this.icon != null)image(this.icon, coords.x, coords.y , 64, 64);
+    
     textSize(28);
     textAlign(LEFT, TOP);
     text(this.amount, coords.x + 33, coords.y + 37);
     popStyle();
   }
+  
+  public ItemStack createCopy(){
+    return new ItemStack(this.itemType, this.amount, this.player);
+  }
+  
   
   
       

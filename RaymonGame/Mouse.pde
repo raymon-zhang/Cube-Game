@@ -40,15 +40,25 @@ public void checkMouse(){
 }
 
 public void checkMouseClicked(){
-  for(;;delay(100)){
-    if(mousePressed&& !drawingInventory){ 
+  for(;;delay(25)){
+    
+    if(mousePressed&& !drawingInventory ){ 
       if (mouseButton == LEFT){
+        
         breakBlock();
+        delay(75);
+        
       }else if(mouseButton == RIGHT){
-        placeBlock();
+        if(player.inventory[player.selectedSlot]!= null){
+          if( player.inventory[player.selectedSlot].itemType<100){  
+            placeBlock();
+            delay(75);
+          }
+        }
       }
     }
   }
+        
 }
 
 public int getInventorySlot(){
@@ -56,8 +66,15 @@ public int getInventorySlot(){
    if(mouseY>=height/2+236 && mouseY<=height/2+300){
      return (int)(  (mouseX-(width/2-320))/72);
    }
-   else if(mouseY>=height/2+4){
+   else if(mouseY>=height/2+4 && mouseY< height/2 + 220){
      return ((int)((mouseY-(height/2+4))/72) + 1)*9 + (int)(  (mouseX-(width/2-320))/72);
+   }
+   else if(mouseX >= width/2+4 &&mouseX<=width/2 + 212 && mouseY >= height/2 -260 && mouseY<= height/2 -44){
+     return (int)((mouseY-(height/2-260))/72)*3 + (int)((mouseX-(width/2+4))/72) + 36;
+     
+   }
+   else if(mouseX>=width/2 + 260&& mouseX<= width/2 + 332){
+     return 45;
    }
   }
   return -1;
