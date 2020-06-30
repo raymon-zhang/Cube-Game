@@ -140,7 +140,7 @@ public void generateMeshes() {
 public void checkChunks() {
 
   for (;; delay(50)) {
-    WORLDSIZE = 19;
+    
 
     ArrayList<Chunk> regenerate= new ArrayList<Chunk>();
     //println(regenerate);

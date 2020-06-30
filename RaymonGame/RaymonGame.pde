@@ -131,11 +131,11 @@ void setup() {
   loading = new SoundFile(this, "/sounds/Loading.mp3");
   //loading.play();
   
-  grass = new SoundFile(this, "/sounds/grass.mp3");
-  stone = new SoundFile(this, "/sounds/stone.mp3");
-  sand = new SoundFile(this, "/sounds/sand.mp3");
-  water = new SoundFile(this, "/sounds/water.mp3");
-  diamond = new SoundFile(this, "/sounds/diamond.mp3");
+  //grass = new SoundFile(this, "/sounds/grass.mp3");
+  //stone = new SoundFile(this, "/sounds/stone.mp3");
+  //sand = new SoundFile(this, "/sounds/sand.mp3");
+  //water = new SoundFile(this, "/sounds/water.mp3");
+  //diamond = new SoundFile(this, "/sounds/diamond.mp3");
 
   player = new Player(80, 50, 80);
   
@@ -149,7 +149,7 @@ void setup() {
 
   //lights();
 
-  frameRate(80);
+  frameRate(150);
   
   myFont = createFont("Arial", 30);
   textFont(myFont);
