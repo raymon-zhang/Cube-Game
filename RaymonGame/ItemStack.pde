@@ -3,6 +3,7 @@ public class ItemStack{
   public int itemType;
   public int amount;
   
+  
   public PImage icon;
   
   public Player player;
@@ -23,10 +24,11 @@ public class ItemStack{
   public void drawStack(PVector coords){
     pushStyle();
     if(this.icon != null)image(this.icon, coords.x, coords.y , 64, 64);
-    
-    textSize(28);
-    textAlign(LEFT, TOP);
-    text(this.amount, coords.x + 33, coords.y + 37);
+    if(this.amount >1){
+      textSize(28);
+      textAlign(LEFT, TOP);
+      text(this.amount, coords.x + 33, coords.y + 37);
+    }
     popStyle();
   }
   

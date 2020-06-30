@@ -69,7 +69,7 @@ public int getInventorySlot(){
    else if(mouseY>=height/2+4 && mouseY< height/2 + 220){
      return ((int)((mouseY-(height/2+4))/72) + 1)*9 + (int)(  (mouseX-(width/2-320))/72);
    }
-   else if(mouseX >= width/2+4 &&mouseX<=width/2 + 212 && mouseY >= height/2 -260 && mouseY<= height/2 -44){
+   else if(mouseX >= width/2+4 &&mouseX<width/2 + 212 && mouseY >= height/2 -260 && mouseY< height/2 -44){
      return (int)((mouseY-(height/2-260))/72)*3 + (int)((mouseX-(width/2+4))/72) + 36;
      
    }

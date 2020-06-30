@@ -37,6 +37,9 @@ public class World {
     textureCoords.put(8, new PVector[]{new PVector(80, 16), new PVector(80, 16), new PVector(80, 16)});//gravel
     textureCoords.put(10, new PVector[]{new PVector(0, 16), new PVector (0, 16), new PVector(0, 16)});//diamondore
     textureCoords.put(11, new PVector[]{new PVector(96, 16), new PVector(96, 16), new PVector(96, 16)});//leaves
+    textureCoords.put(12, new PVector[]{new PVector(112, 0), new PVector(112, 0), new PVector(112, 0)});//poppy flower
+    textureCoords.put(13, new PVector[]{new PVector(128, 0), new PVector(128, 0), new PVector(128, 0)});//dandelion flower
+    textureCoords.put(14, new PVector[]{new PVector(144, 0), new PVector(144, 0), new PVector(144, 0)});//grass flower
 
     
 
