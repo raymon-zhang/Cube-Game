@@ -11,6 +11,7 @@ public class Player {
   public ArrayList<Recipe> recipes;
 
   public ItemStack holding = null;
+  
 
   public Player(float xPos, float yPos, float zPos) {
     this.selectedSlot = 0;
@@ -28,13 +29,17 @@ public class Player {
     this.craftingGrid = new ItemStack[9];
 
     recipes = new ArrayList<Recipe>();
-
+    
     File recipe = new File(dataPath("") + "/recipes");
 
     for (File fileEntry : recipe.listFiles()) {
       recipes.add(new Recipe(fileEntry.getName()));
     }
-    println(recipes);
+    File items = new File(dataPath("") + "/items");
+    for (File fileEntry : items.listFiles()) {
+      ItemType itemtype = new ItemType(fileEntry.getName());
+      itemtype.put();
+    }
   }
 
 
@@ -102,6 +107,7 @@ public class Player {
       drawInventory();
     } else point(width/2, height/2);
   }
+  
   public void drawInventory() {
     image(overlay, 0, 0, width, width);
     image(inventoryImage, width/2-352, height/2 - 332, 704, 664);
@@ -228,5 +234,17 @@ public class Player {
       }
     }
     if (!correct)outputSlot = null;
+  }
+  //item functions
+  public void BREAK(){
+    breakBlock();
+  }
+  public void PLACE(){
+    placeBlock();
+  }
+  public void MOVEFORWARD(){
+    this.xPos = 0.1;
+  }
+  public void NONE(){
   }
 }

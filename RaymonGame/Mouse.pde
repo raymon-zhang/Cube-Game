@@ -44,16 +44,26 @@ public void checkMouseClicked(){
     
     if(mousePressed&& !drawingInventory ){ 
       if (mouseButton == LEFT){
-        
-        breakBlock();
-        delay(75);
+        if(player.inventory[player.selectedSlot]!= null){
+          ItemType item = ItemTypes.get(player.inventory[player.selectedSlot].itemType);
+          try{
+            item.functionLeft.invoke(player);
+          }catch(Exception e){
+            println(e);
+          }
+          delay(75);
+        }
+        else breakBlock();
         
       }else if(mouseButton == RIGHT){
         if(player.inventory[player.selectedSlot]!= null){
-          if( player.inventory[player.selectedSlot].itemType<100){  
-            placeBlock();
-            delay(75);
+          ItemType item = ItemTypes.get(player.inventory[player.selectedSlot].itemType);
+          try{
+            item.functionRight.invoke(player);
+          }catch(Exception e){
+            println(e);
           }
+          delay(75);
         }
       }
     }

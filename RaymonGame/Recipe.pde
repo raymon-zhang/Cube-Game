@@ -4,13 +4,13 @@ public class Recipe{
   
   public Recipe(String filepath){
     String file = "/recipes/"+filepath;
-    grid = new int[9];
+    this.grid = new int[9];
     String[] lines = loadStrings(file);
     output = new ItemStack(Integer.parseInt(lines[1]), Integer.parseInt(lines[2]), player);
     String[] gridIn = split(lines[0], ",");
     for(int x = 0; x<3; x++){
       for(int y = 0; y<3; y++){
-        grid[x*3 + y] = Integer.parseInt(gridIn[x*3 + y]);
+        this.grid[x*3 + y] = Integer.parseInt(gridIn[x*3 + y]);
       }
     }
   }

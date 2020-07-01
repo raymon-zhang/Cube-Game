@@ -6,8 +6,7 @@ import java.awt.Point;
 import processing.sound.*;
 Robot mouseControl;
 import java.io.*;
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GL2ES2;
+import java.lang.reflect.*;
 
 PShader blockShader;
 
@@ -64,6 +63,9 @@ PFont myFont;
 
 int total_frames;
 int time1;
+
+
+public Hashtable<Integer, ItemType> ItemTypes=  new Hashtable<Integer, ItemType>();;
 
 void setup() {
   fullScreen(P3D);
@@ -140,6 +142,7 @@ void setup() {
   //diamond = new SoundFile(this, "/sounds/diamond.mp3");
 
   player = new Player(80, 50, 80);
+  
   
 
   
