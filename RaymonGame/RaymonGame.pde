@@ -182,7 +182,7 @@ void draw() {
   
 
   shader(blockShader);
-  perspective(radians(120), (float)width/ (float)height, 0.01f, 1000);
+  perspective(radians(70), (float)width/ (float)height, 0.01f, 1000);
   c.drawWorld();
   resetShader();
   perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
