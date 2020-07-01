@@ -22,7 +22,7 @@ public class Player {
     this.xPosition = xPos;
     this.yPosition = yPos;
     this.zPosition = zPos;
-    perspective(PI/3, float(width)/float(height), 0.01f, 1000f);
+    perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
 
     this.inventory = new ItemStack[36];
     this.craftingGrid = new ItemStack[9];

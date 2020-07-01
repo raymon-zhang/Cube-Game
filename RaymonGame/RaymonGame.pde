@@ -6,6 +6,8 @@ import java.awt.Point;
 import processing.sound.*;
 Robot mouseControl;
 import java.io.*;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2ES2;
 
 PShader blockShader;
 
@@ -70,14 +72,14 @@ void setup() {
   debug = false;
   drawingInventory = false;
   
-  ((PGraphicsOpenGL)g).textureSampling(3);
+  ((PGraphicsOpenGL)g).textureSampling(2);
 
   originalMatrix = (PMatrix) getMatrix();
   
   blockShader = loadShader("/shaders/Frag.glsl", "/shaders/Vert.glsl");
 
 
-  
+  //filter(POSTERIZE, 200);
 
   cloud = loadImage("/textures/clouds.png");
   gui = loadImage("/textures/gui/gui.png");
@@ -126,7 +128,7 @@ void setup() {
   }
 
   
-  colorMode(RGB);
+  //colorMode(RGB);
   
   loading = new SoundFile(this, "/sounds/Loading.mp3");
   //loading.play();
@@ -164,6 +166,7 @@ void setup() {
 
 
 void draw() {
+  
   total_frames += 1;
   background(130, 202, 255);
   
@@ -173,15 +176,17 @@ void draw() {
   //shape(clouds, -3072, 0);
   //shape(clouds2);
 
-
+  
   checkKeys();
   checkMouse();
-  shader(blockShader);
+  
 
+  shader(blockShader);
+  perspective(radians(120), (float)width/ (float)height, 0.01f, 1000);
   c.drawWorld();
   resetShader();
+  perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
   player.updateCamera();
-
   
   f = frameRate;
     
