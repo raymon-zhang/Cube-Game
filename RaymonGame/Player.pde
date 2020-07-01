@@ -40,6 +40,11 @@ public class Player {
       ItemType itemtype = new ItemType(fileEntry.getName());
       itemtype.put();
     }
+    File blocks = new File(dataPath("") + "/blocks");
+    for (File fileEntry : blocks.listFiles()) {
+      BlockType itemtype = new BlockType(fileEntry.getName());
+      itemtype.put();
+    }
   }
 
 

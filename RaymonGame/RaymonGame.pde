@@ -65,7 +65,8 @@ int total_frames;
 int time1;
 
 
-public Hashtable<Integer, ItemType> ItemTypes=  new Hashtable<Integer, ItemType>();;
+public Hashtable<Integer, ItemType> ItemTypes=  new Hashtable<Integer, ItemType>();
+public Hashtable<Integer, BlockType> BlockTypes=  new Hashtable<Integer, BlockType>();
 
 void setup() {
   fullScreen(P3D);
