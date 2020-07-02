@@ -36,6 +36,7 @@ PImage cloud;
 
 Player player;
 
+Chunk playerChunk;
 
 Point pMouse;
 Point mouse;
@@ -70,7 +71,8 @@ public Hashtable<Integer, BlockType> BlockTypes=  new Hashtable<Integer, BlockTy
 
 void setup() {
   fullScreen(P3D);
-    
+  
+  
 
   debug = false;
   drawingInventory = false;
@@ -141,7 +143,7 @@ void setup() {
   //sand = new SoundFile(this, "/sounds/sand.mp3");
   //water = new SoundFile(this, "/sounds/water.mp3");
   //diamond = new SoundFile(this, "/sounds/diamond.mp3");
-
+  
   player = new Player(80, 50, 80);
   
   
@@ -164,6 +166,7 @@ void setup() {
   
   thread("checkChunks");
   thread("checkMouseClicked");
+  //thread("checkPlayerChunk");  
   
   time1 = millis();
 }

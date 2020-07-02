@@ -40,21 +40,11 @@ public class World {
     textureCoords.put(12, new PVector[]{new PVector(112, 0), new PVector(112, 0), new PVector(112, 0)});//poppy flower
     textureCoords.put(13, new PVector[]{new PVector(128, 0), new PVector(128, 0), new PVector(128, 0)});//dandelion flower
     textureCoords.put(14, new PVector[]{new PVector(144, 0), new PVector(144, 0), new PVector(144, 0)});//grass flower
-
+    textureCoords.put(15, new PVector[]{new PVector(160, 0), new PVector(160, 0), new PVector(160, 0)});//cobblestone
+    textureCoords.put(16, new PVector[]{new PVector(32, 0), new PVector (32, 0), new PVector(32, 0)});//dirt
     
 
-    loadStatus  = "Generating cave map";
-    println(loadStatus);
     
-    loadStatus = "Creating Chunks";
-    println(loadStatus);
-
-    
-
-
-    
-    loadStatus  = "Placing Blocks";
-    println(loadStatus);
     //for (int x = 0;x < chunkMemory.length; x++){
     //   for (int y = 0;y < chunkMemory.length; y++){
     //     Chunk c = chunkMemory[x][y];

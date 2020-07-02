@@ -5,6 +5,7 @@ public class Player {
 
   int selectedSlot;
 
+  boolean onGround = false;
   public ItemStack[] inventory, craftingGrid;
   public ItemStack outputSlot;
 
@@ -52,22 +53,51 @@ public class Player {
     this.xPosition += this.xPos;
     this.yPosition += this.yPos;
     this.zPosition += this.zPos;
-    float yCenter = this.yPosition - cos(this.vDeg);
-    float xCenter = this.xPosition -  sin(this.hDeg) * sin(this.vDeg);
-    float zCenter = this.zPosition +  cos(this.hDeg) * sin(this.vDeg);
-
-
-
-    if (! (isLeft || isRight||isUp||isDown||isShift||isSpace)) {
+    
+    if (! (isLeft || isRight||isUp||isDown||isShift)) {
 
       this.xPos *= 0.7;
-      this.yPos *= 0.7;
+
       this.zPos *= 0.7;
     } else {
       this.xPos *= 0.89;
-      this.yPos *= 0.89;
+
       this.zPos *= 0.89;
     }
+    
+    Chunk playerChunk = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0));
+    if(playerChunk != null){ 
+      this.yPos += 0.35f*(1f/60);
+      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition + 1.5)][ floor((this.zPosition)%16)] != null){
+        this.yPosition =(int)this.yPosition + 0.5f;
+        this.yPos = 0;
+        this.onGround = true;
+      }
+      //if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition -1)][ floor((this.zPosition)%16)] != null){
+      //  this.yPosition =(int)this.yPosition + 0.5f;
+      //  this.yPos = 0;
+      //}
+      //if(playerChunk.blocks[floor((this.xPosition + this.xPos )%16)][ floor(this.yPosition)][ floor(this.zPosition%16)] != null){
+        
+      //  this.xPos = 0;
+      //}
+      //if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition)][ floor((this.zPosition + this.zPos)%16)] != null){
+        
+      //  this.zPos = 0;
+      //}
+      
+      
+      
+      
+       
+    }
+    
+
+
+
+    float yCenter = this.yPosition - cos(this.vDeg);
+    float xCenter = this.xPosition -  sin(this.hDeg) * sin(this.vDeg);
+    float zCenter = this.zPosition +  cos(this.hDeg) * sin(this.vDeg);
     //println(sqrt(pow(xPos, 2) + pow(zPos, 2)));
 
 
@@ -253,3 +283,19 @@ public class Player {
   public void NONE(){
   }
 }
+
+
+//public void checkPlayerChunk(){
+//  int oldPX =floor(player.xPosition/16);
+//  int oldPZ =floor(player.zPosition/16);
+//  for(;;delay(0)){
+//    if (floor(player.xPosition/16) != oldPX || floor(player.zPosition/16) != oldPZ){
+//      playerChunk = c.getChunkAt(floor(player.xPosition/16),floor(player.zPosition/16));
+//      println("hi");
+//      oldPX = floor(player.xPosition/16);
+//      oldPZ = floor(player.zPosition/16);
+//    }
+//  }
+  
+  
+//}

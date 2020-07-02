@@ -8,7 +8,6 @@ void keyPressed() {
   if(key == 's') isDown = true; 
   if(key == 'a') isLeft = true; 
   if(key == 'd') isRight = true;
-  if(key == ' ') isSpace = true; 
   
   if(key == 'q') isShift = true; 
   if(key == 'D')  debug = !debug;
@@ -39,6 +38,12 @@ void keyPressed() {
       noCursor();
     }
   }
+  if(key == ' ' && player.onGround){
+    //println("hi");
+    player.yPos += -7*(1.0/60);
+    player.onGround = false;
+    
+  }
   
 }
  
@@ -53,9 +58,10 @@ void keyReleased() {
 }
  
 void checkKeys(){
+  
   if (isLeft) {
     player.xPos  += sin(PI/2-player.hDeg)/10 * playerSpeed;
-    //if (player.zPosition +  cos(PI/2-player.hDeg)/10* playerSpeed >1.5){
+    
     player.zPos += cos(PI/2-player.hDeg)/10* playerSpeed;
       
     //}
@@ -93,9 +99,9 @@ void checkKeys(){
       
     //}
   }
-  if (isSpace) {
-    player.yPos -= 0.1* playerSpeed;
-  }
+  //if (isSpace && player.onGround) {
+  //  player.yPos -= 0.1* playerSpeed;
+  //}
   if (isShift) {
     player.yPos += 0.1* playerSpeed;
   }
@@ -115,3 +121,6 @@ void mouseWheel(MouseEvent event){
     
   }
 }
+
+
+  
