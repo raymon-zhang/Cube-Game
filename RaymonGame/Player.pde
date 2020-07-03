@@ -301,19 +301,43 @@ public class Player {
         }
         
       }
-      if((playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition + 1)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition + 1)%16)] != null) ){
-        float penetration = this.zPosition - (int)this.zPosition;
-        if(!(penetration < 0.75f)){
-          this.zPosition -= (penetration - 0.75f);
-          this.zPos = 0;
+      if(floor(this.zPosition%16)<15){ 
+        if((playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition + 1)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition + 1)%16)] != null) ){
+          float penetration = this.zPosition - (int)this.zPosition;
+          if(!(penetration < 0.75f)){
+            this.zPosition -= (penetration - 0.75f);
+            this.zPos = 0;
+          }
         }
+      }else{
+        Chunk pZ = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0) + 1);
+        if((pZ.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition + 1)%16)] != null)|| (pZ.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition + 1)%16)] != null) ){
+          float penetration = this.zPosition - (int)this.zPosition;
+          if(!(penetration < 0.75f)){
+            this.zPosition -= (penetration - 0.75f);
+            this.zPos = 0;
+          }
+        }
+        
       }
-      if((playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition - 1)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition - 1)%16)] != null) ){
-        float penetration = (int)this.zPosition - this.zPosition;
-        if((-penetration < 0.25f)){
-          this.zPosition += (0.25 + penetration);
-          this.zPos = 0;
+      if(floor(this.zPosition%16)>0){ 
+        if((playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition - 1)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition - 1)%16)] != null) ){
+          float penetration = (int)this.zPosition - this.zPosition;
+          if((-penetration < 0.25f)){
+            this.zPosition += (0.25 + penetration);
+            this.zPos = 0;
+          }
         }
+      }else{
+        Chunk nZ = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0) - 1);
+        if((nZ.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition - 1)%16)] != null)|| (nZ.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition - 1)%16)] != null) ){
+          float penetration = (int)this.zPosition - this.zPosition;
+          if((-penetration < 0.25f)){
+            this.zPosition += (0.25 + penetration);
+            this.zPos = 0;
+          }
+        }
+        
       }
     }
   }

@@ -287,7 +287,7 @@ public class Chunk{
   public void decorate(){
     for (int x = 0; x< 16; x++) {
       for (int y = 0; y<16; y++) {
-        int highness = 128-((int)map(noise(((this.lowestXPos+ x)/75.0), (this.lowestZPos + y)/75.0), 0, 1, 10, 70));
+        int highness = 128-((int)map(noise(((this.lowestXPos+ x)/75.0), (this.lowestZPos + y)/75.0), 0, 1, 5, 100));
         if(highness > WATERLEVEL){
             for(int water = WATERLEVEL; water < highness; water ++){
               this.setBlock(4, x, water, y, false);

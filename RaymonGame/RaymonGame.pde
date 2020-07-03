@@ -18,7 +18,7 @@ int w = 16;
 int h = 16;
 
 int WORLDSIZE = 19;
-int WATERLEVEL = 100;
+int WATERLEVEL = 96;
 
 
 SoundFile loading;
