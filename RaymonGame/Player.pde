@@ -65,31 +65,7 @@ public class Player {
       this.zPos *= 0.89;
     }
     
-    Chunk playerChunk = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0));
-    if(playerChunk != null){ 
-      this.yPos += 0.35f*(1f/60);
-      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition + 1.5)][ floor((this.zPosition)%16)] != null ){
-        this.yPosition =(int)this.yPosition + 0.5f;
-        this.yPos = 0;
-        this.onGround = true;
-      }
-      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition -1)][ floor((this.zPosition)%16)] != null ){
-        
-      }
-      //if(playerChunk.blocks[floor((this.xPosition + this.xPos )%16)][ floor(this.yPosition)][ floor(this.zPosition%16)] != null){
-        
-      //  this.xPos = 0;
-      //}
-      //if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition)][ floor((this.zPosition + this.zPos)%16)] != null){
-        
-      //  this.zPos = 0;
-      //}
-      
-      
-      
-      
-       
-    }
+    checkCollisions();
     
 
 
@@ -269,6 +245,80 @@ public class Player {
     }
     if (!correct)outputSlot = null;
   }
+  
+  public void checkCollisions(){
+    Chunk playerChunk = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0));
+    if(playerChunk != null){ 
+      this.yPos += 0.35f*(1f/60);
+      
+      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition + 1.5)][ floor((this.zPosition)%16)] != null ){
+        this.yPosition =(int)this.yPosition + 0.5f;
+        this.yPos = 0;
+        this.onGround = true;
+      }
+      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition -1)][ floor((this.zPosition)%16)] != null ){
+        float penetration = (int) this.yPosition - this.yPosition;
+        if(-penetration < 0.25f){
+          this.yPos = 0;
+          this.yPosition += (0.25 + penetration);
+        }
+      }
+      if(floor(this.xPosition%16)<15){
+        if((playerChunk.blocks[floor((this.xPosition +1)%16)][ floor(this.yPosition)][ floor((this.zPosition)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition +1)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null) ){
+          float penetration = this.xPosition - (int)this.xPosition;
+          if(!(penetration < 0.75f)){
+            this.xPosition -= (penetration - 0.75f);
+            this.xPos = 0;
+          }
+        }
+      }else{
+        Chunk pX = c.getChunkAt(floor(player.xPosition/16.0)+1,floor(player.zPosition/16.0));
+        if((pX.blocks[floor((this.xPosition +1)%16)][ floor(this.yPosition)][ floor((this.zPosition)%16)] != null)|| (pX.blocks[floor((this.xPosition +1)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null) ){
+          float penetration = this.xPosition - (int)this.xPosition;
+          if(!(penetration < 0.75f)){
+            this.xPosition -= (penetration - 0.75f);
+            this.xPos = 0;
+          }
+        }
+      
+      }
+      if(floor(this.xPosition%16)>0){ 
+        if((playerChunk.blocks[floor((this.xPosition -1)%16)][ floor(this.yPosition)][ floor((this.zPosition)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition -1)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null) ){
+          float penetration = (int)this.xPosition - this.xPosition;
+          if((-penetration < 0.25f)){
+            this.xPosition += (0.25 + penetration);
+            this.xPos = 0;
+          }
+        }
+      }else{
+        Chunk nX = c.getChunkAt(floor(player.xPosition/16.0)-1,floor(player.zPosition/16.0));
+        if((nX.blocks[floor((this.xPosition -1)%16)][ floor(this.yPosition)][ floor((this.zPosition)%16)] != null)|| (nX.blocks[floor((this.xPosition -1)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null) ){
+          float penetration = (int)this.xPosition - this.xPosition;
+          if((-penetration < 0.25f)){
+            this.xPosition += (0.25 + penetration);
+            this.xPos = 0;
+          }
+        }
+        
+      }
+      if((playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition + 1)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition + 1)%16)] != null) ){
+        float penetration = this.zPosition - (int)this.zPosition;
+        if(!(penetration < 0.75f)){
+          this.zPosition -= (penetration - 0.75f);
+          this.zPos = 0;
+        }
+      }
+      if((playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition - 1)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition - 1)%16)] != null) ){
+        float penetration = (int)this.zPosition - this.zPosition;
+        if((-penetration < 0.25f)){
+          this.zPosition += (0.25 + penetration);
+          this.zPos = 0;
+        }
+      }
+    }
+  }
+  
+  
   //item functions
   public void BREAK(){
     breakBlock();

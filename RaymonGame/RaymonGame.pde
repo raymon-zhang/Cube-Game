@@ -144,7 +144,7 @@ void setup() {
   //water = new SoundFile(this, "/sounds/water.mp3");
   //diamond = new SoundFile(this, "/sounds/diamond.mp3");
   
-  player = new Player(80, 50, 80);
+  player = new Player(88, 50, 88);
   
   
 

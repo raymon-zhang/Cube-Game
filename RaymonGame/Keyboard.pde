@@ -1,5 +1,5 @@
 boolean isLeft, isRight, isUp, isDown, isSpace, isShift; 
-float playerSpeed = 0.06;
+float playerSpeed = 0.1;
 
 
 void keyPressed() {
