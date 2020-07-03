@@ -68,15 +68,14 @@ public class Player {
     Chunk playerChunk = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0));
     if(playerChunk != null){ 
       this.yPos += 0.35f*(1f/60);
-      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition + 1.5)][ floor((this.zPosition)%16)] != null){
+      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition + 1.5)][ floor((this.zPosition)%16)] != null ){
         this.yPosition =(int)this.yPosition + 0.5f;
         this.yPos = 0;
         this.onGround = true;
       }
-      //if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition -1)][ floor((this.zPosition)%16)] != null){
-      //  this.yPosition =(int)this.yPosition + 0.5f;
-      //  this.yPos = 0;
-      //}
+      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition -1)][ floor((this.zPosition)%16)] != null ){
+        
+      }
       //if(playerChunk.blocks[floor((this.xPosition + this.xPos )%16)][ floor(this.yPosition)][ floor(this.zPosition%16)] != null){
         
       //  this.xPos = 0;
