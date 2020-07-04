@@ -360,6 +360,18 @@ public class Player {
         this.xPos = 0;
         this.zPos = 0;
       }
+      //if(c.getBlockAt(playerChunk,floor(this.xPosition)-1,floor(this.yPosition)+1,floor(this.zPosition)-1) != null){
+      //  float zPen = (int)this.zPosition - this.zPosition;
+      //  float xPen = (int)this.xPosition - this.xPosition;
+      //  //println(xPen);    
+      //  if((-xPen < 0.25f) && (-zPen < 0.25f)){
+      //    //println("HI");
+      //    this.xPos = 0;
+      //    this.zPos = 0;
+      //    this.xPosition += (0.25 + xPen);
+      //    this.zPosition += (0.25 + zPen);
+      //  }
+      //}
     }
   }
   

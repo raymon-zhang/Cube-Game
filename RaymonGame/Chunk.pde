@@ -372,14 +372,17 @@ public class Chunk{
           if(highness > WATERLEVEL - 6){
             this.setBlock(5, x, h, y, false);
           }
-          else this.setBlock(1, x, h, y, false);
+          else if(noise((this.lowestXPos + x)/20.0, (128-h)/20.0, (this.lowestZPos + y)/20.0) > 0.3)this.setBlock(1, x, h, y, false);
         }
         for(int h = highness+3; h < 128; h++){
-          this.setBlock(2, x, h, y, false);
+          if(noise((this.lowestXPos + x)/20.0, (128-h)/20.0, (this.lowestZPos + y)/20.0) > 0.3){
+            this.setBlock(2, x, h, y, false);
+          }
         }
       }
     }
   }
+  
   
 }
   
