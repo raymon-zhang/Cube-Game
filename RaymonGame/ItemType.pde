@@ -1,5 +1,5 @@
 public class ItemType{
-  public int type, maxAmount;
+  public int type, maxAmount, breakingSpeed;
   
   public Method functionLeft, functionRight;
   public ItemType(String filepath){
@@ -7,6 +7,8 @@ public class ItemType{
     String[] lines = loadStrings(file);
     this.type = Integer.parseInt(lines[0]);
     this.maxAmount = Integer.parseInt(lines[1]);
+    if (lines.length == 4)this.breakingSpeed = 1;
+    else this.breakingSpeed = Integer.parseInt(lines[4]);
     try{
       this.functionLeft = Player.class.getMethod(lines[2]);
     }catch(NoSuchMethodException e){

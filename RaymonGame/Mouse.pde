@@ -53,7 +53,10 @@ public void checkMouseClicked(){
           }
           delay(75);
         }
-        else breakBlock();
+        else {
+          player.BREAK();
+          delay(75);
+        }
         
       }else if(mouseButton == RIGHT){
         if(player.inventory[player.selectedSlot]!= null){
@@ -93,4 +96,7 @@ public int getInventorySlot(){
 void mouseClicked(){
   mouseclicked = true;
   
+}
+void mouseReleased(){
+  player.blockDamage = 0;
 }

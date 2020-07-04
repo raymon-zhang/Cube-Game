@@ -4,6 +4,8 @@ public class Player {
   float xPosition, yPosition, zPosition;
 
   int selectedSlot;
+  
+  int blockDamage;
 
   boolean onGround = false;
   public ItemStack[] inventory, craftingGrid;
@@ -54,6 +56,11 @@ public class Player {
     this.yPosition += this.yPos;
     this.zPosition += this.zPos;
     
+    
+    
+    
+    
+    checkCollisions();
     if (! (isLeft || isRight||isUp||isDown||isShift)) {
 
       this.xPos *= 0.7;
@@ -64,10 +71,6 @@ public class Player {
 
       this.zPos *= 0.89;
     }
-    
-    checkCollisions();
-    
-
 
 
     float yCenter = this.yPosition - cos(this.vDeg);
@@ -78,7 +81,7 @@ public class Player {
 
 
     stroke(255);
-    strokeWeight(5);
+    strokeWeight(7);
 
     camera(this.xPosition, this.yPosition, this.zPosition, xCenter, yCenter, zCenter, 0, 1, 0);
 
@@ -101,6 +104,18 @@ public class Player {
 
   public void drawGui() {
     image(gui, width/2-364, height-88, 728, 88); 
+    
+    if(this.blockDamage >0){
+      pushStyle();
+      fill(200, 100);
+      noStroke();
+      rect(width/2-15, height/2+12, 30, 5);
+
+      rect(width/2-14, height/2+12 , this.blockDamage, 5);
+      
+      popStyle();
+    }
+    
     image(indicator, width/2-368 + this.selectedSlot * 80, height-92, 96, 96);
 
     for (int slot = 0; slot < 9; slot ++) {
@@ -339,13 +354,28 @@ public class Player {
         }
         
       }
+      if(playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null){
+        this.xPosition -= this.xPos;
+        this.zPosition -= this.zPos;
+        this.xPos = 0;
+        this.zPos = 0;
+      }
     }
   }
   
   
   //item functions
   public void BREAK(){
-    breakBlock();
+    if(player.inventory[player.selectedSlot]!= null){
+      ItemType item = ItemTypes.get(player.inventory[player.selectedSlot].itemType);
+      this.blockDamage += item.breakingSpeed;
+    }else{
+      
+      this.blockDamage += 1;
+    }
+      
+    
+    if(this.blockDamage >= 30)breakBlock();
   }
   public void PLACE(){
     placeBlock();

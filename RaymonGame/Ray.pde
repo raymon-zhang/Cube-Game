@@ -1,5 +1,6 @@
 
 public void breakBlock(){
+  player.blockDamage = 0;
   float yDelta = - cos(player.vDeg)/100;
   float xDelta = - sin(player.hDeg) * sin(player.vDeg)/100;
   float zDelta = + cos(player.hDeg) * sin(player.vDeg)/100;
