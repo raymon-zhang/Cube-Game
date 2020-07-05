@@ -42,6 +42,8 @@ public class World {
     textureCoords.put(14, new PVector[]{new PVector(144, 0), new PVector(144, 0), new PVector(144, 0)});//grass flower
     textureCoords.put(15, new PVector[]{new PVector(160, 0), new PVector(160, 0), new PVector(160, 0)});//cobblestone
     textureCoords.put(16, new PVector[]{new PVector(32, 0), new PVector (32, 0), new PVector(32, 0)});//dirt
+    textureCoords.put(17, new PVector[]{new PVector(0, 32), new PVector (0, 32), new PVector(0, 32)});//ironore
+    textureCoords.put(18, new PVector[]{new PVector(16, 32), new PVector (16, 32), new PVector(16, 32)});//goldore
     
 
     

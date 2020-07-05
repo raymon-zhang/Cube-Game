@@ -297,60 +297,7 @@ public class Chunk{
           float random = random(0, 20);
           //println(random);
           if(random < 0.3){
-            int tree = highness-1;
-            for(tree = highness - 1; tree > highness -1 - random(2, 7); tree--){
-              if (tree>0)this.setBlock(3, x, tree, y, false);
-              
-            }
-            
-            for(int level = 3; level > -1; level--){
-              if (level < 2){
-                for(int xOff = -2; xOff <3; xOff ++){
-                  for(int yOff = -2; yOff<3; yOff ++){
-                    
-                    this.setBlock(11, x + xOff, tree -level, y + yOff, false);
-                    
-                  }
-                }
-              }
-              else{
-                
-                this.setBlock(11, x + 1, tree -level, y , false);
-                
-                this.setBlock(11, x - 1, tree -level, y , false);
-                
-                this.setBlock(11, x , tree -level, y-1 , false);
-                
-                this.setBlock(11, x , tree -level, y +1, false);
-                
-                this.setBlock(11, x , tree -level, y, false);
-                
-              }
-            }
-            if(random(0, 10) < 4.5){
-              this.removeBlock(x + 2, tree, y + 2, false);
-            }
-            if(random(0, 10) < 4.5){
-              this.removeBlock(x - 2, tree, y + 2, false);
-            }
-            if(random(0, 10) < 4.5){
-              this.removeBlock(x + 2, tree, y - 2, false);
-            }
-            if(random(0, 10) < 4.5){
-              this.removeBlock(x -2, tree, y - 2, false);
-            }
-            if(random(0, 10) < 4.5){
-              this.removeBlock(x + 2, tree - 1, y + 2, false);
-            }
-            if(random(0, 10) < 4.5){
-              this.removeBlock(x - 2, tree - 1, y + 2, false);
-            }
-            if(random(0, 10) < 4.5){
-              this.removeBlock(x + 2, tree-1, y - 2, false);
-            }
-            if(random(0, 10) < 4.5){
-              this.removeBlock(x -2, tree-1, y - 2, false);
-            }
+            generateTree(highness, x, y);
             
             
           }
@@ -377,6 +324,90 @@ public class Chunk{
         for(int h = highness+3; h < 128; h++){
           if(noise((this.lowestXPos + x)/20.0, (128-h)/20.0, (this.lowestZPos + y)/20.0) > 0.3){
             this.setBlock(2, x, h, y, false);
+          }
+        }
+      }
+    }
+    this.generateOres();
+  }
+  public void generateTree(int highness, int x, int y){
+    int tree = highness-1;
+    for(tree = highness - 1; tree > highness -1 - random(2, 7); tree--){
+      if (tree>0)this.setBlock(3, x, tree, y, false);
+      
+    }
+    
+    for(int level = 3; level > -1; level--){
+      if (level < 2){
+        for(int xOff = -2; xOff <3; xOff ++){
+          for(int yOff = -2; yOff<3; yOff ++){
+            
+            this.setBlock(11, x + xOff, tree -level, y + yOff, false);
+            
+          }
+        }
+      }
+      else{
+        
+        this.setBlock(11, x + 1, tree -level, y , false);
+        
+        this.setBlock(11, x - 1, tree -level, y , false);
+        
+        this.setBlock(11, x , tree -level, y-1 , false);
+        
+        this.setBlock(11, x , tree -level, y +1, false);
+        
+        this.setBlock(11, x , tree -level, y, false);
+        
+      }
+    }
+    if(random(0, 10) < 4.5){
+      this.removeBlock(x + 2, tree, y + 2, false);
+    }
+    if(random(0, 10) < 4.5){
+      this.removeBlock(x - 2, tree, y + 2, false);
+    }
+    if(random(0, 10) < 4.5){
+      this.removeBlock(x + 2, tree, y - 2, false);
+    }
+    if(random(0, 10) < 4.5){
+      this.removeBlock(x -2, tree, y - 2, false);
+    }
+    if(random(0, 10) < 4.5){
+      this.removeBlock(x + 2, tree - 1, y + 2, false);
+    }
+    if(random(0, 10) < 4.5){
+      this.removeBlock(x - 2, tree - 1, y + 2, false);
+    }
+    if(random(0, 10) < 4.5){
+      this.removeBlock(x + 2, tree-1, y - 2, false);
+    }
+    if(random(0, 10) < 4.5){
+      this.removeBlock(x -2, tree-1, y - 2, false);
+    }
+    
+  }
+  
+  public void generateOres(){
+    int diamondX = (int)random(15);
+    int diamondZ = (int)random(15);
+    println("Diamond generated at " + (this.lowestXPos + diamondX) + ", " + (this.lowestZPos + diamondZ));
+    for(int x = 0; x<(int)random(1,3); x++){
+      for(int z = 0; z<(int)random(1,3); z++){
+        for(int y = 0; y<(int)random(1,3); y++){
+          if(this.blocks[diamondX + x][ 116][ diamondZ + z]!= null)this.setBlock(10, diamondX + x, 116 + y, diamondZ + z, false);
+        }
+      }
+    }
+    for(int rep = 0; rep < 2; rep++){
+      int ironX = (int)random(0,14);
+      int ironZ = (int)random(0,14);
+      int ironY = (int)random(0, 15);
+      println("Iron generated at " + (this.lowestXPos + ironX) + ", " + (this.lowestZPos + ironZ));
+      for(int x = 0; x<(int)random(1,4); x++){
+        for(int z = 0; z<(int)random(1,4); z++){
+          for(int y = 0; y<(int)    random(1,4); y++){
+            if(this.blocks[ironX + x][ 116-ironY + y][ ironZ + z] != null)this.setBlock(17, ironX + x, 116 - ironY+y, ironZ + z, false);
           }
         }
       }

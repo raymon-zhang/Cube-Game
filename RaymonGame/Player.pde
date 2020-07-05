@@ -29,6 +29,7 @@ public class Player {
     perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
 
     this.inventory = new ItemStack[36];
+    this.inventory[1] = new ItemStack(102, this);
     this.craftingGrid = new ItemStack[9];
 
     recipes = new ArrayList<Recipe>();
@@ -387,7 +388,7 @@ public class Player {
     }
       
     
-    if(this.blockDamage >= 30)breakBlock();
+    if(this.blockDamage >= 0)breakBlock();
   }
   public void PLACE(){
     placeBlock();
