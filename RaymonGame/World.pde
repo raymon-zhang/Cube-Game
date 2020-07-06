@@ -123,19 +123,12 @@ public class World {
 
   }
   
-  public Block getBlockAt(Chunk centerChunk, int x, int y, int z){
+  public Block getBlockAt(int x, int y, int z){
     
-    int rX = x%16;
-    int rZ = z%16;
-    if(rX<=15 && rX>=0 && rZ<=15 && rZ >= 0){
-      return centerChunk.blocks[rX][y][rZ];
-    }
-    else{
-      int cX = floor(x/16.0);
-      int cZ = floor(z/16.0);
-      return this.getChunkAt(cX,cZ).blocks[rX][y][rZ]; 
+    Chunk chunk = this.getChunkAt(floor(x/16.0), floor(z/16.0));
+    return chunk.blocks[x-floor(x/16.0)*16][y][z-floor(z/16.0)*16];
       
-    }
+    
   }
 }
 

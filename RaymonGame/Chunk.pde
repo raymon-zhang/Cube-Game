@@ -196,12 +196,22 @@ public class Chunk{
                     }
                   }
                 }
-                else if(x == 15){
+                else{
+                  if (blocks[x-1][y][z] == null ||(blocks[x-1][y][z].isTransparent() && ! block.isTransparent())){
+                    block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                  }
+                }
+                if(x == 15){
                   Chunk chunk = this.world.getChunkAt(lowestXPos/16 +1, lowestZPos/16);
                   if(chunk != null){
                     if(chunk.blocks[0][y][z] == null ||(chunk.blocks[0][y][z].isTransparent() && ! block.isTransparent())){
                       block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                     }
+                  }
+                }
+                else{
+                  if (blocks[x+1][y][z] == null ||(blocks[x+1][y][z].isTransparent() && ! block.isTransparent())){
+                    block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                   }
                 }
                 
@@ -213,12 +223,23 @@ public class Chunk{
                     }
                   }
                 }
-                else if(z == 0){
+                else{
+                  if (blocks[x][y][z+1] == null ||(blocks[x][y][z+1].isTransparent() && ! block.isTransparent())){
+                    block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
+                    
+                  }
+                }
+                if(z == 0){
                   Chunk chunk = this.world.getChunkAt(lowestXPos/16, lowestZPos/16-1);
                   if(chunk != null){
                     if(chunk.blocks[x][y][15] == null ||(chunk.blocks[x][y][15].isTransparent() && ! block.isTransparent())){
                       block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                     }
+                  }
+                }
+                else{
+                  if (blocks[x][y][z-1] == null ||(blocks[x][y][z-1].isTransparent() && ! block.isTransparent())){
+                    block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
                   }
                 }
                 
@@ -240,31 +261,13 @@ public class Chunk{
                   }
                 }
                 
-                if(z != 15){
-                  if (blocks[x][y][z+1] == null ||(blocks[x][y][z+1].isTransparent() && ! block.isTransparent())){
-                    block.drawSide1(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
-                    
-                  }
-                }
+                
                             
-                if(x != 15){
-                  if (blocks[x+1][y][z] == null ||(blocks[x+1][y][z].isTransparent() && ! block.isTransparent())){
-                    block.drawSide2(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
-                  }
-                }
+                
                   
-                if(z != 0){
-                  if (blocks[x][y][z-1] == null ||(blocks[x][y][z-1].isTransparent() && ! block.isTransparent())){
-                    block.drawSide3(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
-                  }
-                }
                 
                 
-                if(x != 0){
-                  if (blocks[x-1][y][z] == null ||(blocks[x-1][y][z].isTransparent() && ! block.isTransparent())){
-                    block.drawSide4(newMesh, this.lowestXPos + x , this.lowestYPos + y , this.lowestZPos + z, texCoords[1]); 
-                  }
-                }
+                
                 
               }
             }else block.drawNature(newMesh, this.lowestXPos + x, this.lowestYPos + y, this.lowestZPos + z, texCoords[1]);

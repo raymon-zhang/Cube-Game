@@ -1,13 +1,10 @@
-public class Player {
-  float xPos, yPos, zPos;
-  float vDeg, hDeg;
-  float xPosition, yPosition, zPosition;
+public class Player extends Entity{
 
   int selectedSlot;
   
   int blockDamage;
 
-  boolean onGround = false;
+
   public ItemStack[] inventory, craftingGrid;
   public ItemStack outputSlot;
 
@@ -17,19 +14,14 @@ public class Player {
   
 
   public Player(float xPos, float yPos, float zPos) {
+    super(xPos, yPos, zPos);
     this.selectedSlot = 0;
-    this.xPos = 0;
-    this.yPos = 0;
-    this.zPos = 0;
-    this.hDeg = 0;
-    this.vDeg = 0;
-    this.xPosition = xPos;
-    this.yPosition = yPos;
-    this.zPosition = zPos;
+    
     perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
 
     this.inventory = new ItemStack[36];
     this.inventory[1] = new ItemStack(102, this);
+    this.inventory[2] = new ItemStack(150, this);
     this.craftingGrid = new ItemStack[9];
 
     recipes = new ArrayList<Recipe>();
@@ -53,15 +45,22 @@ public class Player {
 
 
   public void updateCamera() {
+    
+    this.yPos += 0.35f*(1f/60);
     this.xPosition += this.xPos;
+    //this.checkCollisions(new PVector(this.xPos, 0,0));
+    
     this.yPosition += this.yPos;
+    //this.checkCollisions(new PVector(0, this.yPos, 0));
+    
     this.zPosition += this.zPos;
-    
-    
-    
+    //this.checkCollisions(new PVector(0, 0, this.zPos));
     
     
     checkCollisions();
+    
+    
+    
     if (! (isLeft || isRight||isUp||isDown||isShift)) {
 
       this.xPos *= 0.7;
@@ -110,9 +109,9 @@ public class Player {
       pushStyle();
       fill(200, 100);
       noStroke();
-      rect(width/2-15, height/2+12, 30, 5);
+      rect(width/2-20, height/2+12, 40, 5);
 
-      rect(width/2-14, height/2+12 , this.blockDamage, 5);
+      rect(width/2-20, height/2+12 , this.blockDamage, 5);
       
       popStyle();
     }
@@ -388,7 +387,7 @@ public class Player {
     }
       
     
-    if(this.blockDamage >= 0)breakBlock();
+    if(this.blockDamage >= 40)breakBlock();
   }
   public void PLACE(){
     placeBlock();
@@ -397,6 +396,20 @@ public class Player {
     this.xPos = 0.1;
   }
   public void NONE(){
+  }
+  
+  public void PLACETREE(){
+    
+      int[] coords = findTargetedBlock();
+      Chunk chunk = c.getChunkAt(coords[0],coords[1]);
+    try{
+      chunk.generateTree(coords[3],coords[2],coords[4]);
+    }catch(Exception e){
+      //its ok
+    }
+      chunk.betterGenerateMesh();
+    
+    
   }
 }
 

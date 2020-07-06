@@ -100,3 +100,30 @@ void mouseClicked(){
 void mouseReleased(){
   player.blockDamage = 0;
 }
+
+void mouseWheel(MouseEvent event){
+  if (drawingInventory){
+    if(player.holding != null && player.holding.amount > 1){
+      int x = getInventorySlot();
+      if(x <36 && x>-1){
+        if(player.inventory[x] == null){
+          player.inventory[x] = new ItemStack(player.holding.itemType, (int)player.holding.amount/2, player);
+          player.holding.amount -= (int)player.holding.amount/2;
+        }
+      }
+    }
+    
+  }
+  else{
+    if (event.getCount() > 0){
+      if (player.selectedSlot < 8)player.selectedSlot += 1;
+      else player.selectedSlot = 0;
+      
+    }
+    else if (event.getCount() < 0){
+      if (player.selectedSlot > 0)player.selectedSlot -= 1;
+      else player.selectedSlot = 8;
+      
+    }
+  }
+}

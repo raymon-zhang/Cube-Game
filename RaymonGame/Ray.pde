@@ -97,3 +97,48 @@ public void placeBlock(){
   }
   
 }
+
+
+public int[] findTargetedBlock(){
+
+  float yDelta = - cos(player.vDeg)/100;
+  float xDelta = - sin(player.hDeg) * sin(player.vDeg)/100;
+  float zDelta = + cos(player.hDeg) * sin(player.vDeg)/100;
+    
+  float yCenter = player.yPosition + yDelta;
+  float xCenter = player.xPosition + xDelta;
+  float zCenter = player.zPosition +  zDelta;
+  
+  int counter = 0;
+  
+  int[] nums = new int[5];
+  try{
+    while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null){
+      //println("Step");
+      //println(floor(xCenter )-(floor(xCenter/16) )*16);
+      yCenter += yDelta;
+      xCenter += xDelta;
+      zCenter += zDelta;
+      
+      counter ++;
+      
+    }
+    if(counter <1200){
+      
+
+      nums[0] = floor(xCenter/16);
+      nums[1] = floor(zCenter/16);
+     
+      nums[2] = floor(xCenter )-(floor(xCenter/16) )*16;
+      nums[3] = floor( yCenter);
+      nums[4] = (floor(zCenter))-(floor(zCenter/16 ) )*16;
+
+      
+
+    }
+    
+  }catch(Exception e){
+    println(floor(xCenter )-(floor(xCenter/16) )*16);
+  }
+  return nums;
+}

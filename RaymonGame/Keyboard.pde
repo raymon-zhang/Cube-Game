@@ -111,16 +111,7 @@ void checkKeys(){
 }
 
 
-void mouseWheel(MouseEvent event){
-  if (event.getCount() > 0){
-    if (player.selectedSlot < 8)player.selectedSlot += 1;
-    
-  }
-  else if (event.getCount() < 0){
-    if (player.selectedSlot > 0)player.selectedSlot -= 1;
-    
-  }
-}
+
 
 
   
