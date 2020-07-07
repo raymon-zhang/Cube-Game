@@ -126,7 +126,13 @@ public class World {
   public Block getBlockAt(int x, int y, int z){
     
     Chunk chunk = this.getChunkAt(floor(x/16.0), floor(z/16.0));
-    return chunk.blocks[x-floor(x/16.0)*16][y][z-floor(z/16.0)*16];
+    try{
+      return chunk.blocks[x-floor(x/16.0)*16][y][z-floor(z/16.0)*16];
+    }
+    catch(Exception e){
+      println((x-floor(x/16.0)*16) + ", " + y + ", " + (z-floor(z/16.0)*16));
+      return chunk.blocks[x-floor(x/16.0)*16][y][z-floor(z/16.0)*16];
+    }
       
     
   }

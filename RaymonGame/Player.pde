@@ -45,19 +45,19 @@ public class Player extends Entity{
 
 
   public void updateCamera() {
-    
     this.yPos += 0.35f*(1f/60);
+
     this.xPosition += this.xPos;
-    //this.checkCollisions(new PVector(this.xPos, 0,0));
+    this.checkCollisions(new PVector(this.xPos, 0,0));
     
     this.yPosition += this.yPos;
-    //this.checkCollisions(new PVector(0, this.yPos, 0));
+    this.checkCollisions(new PVector(0, this.yPos, 0));
     
     this.zPosition += this.zPos;
-    //this.checkCollisions(new PVector(0, 0, this.zPos));
+    this.checkCollisions(new PVector(0, 0, this.zPos));
     
     
-    checkCollisions();
+    //checkCollisions();
     
     
     

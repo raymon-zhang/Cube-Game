@@ -38,10 +38,9 @@ void keyPressed() {
       noCursor();
     }
   }
-  if(key == ' ' && player.onGround){
+  if(key == ' '){
     //println("hi");
-    player.yPos += -7*(1.0/60);
-    player.onGround = false;
+    isSpace = true;
     
   }
   
@@ -99,12 +98,13 @@ void checkKeys(){
       
     //}
   }
-  //if (isSpace && player.onGround) {
-  //  player.yPos -= 0.1* playerSpeed;
-  //}
-  if (isShift) {
-    player.yPos += 0.1* playerSpeed;
+  if (isSpace && player.onGround) {
+    player.yPos += -7*(1.0/60);
+    player.onGround = false;
   }
+  //if (isShift) {
+  //  player.yPos += 0.1* playerSpeed;
+  //}
   
   //if ( (int) (player.yPosition +1.62)
   

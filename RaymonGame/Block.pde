@@ -139,6 +139,9 @@ public class Block{
       if(bottom)this.drawBottom(shape, x, y, z, texture[2]);
     }else this.drawNature(shape, x, y, z, texture[1]);
   }
+  
+  
+  
   public boolean isTransparent(){
     return (this.blockType == 4 || this.blockType == 12 || this.blockType == 13 || this.blockType == 14);
   }

@@ -410,7 +410,7 @@ public class Chunk{
       for(int x = 0; x<(int)random(1,4); x++){
         for(int z = 0; z<(int)random(1,4); z++){
           for(int y = 0; y<(int)    random(1,4); y++){
-            if(this.blocks[ironX + x][ 116-ironY + y][ ironZ + z] != null)this.setBlock(17, ironX + x, 116 - ironY+y, ironZ + z, false);
+            if(this.blocks[ironX + x][ 116-ironY + y][ ironZ + z] != null && this.blocks[ironX + x][ 116-ironY + y][ ironZ + z].isTransparent())this.setBlock(17, ironX + x, 116 - ironY+y, ironZ + z, false);
           }
         }
       }
