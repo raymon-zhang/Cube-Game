@@ -146,7 +146,7 @@ void setup() {
   //diamond = new SoundFile(this, "/sounds/diamond.mp3");
   
   player = new Player(88, 50, 88);
-  test = new Pig(88, 50, 80);
+  test = new Pig(88, 50, 88);
   
 
   
@@ -210,13 +210,13 @@ void draw() {
 
 
 
-public void exit() {
-  int x = millis()-time1;
-  println("Total Frames: " + total_frames);
-  println("Total Seconds: " + x/1000);
-  println( total_frames /( x/1000));
-  running = false;
-  //println("hi");
-  super.exit();
+//public void exit() {
+//  int x = millis()-time1;
+//  println("Total Frames: " + total_frames);
+//  println("Total Seconds: " + x/1000);
+//  println( total_frames /( x/1000));
+//  running = false;
+//  //println("hi");
+//  super.exit();
   
-}
+//}

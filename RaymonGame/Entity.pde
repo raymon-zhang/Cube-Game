@@ -5,15 +5,16 @@ public class Entity{
   
   float hitboxWidth, hitboxHeight, hitboxLength;
   
-  
+  float legRotation;
   boolean onGround = false;
   boolean walking = false;
   boolean jumping = false;
   
-  PShape shape;
+  PShape shape, legs;
   
   PVector targetedPosition = new PVector();
   PVector delta = new PVector();
+  int legDirection = 4;
   
   public Entity(float xPos, float yPos, float zPos) {
 
@@ -28,6 +29,7 @@ public class Entity{
     this.hitboxWidth = 0.5;
     this.hitboxHeight = 1.5;
     this.hitboxLength = 0.5;
+    this.legRotation = 0;
     
   }
   
@@ -35,15 +37,18 @@ public class Entity{
     
     //println(walking);
     
-
+    
     if(abs(this.targetedPosition.x- this.xPosition ) <= 1.0 && abs(this.targetedPosition.y - this.zPosition) <= 1.0){
       //println("hi");
       this.walking = false;
+      this.legRotation = 0;
       this.xPos = 0;
       this.zPos = 0;
     }else{
       this.xPos = delta.x;
       this.zPos = delta.y;
+      if(abs(this.legRotation) >= 45)this.legDirection = -this.legDirection;
+      this.legRotation += this.legDirection;
     }
     if (abs(player.xPosition- this.xPosition ) >= 1.0 || abs(player.zPosition - this.zPosition) >= 1.0&& walking == false){
       this.goToLocation(new PVector(player.xPosition, player.zPosition));
@@ -52,9 +57,11 @@ public class Entity{
     
     this.yPos += 0.35f*(1f/60);
     
-    if(this.jumping){
-      this.yPos += -0.5*(1.0/60);
-      println("HI");
+    if(this.jumping && this.onGround){
+      this.onGround = false;
+      this.yPos += -7*(1.0/60);
+      
+      //println("HI");
       this.jumping = false;
       
     }
@@ -209,6 +216,59 @@ public class Entity{
     this.shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y + 8);
     this.shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x, textureCoords.y + 8 + dimensions.y);
     this.shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y + 8);
+  }
+  
+  public void createShapeOnShape(PShape shape, PVector cornerCoords, PVector lengths, PVector textureCoords, PVector dimensions){
+    shape.tint(204);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z, textureCoords.x - dimensions.x, textureCoords.y);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y);
+    shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y + 8);
+    shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z,textureCoords.x - dimensions.x, textureCoords.y + 8);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z, textureCoords.x - dimensions.x, textureCoords.y);
+    shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y + 8);
+    
+    shape.tint(153);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y + 8);
+    shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y + 8);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y + 8);
+    
+    
+    shape.tint(204);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z, textureCoords.x + dimensions.x + 8, textureCoords.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y + 8);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x + dimensions.x + 8, textureCoords.y + 8);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z, textureCoords.x + dimensions.x + 8, textureCoords.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y + 8);
+    
+    shape.tint(153);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z, textureCoords.x + 8 +8, textureCoords.y - 8);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z, textureCoords.x + 8, textureCoords.y - 8);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x + 8, textureCoords.y);
+    shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x + 8 + 8, textureCoords.y);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z, textureCoords.x + 8 + 8, textureCoords.y - 8);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x + 8, textureCoords.y);
+    
+    shape.tint(255);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z, textureCoords.x, textureCoords.y - dimensions.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z, textureCoords.x + 8, textureCoords.y - dimensions.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x +8, textureCoords.y);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y);
+    shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z, textureCoords.x, textureCoords.y - dimensions.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x +8, textureCoords.y);
+    shape.tint(102);
+    shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x, textureCoords.y + 8 + dimensions.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x + 8, textureCoords.y + 8 + dimensions.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y + 8);
+    shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y + 8);
+    shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x, textureCoords.y + 8 + dimensions.y);
+    shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x + 8, textureCoords.y + 8);
+    
+    
+    
   }
   
   
