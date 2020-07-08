@@ -249,6 +249,66 @@ public class Player extends Entity{
       }
     }
   }
+  
+  
+  
+  
+  public void checkCollisions(PVector vel){
+    
+    float xPosition = this.xPosition;
+    float yPosition = this.yPosition;
+    float zPosition = this.zPosition;
+    for(float x = this.xPosition - this.hitboxWidth/2; x <= xPosition + this.hitboxWidth/2; x+=this.hitboxWidth){
+      //println(x);
+      for(float y = this.yPosition; y <= yPosition +this.hitboxHeight; y+= this.hitboxHeight - 0.001){
+        for(float z = this.zPosition - this.hitboxLength/2; z <= zPosition + this.hitboxLength/2; z+=this.hitboxLength){
+          
+          //point(x,y,z);
+          int xPos = floor(x);
+          int yPos = floor(y);
+          int zPos = floor(z);
+          Block block = c.getBlockAt(xPos, yPos, zPos);
+          if(block != null && !block.isTransparent()){
+            if(vel.x >0){
+              this.xPosition = xPos-(this.hitboxWidth/2 + 0.0001);
+              this.xPos = 0;
+              //this.xPos = 0;
+            }
+            
+            else if(vel.x <0){
+              this.xPosition = xPos+1 + (this.hitboxWidth/2 + 0.0001);
+              this.xPos = 0;
+              //this.xPos = 0;
+            }
+            if(vel.z >0){
+              this.zPosition = zPos-(this.hitboxLength/2 + 0.0001);
+              this.zPos = 0;
+              //this.xPos = 0;
+            }
+            
+            else if(vel.z <0){
+              this.zPosition = zPos+1 + (this.hitboxLength/2 + 0.0001);
+              this.zPos = 0;
+              //this.xPos = 0;
+            }
+            
+            if(vel.y>0){
+              this.onGround = true;
+              this.yPosition =yPos  - this.hitboxHeight;
+              this.yPos = 0;
+              
+            }
+            
+            
+          }
+          
+        }
+      }
+    }
+    
+    
+    
+  }
 
   public void checkSlots() {
     boolean correct = false;
@@ -261,119 +321,7 @@ public class Player extends Entity{
     if (!correct)outputSlot = null;
   }
   
-  public void checkCollisions(){
-    Chunk playerChunk = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0));
-    if(playerChunk != null){ 
-      this.yPos += 0.35f*(1f/60);
-      
-      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition + 1.5)][ floor((this.zPosition)%16)] != null ){
-        this.yPosition =(int)this.yPosition + 0.5f;
-        this.yPos = 0;
-        this.onGround = true;
-      }
-      if(playerChunk.blocks[floor((this.xPosition )%16)][ floor(this.yPosition -1)][ floor((this.zPosition)%16)] != null ){
-        float penetration = (int) this.yPosition - this.yPosition;
-        if(-penetration < 0.25f){
-          this.yPos = 0;
-          this.yPosition += (0.25 + penetration);
-        }
-      }
-      if(floor(this.xPosition%16)<15){
-        if((playerChunk.blocks[floor((this.xPosition +1)%16)][ floor(this.yPosition)][ floor((this.zPosition)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition +1)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null) ){
-          float penetration = this.xPosition - (int)this.xPosition;
-          if(!(penetration < 0.75f)){
-            this.xPosition -= (penetration - 0.75f);
-            this.xPos = 0;
-          }
-        }
-      }else{
-        Chunk pX = c.getChunkAt(floor(player.xPosition/16.0)+1,floor(player.zPosition/16.0));
-        if((pX.blocks[floor((this.xPosition +1)%16)][ floor(this.yPosition)][ floor((this.zPosition)%16)] != null)|| (pX.blocks[floor((this.xPosition +1)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null) ){
-          float penetration = this.xPosition - (int)this.xPosition;
-          if(!(penetration < 0.75f)){
-            this.xPosition -= (penetration - 0.75f);
-            this.xPos = 0;
-          }
-        }
-      
-      }
-      if(floor(this.xPosition%16)>0){ 
-        if((playerChunk.blocks[floor((this.xPosition -1)%16)][ floor(this.yPosition)][ floor((this.zPosition)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition -1)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null) ){
-          float penetration = (int)this.xPosition - this.xPosition;
-          if((-penetration < 0.25f)){
-            this.xPosition += (0.25 + penetration);
-            this.xPos = 0;
-          }
-        }
-      }else{
-        Chunk nX = c.getChunkAt(floor(player.xPosition/16.0)-1,floor(player.zPosition/16.0));
-        if((nX.blocks[floor((this.xPosition -1)%16)][ floor(this.yPosition)][ floor((this.zPosition)%16)] != null)|| (nX.blocks[floor((this.xPosition -1)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null) ){
-          float penetration = (int)this.xPosition - this.xPosition;
-          if((-penetration < 0.25f)){
-            this.xPosition += (0.25 + penetration);
-            this.xPos = 0;
-          }
-        }
-        
-      }
-      if(floor(this.zPosition%16)<15){ 
-        if((playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition + 1)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition + 1)%16)] != null) ){
-          float penetration = this.zPosition - (int)this.zPosition;
-          if(!(penetration < 0.75f)){
-            this.zPosition -= (penetration - 0.75f);
-            this.zPos = 0;
-          }
-        }
-      }else{
-        Chunk pZ = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0) + 1);
-        if((pZ.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition + 1)%16)] != null)|| (pZ.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition + 1)%16)] != null) ){
-          float penetration = this.zPosition - (int)this.zPosition;
-          if(!(penetration < 0.75f)){
-            this.zPosition -= (penetration - 0.75f);
-            this.zPos = 0;
-          }
-        }
-        
-      }
-      if(floor(this.zPosition%16)>0){ 
-        if((playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition - 1)%16)] != null)|| (playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition - 1)%16)] != null) ){
-          float penetration = (int)this.zPosition - this.zPosition;
-          if((-penetration < 0.25f)){
-            this.zPosition += (0.25 + penetration);
-            this.zPos = 0;
-          }
-        }
-      }else{
-        Chunk nZ = c.getChunkAt(floor(player.xPosition/16.0),floor(player.zPosition/16.0) - 1);
-        if((nZ.blocks[floor((this.xPosition)%16)][ floor(this.yPosition)][ floor((this.zPosition - 1)%16)] != null)|| (nZ.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition - 1)%16)] != null) ){
-          float penetration = (int)this.zPosition - this.zPosition;
-          if((-penetration < 0.25f)){
-            this.zPosition += (0.25 + penetration);
-            this.zPos = 0;
-          }
-        }
-        
-      }
-      if(playerChunk.blocks[floor((this.xPosition)%16)][ floor(this.yPosition+1)][ floor((this.zPosition)%16)] != null){
-        this.xPosition -= this.xPos;
-        this.zPosition -= this.zPos;
-        this.xPos = 0;
-        this.zPos = 0;
-      }
-      //if(c.getBlockAt(playerChunk,floor(this.xPosition)-1,floor(this.yPosition)+1,floor(this.zPosition)-1) != null){
-      //  float zPen = (int)this.zPosition - this.zPosition;
-      //  float xPen = (int)this.xPosition - this.xPosition;
-      //  //println(xPen);    
-      //  if((-xPen < 0.25f) && (-zPen < 0.25f)){
-      //    //println("HI");
-      //    this.xPos = 0;
-      //    this.zPos = 0;
-      //    this.xPosition += (0.25 + xPen);
-      //    this.zPosition += (0.25 + zPen);
-      //  }
-      //}
-    }
-  }
+  
   
   
   //item functions

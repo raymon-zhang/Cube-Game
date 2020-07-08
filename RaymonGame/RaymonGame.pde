@@ -12,10 +12,8 @@ PShader blockShader;
 
 boolean running;
 
-int cols, rows;
-int scl = 1;
-int w = 16;
-int h = 16;
+
+
 
 int WORLDSIZE = 19;
 int WATERLEVEL = 96;
@@ -46,7 +44,7 @@ boolean drawingUI;
 boolean debug;
 boolean drawingInventory;
 
-PImage gui, indicator, inventoryImage, overlay, highlight;
+PImage gui, indicator, inventoryImage, overlay, highlight, testImage;
 
 boolean mouseclicked;
 
@@ -64,6 +62,8 @@ PFont myFont;
 
 int total_frames;
 int time1;
+
+Entity test;
 
 
 public Hashtable<Integer, ItemType> ItemTypes=  new Hashtable<Integer, ItemType>();
@@ -92,6 +92,7 @@ void setup() {
   inventoryImage = loadImage("textures/gui/inventory.png");
   overlay = loadImage("textures/gui/overlay.png");
   highlight = loadImage("textures/gui/highlight.png");
+  testImage = loadImage("textures/entity/test.png");
   
 
   total_frames = 0;
@@ -121,8 +122,8 @@ void setup() {
 
   noCursor();
   
-  cols = w/scl;
-  rows = h/scl;
+
+
 
   try {
     mouseControl = new Robot();
@@ -145,7 +146,7 @@ void setup() {
   //diamond = new SoundFile(this, "/sounds/diamond.mp3");
   
   player = new Player(88, 50, 88);
-  
+  test = new Pig(88, 50, 80);
   
 
   
@@ -192,8 +193,11 @@ void draw() {
   perspective(radians(70), (float)width/ (float)height, 0.01f, 1000);
   c.drawWorld();
   resetShader();
+  test.update();
   perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
+  
   player.updateCamera();
+  
   
   f = frameRate;
     
