@@ -20,7 +20,7 @@ public class Player extends Entity{
     perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
 
     this.inventory = new ItemStack[36];
-    this.inventory[1] = new ItemStack(102, this);
+    this.inventory[1] = new ItemStack(104, this);
     this.inventory[2] = new ItemStack(150, this);
     this.craftingGrid = new ItemStack[9];
 
@@ -45,8 +45,8 @@ public class Player extends Entity{
 
 
   public void updateCamera() {
-    this.yPos += 0.35f*(1f/60);
-
+    this.yPos += this.gravity*(1f/60);
+    this.gravity = 0.35f;
     this.xPosition += this.xPos;
     this.checkCollisions(new PVector(this.xPos, 0,0));
     
@@ -86,7 +86,7 @@ public class Player extends Entity{
     camera(this.xPosition, this.yPosition, this.zPosition, xCenter, yCenter, zCenter, 0, 1, 0);
 
 
-    drawingUI = true;
+    //drawingUI = true;
     pushMatrix();
     hint(DISABLE_DEPTH_TEST);
     resetMatrix();
@@ -98,11 +98,17 @@ public class Player extends Entity{
     hint(ENABLE_DEPTH_TEST);
 
     popMatrix();
-    drawingUI = false;
+    //drawingUI = false;
     noStroke();
+    
   }
 
   public void drawGui() {
+    textAlign(LEFT, TOP);
+    if (isUnderwater){
+      image(underwater, 0,0,width, height);
+      this.yPos *= 0.75;
+    }
     image(gui, width/2-364, height-88, 728, 88); 
     
     if(this.blockDamage >0){
@@ -258,10 +264,10 @@ public class Player extends Entity{
     float xPosition = this.xPosition;
     float yPosition = this.yPosition;
     float zPosition = this.zPosition;
-    for(float x = this.xPosition - this.hitboxWidth/2; x <= xPosition + this.hitboxWidth/2; x+=this.hitboxWidth){
+    for(int x = floor(this.xPosition - this.hitboxWidth/2); x < xPosition + this.hitboxWidth/2; x++){
       //println(x);
-      for(float y = this.yPosition; y <= yPosition +this.hitboxHeight; y+= this.hitboxHeight - 0.001){
-        for(float z = this.zPosition - this.hitboxLength/2; z <= zPosition + this.hitboxLength/2; z+=this.hitboxLength){
+      for(int y = floor(this.yPosition); y < yPosition +this.hitboxHeight; y++){
+        for(int z = floor(this.zPosition - this.hitboxLength/2); z < zPosition + this.hitboxLength/2; z++){
           
           //point(x,y,z);
           int xPos = floor(x);
@@ -269,6 +275,11 @@ public class Player extends Entity{
           int zPos = floor(z);
           Block block = c.getBlockAt(xPos, yPos, zPos);
           if(block != null && !block.isTransparent()){
+            if (vel.y < 0){
+              this.yPosition = yPos +1+0.01;
+              this.yPos = 0;
+            }
+            
             if(vel.x >0){
               this.xPosition = xPos-(this.hitboxWidth/2 + 0.0001);
               this.xPos = 0;
@@ -302,11 +313,16 @@ public class Player extends Entity{
             
           }
           
+          
         }
       }
     }
     
-    
+    Block block = c.getBlockAt(floor(this.xPosition), floor(this.yPosition), floor(this.zPosition));
+    if (block != null && block.blockType == 4){
+            this.gravity = 0.6;
+            isUnderwater = true;
+    }
     
   }
 

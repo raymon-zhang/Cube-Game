@@ -130,11 +130,15 @@ public class World {
       return chunk.blocks[x-floor(x/16.0)*16][y][z-floor(z/16.0)*16];
     }
     catch(Exception e){
-      println((x-floor(x/16.0)*16) + ", " + y + ", " + (z-floor(z/16.0)*16));
-      return chunk.blocks[x-floor(x/16.0)*16][y][z-floor(z/16.0)*16];
+      //println((x-floor(x/16.0)*16) + ", " + y + ", " + (z-floor(z/16.0)*16));
+      return new Block(1);
     }
       
     
+  }
+  
+  public int getHighestBlockAt(int x, int z){
+    return 128-((int)map(noise(((x)/75.0), (z)/75.0), 0, 1, 5, 100));
   }
 }
 

@@ -45,7 +45,7 @@ void keyPressed() {
   }
   
 }
- 
+
 void keyReleased() {
   if(key == 'w') isUp = false;  
   if(key == 's') isDown = false; 
@@ -98,10 +98,14 @@ void checkKeys(){
       
     //}
   }
-  if (isSpace && player.onGround) {
+  if (isSpace && isUnderwater){
+    player.yPos += -2.5*(1.0/60);
+  }
+  else if (isSpace && player.onGround && !isUnderwater) {
     player.yPos += -7*(1.0/60);
     player.onGround = false;
   }
+  
   //if (isShift) {
   //  player.yPos += 0.1* playerSpeed;
   //}

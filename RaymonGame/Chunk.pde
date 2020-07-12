@@ -122,7 +122,7 @@ public class Chunk{
   public void betterGenerateMesh(){
     
     
-    int timeStamp1 = millis();
+    //int timeStamp1 = millis();
     while(drawingUI == true) delay(1);
     PShape newMesh = createShape();
     newMesh.beginShape(TRIANGLE);
@@ -280,7 +280,7 @@ public class Chunk{
     newMesh.endShape();
     this.mesh = newMesh;
     
-    println("Generating mesh actually took: " + (millis()-timeStamp1)+ " ms");
+    //println("Generating mesh actually took: " + (millis()-timeStamp1)+ " ms");
     //println("------");
   }
   
@@ -394,7 +394,7 @@ public class Chunk{
   public void generateOres(){
     int diamondX = (int)random(15);
     int diamondZ = (int)random(15);
-    println("Diamond generated at " + (this.lowestXPos + diamondX) + ", " + (this.lowestZPos + diamondZ));
+    //println("Diamond generated at " + (this.lowestXPos + diamondX) + ", " + (this.lowestZPos + diamondZ));
     for(int x = 0; x<(int)random(1,3); x++){
       for(int z = 0; z<(int)random(1,3); z++){
         for(int y = 0; y<(int)random(1,3); y++){
@@ -406,7 +406,7 @@ public class Chunk{
       int ironX = (int)random(0,14);
       int ironZ = (int)random(0,14);
       int ironY = (int)random(0, 15);
-      println("Iron generated at " + (this.lowestXPos + ironX) + ", " + (this.lowestZPos + ironZ));
+      //println("Iron generated at " + (this.lowestXPos + ironX) + ", " + (this.lowestZPos + ironZ));
       for(int x = 0; x<(int)random(1,4); x++){
         for(int z = 0; z<(int)random(1,4); z++){
           for(int y = 0; y<(int)    random(1,4); y++){

@@ -10,8 +10,7 @@ import java.lang.reflect.*;
 
 PShader blockShader;
 
-boolean running;
-
+boolean running, isUnderwater;
 
 
 
@@ -44,7 +43,7 @@ boolean drawingUI;
 boolean debug;
 boolean drawingInventory;
 
-PImage gui, indicator, inventoryImage, overlay, highlight, testImage;
+PImage gui, indicator, inventoryImage, overlay, highlight, testImage, panda, underwater, background;
 
 boolean mouseclicked;
 
@@ -63,7 +62,7 @@ PFont myFont;
 int total_frames;
 int time1;
 
-Entity test;
+Entity test, test2;
 
 
 public Hashtable<Integer, ItemType> ItemTypes=  new Hashtable<Integer, ItemType>();
@@ -93,7 +92,9 @@ void setup() {
   overlay = loadImage("textures/gui/overlay.png");
   highlight = loadImage("textures/gui/highlight.png");
   testImage = loadImage("textures/entity/test.png");
-  
+  panda = loadImage("textures/entity/panda.png");
+  underwater = loadImage("textures/underwater.png");
+  background = loadImage("textures/gui/background.png");
 
   total_frames = 0;
 
@@ -146,7 +147,8 @@ void setup() {
   //diamond = new SoundFile(this, "/sounds/diamond.mp3");
   
   player = new Player(88, 50, 88);
-  test = new Pig(88, 50, 88);
+  test = new Pig(88, 50, 80);
+  test2 = new Panda(80, 50, 88);
   
 
   
@@ -156,13 +158,13 @@ void setup() {
   noSmooth();
   hint(DISABLE_TEXTURE_MIPMAPS);
 
-  //lights();
+  lights();
 
   frameRate(150);
   
-  myFont = createFont("Arial", 30);
+  myFont = createFont("Minecraft.ttf", 30);
   textFont(myFont);
-  textAlign(LEFT);
+  textAlign(RIGHT);
   
   
   thread("checkChunks");
@@ -174,37 +176,59 @@ void setup() {
 
 
 void draw() {
-  
-  total_frames += 1;
-  background(130, 202, 255);
-  
-  //if (time1 == 0) time1 = millis();
-
-  //shape(clouds);
-  //shape(clouds, -3072, 0);
-  //shape(clouds2);
-
-  
-  checkKeys();
-  checkMouse();
-  
-
-  shader(blockShader);
-  perspective(radians(70), (float)width/ (float)height, 0.01f, 1000);
-  c.drawWorld();
-  resetShader();
-  test.update();
-  perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
-  
-  player.updateCamera();
-  
-  
-  f = frameRate;
+  try{
+    total_frames += 1;
+    background(130, 202, 255);
     
-   
+    //if (time1 == 0) time1 = millis();
   
-  pMouse.x = mouse.x;
-  pMouse.y = mouse.y;
+    //shape(clouds);
+    //shape(clouds, -3072, 0);
+    //shape(clouds2);
+  
+    
+    checkKeys();
+    checkMouse();
+    
+    isUnderwater = false;
+    shader(blockShader);
+    perspective(radians(70), (float)width/ (float)height, 0.01f, 1000);
+    c.drawWorld();
+    resetShader();
+    drawingUI = true;
+    checkSpawnEntities();
+    updateEntities();
+    perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
+    
+    player.updateCamera();
+    
+    drawingUI = false;
+    f = frameRate;
+      
+     
+    
+    pMouse.x = mouse.x;
+    pMouse.y = mouse.y;
+  }catch(Exception e){
+    perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
+    pushMatrix();
+    hint(DISABLE_DEPTH_TEST);
+    resetMatrix();
+    applyMatrix(originalMatrix);
+    tint(100);
+    for(int x = 0; x<width; x+=128){
+      for(int y = 0; y<height; y+=128){
+        image(background, x, y, 128, 128);
+      }
+    }
+    
+    //fill(255, 0,0);
+    textSize(50);
+    textAlign(CENTER);
+    text("There was an error.", width/2, height/2-50);
+    text(e.toString(),width/2, height/2 + 50);
+    noLoop();
+  }
   
 }
 

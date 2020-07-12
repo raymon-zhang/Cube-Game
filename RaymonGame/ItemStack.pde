@@ -26,8 +26,8 @@ public class ItemStack{
     if(this.icon != null)image(this.icon, coords.x, coords.y , 64, 64);
     if(this.amount >1){
       textSize(28);
-      textAlign(LEFT, TOP);
-      text(this.amount, coords.x + 33, coords.y + 37);
+      textAlign(RIGHT, TOP);
+      text(this.amount, coords.x + 65, coords.y + 40);
     }
     popStyle();
   }

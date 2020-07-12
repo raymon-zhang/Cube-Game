@@ -11,7 +11,7 @@ public void breakBlock(){
   
   int counter = 0;
   try{
-    while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null){
+    while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null ||c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16].isTransparent()){
       //println("Step");
       //println(floor(xCenter )-(floor(xCenter/16) )*16);
       yCenter += yDelta;
@@ -59,7 +59,8 @@ public void placeBlock(){
   float yCenter = player.yPosition + yDelta;
   float xCenter = player.xPosition + xDelta;
   float zCenter = player.zPosition +  zDelta;
-  
+  PVector playerPosition = new PVector(floor(player.xPosition), floor(player.yPosition), floor(player.zPosition));
+  PVector playerPositionplusOne = new PVector(floor(player.xPosition), floor(player.yPosition+1.499), floor(player.zPosition));
   int counter = 0;
   try{
     while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null){
@@ -77,7 +78,7 @@ public void placeBlock(){
       
       
     }
-    if(counter <120){
+    if(counter <120 &&(! new PVector(floor(xCenter), floor(yCenter), floor(zCenter) ).equals(playerPosition)) &&(! new PVector(floor(xCenter), floor(yCenter), floor(zCenter) ).equals(playerPositionplusOne))){
    
       Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
       Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];

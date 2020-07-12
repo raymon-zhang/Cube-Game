@@ -12,8 +12,8 @@ public class Pig extends Entity{
     this.shape.texture(testImage);
     
     
-    this.createRectPrism(new PVector(0.2,0.1,0), new PVector(0.6, 0.4, 0.7), new PVector(40, 16), new PVector(16, 16));
-    this.createRectPrism(new PVector(0.22, 0, 0.5), new PVector(0.56,0.5, 0.5), new PVector(8, 8), new PVector(8,8)); 
+    this.createRectPrism(new PVector(0.2,0.1,0), new PVector(0.6, 0.4, 0.7), new PVector(40, 16), new PVector(16, 16), new PVector(8,8));
+    this.createRectPrism(new PVector(0.22, 0, 0.5), new PVector(0.56,0.5, 0.5), new PVector(8, 8), new PVector(8,8), new PVector(8,8)); 
     this.shape.endShape();
     //this.createRectPrism(new PVector(0.2, 0.5, 0.05), new PVector(0.2, 0.4, 0.15), new PVector(16, 32), new PVector(8,8));
     //this.createRectPrism(new PVector(0.6, 0.5, 0.05), new PVector(0.2, 0.4, 0.15), new PVector(16, 32), new PVector(8,8));
@@ -24,7 +24,7 @@ public class Pig extends Entity{
     //this.shape.noFill();
     this.legs.noStroke();
     this.legs.texture(testImage);
-    this.createShapeOnShape(this.legs, new PVector(0,0,-0.075), new PVector(0.2, 0.4, 0.15), new PVector(16, 32), new PVector(8,8));
+    this.createShapeOnShape(this.legs, new PVector(0,0,-0.075), new PVector(0.2, 0.4, 0.15), new PVector(16, 32), new PVector(8,8), new PVector(8,8));
     this.legs.endShape();
     //this.shape.vertex(0,0, 0, 8, 0);
     //this.shape.vertex(0, 0, hitboxLength, 24, 0);
@@ -81,8 +81,10 @@ public class Pig extends Entity{
     
     
     shape(this.shape);
-    
-    
+    //textSize(0.1);
+    stroke(255);
+    line(0,0,0, 0, -100, 0);
+    //text(this.targetedPosition.toString(), 0, -1, 0);
     
     translate(0.2, 0.5, 0.125);
     rotateX(radians(this.legRotation));
