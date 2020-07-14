@@ -1,3 +1,4 @@
+//A class that represents all things that have hitboxes, and are not fixed to the world grid.
 public class Entity{
   float xPos, yPos, zPos;
   float vDeg, hDeg;

@@ -1,3 +1,4 @@
+//Reads recipes from file
 public class Recipe{
   public int[] grid;
   public ItemStack output;

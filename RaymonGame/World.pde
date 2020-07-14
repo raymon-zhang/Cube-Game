@@ -1,3 +1,4 @@
+//Class for handling the world, such as chunk loading
 //import java.util.*;
 public class World {
   public ArrayList<Chunk> chunkMemory;

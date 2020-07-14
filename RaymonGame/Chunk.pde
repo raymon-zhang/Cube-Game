@@ -1,3 +1,4 @@
+//Class for all chunk functionality
 public class Chunk{
   public int lowestXPos, lowestYPos, lowestZPos;
 

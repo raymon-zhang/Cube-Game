@@ -1,3 +1,4 @@
+//Class for storing stacks of items in the inventory
 public class ItemStack{
   
   public int itemType;

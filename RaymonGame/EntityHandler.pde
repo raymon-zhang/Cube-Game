@@ -1,3 +1,4 @@
+//Handles mob spawns and other things
 public ArrayList<Entity> entities = new ArrayList<Entity>();
 public String[] entityTypes = new String[]{"Pig", "Panda"};
 public void checkSpawnEntities(){

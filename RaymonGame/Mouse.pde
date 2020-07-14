@@ -1,3 +1,4 @@
+//For handling mouse input
 public void checkMouse(){
   
   if(!drawingInventory){

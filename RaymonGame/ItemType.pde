@@ -1,3 +1,4 @@
+//Class for reading ItemTypes from files and determining features of itemtypes.
 public class ItemType{
   public int type, maxAmount, breakingSpeed;
   

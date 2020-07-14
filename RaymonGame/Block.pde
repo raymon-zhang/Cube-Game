@@ -1,3 +1,4 @@
+//Class for storing and drawing blocks to chunk meshes
 public class Block{
   
   

@@ -1,4 +1,4 @@
-
+//Handles raycasting for players targeted block
 public void breakBlock(){
   player.blockDamage = 0;
   float yDelta = - cos(player.vDeg)/100;
@@ -81,7 +81,7 @@ public void placeBlock(){
     if(counter <120 &&(! new PVector(floor(xCenter), floor(yCenter), floor(zCenter) ).equals(playerPosition)) &&(! new PVector(floor(xCenter), floor(yCenter), floor(zCenter) ).equals(playerPositionplusOne))){
    
       Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
-      Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
+      //Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
       try{
         chunk.setBlock( player.inventory[player.selectedSlot].itemType,(floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
         if(player.inventory[player.selectedSlot].amount > 1){

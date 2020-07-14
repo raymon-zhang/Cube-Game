@@ -1,3 +1,4 @@
+//For handling keyboard input
 boolean isLeft, isRight, isUp, isDown, isSpace, isShift; 
 float playerSpeed = 0.1;
 

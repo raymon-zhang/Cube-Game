@@ -1,3 +1,4 @@
+//Exteds entity class, handles player features
 public class Player extends Entity{
 
   int selectedSlot;

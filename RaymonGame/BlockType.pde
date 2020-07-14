@@ -1,3 +1,4 @@
+//Class that reads blocktypes from file and determines features of thos blocks
 public class BlockType{
   public int type, dropped;
   
