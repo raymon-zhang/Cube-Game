@@ -11,7 +11,7 @@ public void breakBlock(){
   
   int counter = 0;
   try{
-    while (c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null ||c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16].isTransparent()){
+    while ((c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null ||c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16].isTransparent())&&getEntityAt(new PVector(xCenter, yCenter, zCenter))==null){
       //println("Step");
       //println(floor(xCenter )-(floor(xCenter/16) )*16);
       yCenter += yDelta;
@@ -22,30 +22,36 @@ public void breakBlock(){
       
     }
     if(counter <1200){
-      
-      Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
-     
-      Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
-      chunk.removeBlock((floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
-      BlockType blocktype = BlockTypes.get(block.blockType);
-      int drop = blocktype.dropped;
-
-      
-      for (int x = 0; x < player.inventory.length; x++){
-        if(player.inventory[x] == null){
-          player.inventory[x] = new ItemStack(drop, player);
-          return;
+      Entity targetedEntity = getEntityAt(new PVector(xCenter, yCenter, zCenter));
+      if(targetedEntity == null){
+        Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
+       
+        Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
+        chunk.removeBlock((floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
+        BlockType blocktype = BlockTypes.get(block.blockType);
+        int drop = blocktype.dropped;
+  
+        
+        for (int x = 0; x < player.inventory.length; x++){
+          if(player.inventory[x] == null){
+            player.inventory[x] = new ItemStack(drop, player);
+            return;
+          }
+          else if (player.inventory[x].itemType == drop){
+            if(player.inventory[x].amount<64)player.inventory[x].amount ++;
+            else continue;
+            return;
+          }
         }
-        else if (player.inventory[x].itemType == drop){
-          if(player.inventory[x].amount<64)player.inventory[x].amount ++;
-          else continue;
-          return;
-        }
+      }else{
+        entities.remove(targetedEntity);
+        
+        
       }
 
     }
   }catch(Exception e){
-    println(floor(xCenter )-(floor(xCenter/16) )*16);
+    //println(floor(xCenter )-(floor(xCenter/16) )*16);
   }
   
 }

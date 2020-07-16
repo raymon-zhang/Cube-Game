@@ -35,3 +35,14 @@ public void updateEntities(){
   }
   
 }
+
+public Entity getEntityAt(PVector position){
+  for(Entity entity :entities){
+    if(position.x > entity.xPosition && position.x < entity.xPosition +entity.hitboxWidth && position.y > entity.yPosition && position.y < entity.yPosition + entity.hitboxHeight && position.z > entity.zPosition && position.z < entity.zPosition +entity.hitboxLength){
+      println("HI");
+      return entity;
+    }
+  }
+  return null;
+  
+}

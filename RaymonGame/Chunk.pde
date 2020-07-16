@@ -33,7 +33,7 @@ public class Chunk{
       try{
       
         if(x == 0){
-          println("Checking chunk: " + ((lowestXPos)/16 -1) + ", " + lowestZPos/16);
+          //println("Checking chunk: " + ((lowestXPos)/16 -1) + ", " + lowestZPos/16);
           this.world.getChunkAt(lowestXPos/16-1, lowestZPos/16).betterGenerateMesh();
         }
       }catch(ArrayIndexOutOfBoundsException e){
@@ -42,7 +42,7 @@ public class Chunk{
       try{
       
         if(x == 15){
-          println("Checking chunk: " + ((lowestXPos)/16 + 1) + ", " + lowestZPos/16);
+          //println("Checking chunk: " + ((lowestXPos)/16 + 1) + ", " + lowestZPos/16);
           this.world.getChunkAt(lowestXPos/16+1,lowestZPos/16).betterGenerateMesh();
         }
       }catch(ArrayIndexOutOfBoundsException e){
@@ -51,7 +51,7 @@ public class Chunk{
       try{
       
         if(z == 0){
-          println("Checking chunk: ", + (lowestXPos/16) + ", " + ((lowestZPos)/16 -1) );
+          //println("Checking chunk: ", + (lowestXPos/16) + ", " + ((lowestZPos)/16 -1) );
           this.world.getChunkAt(lowestXPos/16, lowestZPos/16-1).betterGenerateMesh();
         }
       }catch(ArrayIndexOutOfBoundsException e){
@@ -60,7 +60,7 @@ public class Chunk{
       try{
       
         if(z == 15){
-          println("Checking chunk: " +(lowestXPos/16) + ", " + ((lowestZPos)/16 + 1)  );
+          //println("Checking chunk: " +(lowestXPos/16) + ", " + ((lowestZPos)/16 + 1)  );
           this.world.getChunkAt(lowestXPos/16, lowestZPos/16+1).betterGenerateMesh();
         }
       }catch(ArrayIndexOutOfBoundsException e){
@@ -75,7 +75,7 @@ public class Chunk{
       try{
       
         if(x == 0){
-          println("Checking chunk: " + ((lowestXPos)/16 -1) + ", " + lowestZPos/16);
+          //println("Checking chunk: " + ((lowestXPos)/16 -1) + ", " + lowestZPos/16);
           this.world.getChunkAt(lowestXPos/16-1, lowestZPos/16).betterGenerateMesh();
         }
       }catch(ArrayIndexOutOfBoundsException e){
@@ -84,7 +84,7 @@ public class Chunk{
       try{
       
         if(x == 15){
-          println("Checking chunk: " + ((lowestXPos)/16 + 1) + ", " + lowestZPos/16);
+          //println("Checking chunk: " + ((lowestXPos)/16 + 1) + ", " + lowestZPos/16);
           this.world.getChunkAt(lowestXPos/16+1,lowestZPos/16).betterGenerateMesh();
         }
       }catch(ArrayIndexOutOfBoundsException e){
@@ -93,7 +93,7 @@ public class Chunk{
       try{
       
         if(z == 0){
-          println("Checking chunk: ", + (lowestXPos/16) + ", " + ((lowestZPos)/16 -1) );
+          //println("Checking chunk: ", + (lowestXPos/16) + ", " + ((lowestZPos)/16 -1) );
           this.world.getChunkAt(lowestXPos/16, lowestZPos/16-1).betterGenerateMesh();
         }
       }catch(ArrayIndexOutOfBoundsException e){
@@ -102,7 +102,7 @@ public class Chunk{
       try{
       
         if(z == 15){
-          println("Checking chunk: " +(lowestXPos/16) + ", " + ((lowestZPos)/16 + 1)  );
+          //println("Checking chunk: " +(lowestXPos/16) + ", " + ((lowestZPos)/16 + 1)  );
           this.world.getChunkAt(lowestXPos/16, lowestZPos/16+1).betterGenerateMesh();
         }
       }catch(ArrayIndexOutOfBoundsException e){

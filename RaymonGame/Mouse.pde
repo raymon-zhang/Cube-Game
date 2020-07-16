@@ -1,7 +1,7 @@
 //For handling mouse input
 public void checkMouse(){
   
-  if(!drawingInventory){
+  if(!drawingInventory && !player.dead){
     mouse = MouseInfo.getPointerInfo().getLocation();
     if (pMouse == null)pMouse = new Point(mouse.x, mouse.y);
       
@@ -29,11 +29,9 @@ public void checkMouse(){
     player.vDeg = map(mouse.y, 0, height, 0, PI);
     
     
-    if (mouse.x < 960) {
-      player.hDeg = map(mouse.x, 2, 960, 0, PI);
-    } else if (mouse.x >= 960) {
-      player.hDeg = map(mouse.x, 960, 1918, PI, TWO_PI);
-    } 
+    
+    player.hDeg = map(mouse.x, 2, 1918, 0, TWO_PI);
+    
   
   
   }
@@ -43,7 +41,7 @@ public void checkMouse(){
 public void checkMouseClicked(){
   for(;;delay(25)){
     
-    if(mousePressed&& !drawingInventory ){ 
+    if(mousePressed&& !drawingInventory && !player.dead){ 
       if (mouseButton == LEFT){
         if(player.inventory[player.selectedSlot]!= null){
           ItemType item = ItemTypes.get(player.inventory[player.selectedSlot].itemType);
@@ -97,6 +95,9 @@ public int getInventorySlot(){
 void mouseClicked(){
   mouseclicked = true;
   
+}
+void mousePressed(){
+  bmouseclicked = true;
 }
 void mouseReleased(){
   player.blockDamage = 0;

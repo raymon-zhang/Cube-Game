@@ -24,7 +24,7 @@ public class Pig extends Entity{
     //this.shape.noFill();
     this.legs.noStroke();
     this.legs.texture(testImage);
-    this.createShapeOnShape(this.legs, new PVector(0,0,-0.075), new PVector(0.2, 0.4, 0.15), new PVector(16, 32), new PVector(8,8), new PVector(8,8));
+    this.createShapeOnShape(this.legs, new PVector(0,0,-0.125), new PVector(0.2, 0.4, 0.25), new PVector(16, 32), new PVector(8,8), new PVector(8,8));
     this.legs.endShape();
     //this.shape.vertex(0,0, 0, 8, 0);
     //this.shape.vertex(0, 0, hitboxLength, 24, 0);

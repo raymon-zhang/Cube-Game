@@ -44,8 +44,9 @@ boolean debug;
 boolean drawingInventory;
 
 PImage gui, indicator, inventoryImage, overlay, highlight, testImage, panda, underwater, background;
+PImage icons, healthBack, health1, health2, death, buttonTexture, cbuttonTexture;
 
-boolean mouseclicked;
+boolean mouseclicked, bmouseclicked;
 
 
 PMatrix originalMatrix;
@@ -95,7 +96,13 @@ void setup() {
   panda = loadImage("textures/entity/panda.png");
   underwater = loadImage("textures/underwater.png");
   background = loadImage("textures/gui/background.png");
-
+  icons = loadImage("textures/gui/icons.png");
+  death = loadImage("textures/dead.png");
+  healthBack = icons.get(0,0,9,9);
+  health1 = icons.get(9,0,9,9);
+  health2 = icons.get(9,0,5,9);
+  buttonTexture = icons.get(0, 9, 200, 20);
+  cbuttonTexture = icons.get(0, 29, 200, 20);
   total_frames = 0;
 
   running = true;
@@ -162,7 +169,7 @@ void setup() {
 
   frameRate(150);
   
-  myFont = createFont("Minecraft.ttf", 30);
+  myFont = createFont("Minecraft.ttf", 200);
   textFont(myFont);
   textAlign(RIGHT);
   
@@ -179,7 +186,6 @@ void draw() {
   try{
     total_frames += 1;
     background(130, 202, 255);
-    
     //if (time1 == 0) time1 = millis();
   
     //shape(clouds);
@@ -193,11 +199,12 @@ void draw() {
     isUnderwater = false;
     shader(blockShader);
     perspective(radians(70), (float)width/ (float)height, 0.01f, 1000);
+    updateEntities();
     c.drawWorld();
     resetShader();
     drawingUI = true;
     checkSpawnEntities();
-    updateEntities();
+   
     perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
     
     player.updateCamera();
@@ -229,7 +236,7 @@ void draw() {
     text(e.toString(),width/2, height/2 + 50);
     noLoop();
   }
-  
+  bmouseclicked = false;
 }
 
 

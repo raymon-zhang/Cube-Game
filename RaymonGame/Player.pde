@@ -5,7 +5,7 @@ public class Player extends Entity{
   
   int blockDamage;
 
-
+  boolean dead = false;
   public ItemStack[] inventory, craftingGrid;
   public ItemStack outputSlot;
 
@@ -17,6 +17,7 @@ public class Player extends Entity{
   public Player(float xPos, float yPos, float zPos) {
     super(xPos, yPos, zPos);
     this.selectedSlot = 0;
+    
     
     perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
 
@@ -46,61 +47,95 @@ public class Player extends Entity{
 
 
   public void updateCamera() {
-    this.yPos += this.gravity*(1f/60);
-    this.gravity = 0.35f;
-    this.xPosition += this.xPos;
-    this.checkCollisions(new PVector(this.xPos, 0,0));
-    
-    this.yPosition += this.yPos;
-    this.checkCollisions(new PVector(0, this.yPos, 0));
-    
-    this.zPosition += this.zPos;
-    this.checkCollisions(new PVector(0, 0, this.zPos));
-    
-    
-    //checkCollisions();
-    
-    
-    
-    if (! (isLeft || isRight||isUp||isDown||isShift)) {
-
-      this.xPos *= 0.7;
-
-      this.zPos *= 0.7;
-    } else {
+    if(!this.dead){ 
+      this.yPos += this.gravity*(1f/60);
+      this.gravity = 0.35f;
+      this.xPosition += this.xPos;
+      this.checkCollisions(new PVector(this.xPos, 0,0));
+      
+      this.yPosition += this.yPos;
+      this.checkCollisions(new PVector(0, this.yPos, 0));
+      
+      this.zPosition += this.zPos;
+      this.checkCollisions(new PVector(0, 0, this.zPos));
+      
+      
+      //checkCollisions();
+      
+      if(frameCount % 60 == 0)this.health += 1;
+      
+      if(this.health>20)this.health=20;
+      
+      else if (this.health<=0)this.dead = true;
+      
+      //if (! (isLeft || isRight||isUp||isDown||isShift)) {
+  
+      //  this.xPos *= 0.7;
+  
+      //  this.zPos *= 0.7;
+      
       this.xPos *= 0.89;
-
+  
       this.zPos *= 0.89;
+      
+  
+  
+      float yCenter = this.yPosition - cos(this.vDeg);
+      float xCenter = this.xPosition -  sin(this.hDeg) * sin(this.vDeg);
+      float zCenter = this.zPosition +  cos(this.hDeg) * sin(this.vDeg);
+      //println(sqrt(pow(xPos, 2) + pow(zPos, 2)));
+  
+  
+  
+      stroke(255);
+      strokeWeight(7);
+      
+      camera(this.xPosition, this.yPosition, this.zPosition, xCenter, yCenter, zCenter, 0, 1, 0);
+      
+  
+      //drawingUI = true;
+      pushMatrix();
+      hint(DISABLE_DEPTH_TEST);
+      resetMatrix();
+      applyMatrix(originalMatrix);
+  
+  
+      this.drawGui();
+  
+      hint(ENABLE_DEPTH_TEST);
+  
+      popMatrix();
+      //drawingUI = false;
+      noStroke();
     }
-
-
-    float yCenter = this.yPosition - cos(this.vDeg);
-    float xCenter = this.xPosition -  sin(this.hDeg) * sin(this.vDeg);
-    float zCenter = this.zPosition +  cos(this.hDeg) * sin(this.vDeg);
-    //println(sqrt(pow(xPos, 2) + pow(zPos, 2)));
-
-
-
-    stroke(255);
-    strokeWeight(7);
-
-    camera(this.xPosition, this.yPosition, this.zPosition, xCenter, yCenter, zCenter, 0, 1, 0);
-
-
-    //drawingUI = true;
-    pushMatrix();
-    hint(DISABLE_DEPTH_TEST);
-    resetMatrix();
-    applyMatrix(originalMatrix);
-
-
-    this.drawGui();
-
-    hint(ENABLE_DEPTH_TEST);
-
-    popMatrix();
-    //drawingUI = false;
-    noStroke();
+    else{
+      pushMatrix();
+      
+      hint(DISABLE_DEPTH_TEST);
+      resetMatrix();
+      applyMatrix(originalMatrix);
+      cursor();
+      fill(255, 0,0,100);
+      noStroke();
+      rect(0,0,width, height);
+      textAlign(CENTER);
+      textSize(100);
+      fill(100);
+      text("You died!", width/2+12, height/2 - 187);
+      fill(255);
+      text("You died!", width/2, height/2 - 200);
+      if(button(width/2-400, height/2, 800, 80, buttonTexture, cbuttonTexture, "Respawn", 28)){
+        
+        this.dead = false;
+        this.health = 20;
+        noCursor();
+        popStyle();
+      }
+      hint(ENABLE_DEPTH_TEST);
+  
+      popMatrix();
+      
+    }
     
   }
 
@@ -109,6 +144,14 @@ public class Player extends Entity{
     if (isUnderwater){
       image(underwater, 0,0,width, height);
       this.yPos *= 0.75;
+    }
+    for(int x = 0; x < 10; x++){
+      image(healthBack, width/2-364 + x*32, height-128, 36,36);
+      
+    }
+    for(int x = 0; x < this.health; x+=2){
+      image(health1, width/2-364 + x*16, height-128, 36,36);
+      
     }
     image(gui, width/2-364, height-88, 728, 88); 
     
@@ -130,6 +173,7 @@ public class Player extends Entity{
     }
 
     if (debug) {
+      textSize(30);
       text("FPS: " + f, 30, 50);
       text(this.xPosition + ", " + this.yPosition + ", " +this.zPosition, 30, 85);
       text("Speed: " + (sqrt(this.xPos * this.xPos + this.zPos * this.zPos)*f), 30, 120);
@@ -306,6 +350,8 @@ public class Player extends Entity{
             
             if(vel.y>0){
               this.onGround = true;
+              this.health -= constrain((int)map(vel.y, 0.15, 0.85, 0,20),0,20);
+              rotate(PI);
               this.yPosition =yPos  - this.hitboxHeight;
               this.yPos = 0;
               
@@ -393,3 +439,28 @@ public class Player extends Entity{
   
   
 //}
+
+public boolean button(int tX, int tY, int w, int h, PImage texture, PImage ctexture, String text, int textSize){
+  if(mouseX > tX && mouseX < tX + w && mouseY > tY && mouseY < tY + h ){
+    image(ctexture, tX, tY, w, h);
+    pushStyle();
+    textAlign(CENTER, CENTER);
+    fill(255);
+    textSize(textSize);
+    text(text, tX + w/2, tY + h/2);
+    popStyle();
+    if( bmouseclicked){
+      return true;
+    }
+  }
+  else{
+    image(texture, tX, tY, w, h);
+    pushStyle();
+    textAlign(CENTER, CENTER);
+    fill(255);
+    textSize(textSize);
+    text(text, tX + w/2, tY + h/2); 
+    return false;
+  }
+  return false;
+}

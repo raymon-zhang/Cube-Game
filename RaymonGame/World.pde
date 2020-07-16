@@ -132,7 +132,7 @@ public class World {
     }
     catch(Exception e){
       //println((x-floor(x/16.0)*16) + ", " + y + ", " + (z-floor(z/16.0)*16));
-      return new Block(1);
+      return null;
     }
       
     

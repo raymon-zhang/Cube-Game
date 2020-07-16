@@ -58,53 +58,54 @@ void keyReleased() {
 }
  
 void checkKeys(){
+  if(!player.dead){
+    if (isLeft) {
+      player.xPos  += sin(PI/2-player.hDeg)/10 * playerSpeed;
+      
+      player.zPos += cos(PI/2-player.hDeg)/10* playerSpeed;
+        
+      //}
+      //else{
+        
+      //}
+    }
+    if (isRight) {
+      player.xPos  -= sin(PI/2-player.hDeg)/10* playerSpeed;
+      //if (player.zPosition -cos(PI/2-player.hDeg)/10* playerSpeed>1.5){
+      player.zPos -= cos(PI/2-player.hDeg)/10* playerSpeed;
+        
+      //}
+      //else{
+        
+      //}
+    }
   
-  if (isLeft) {
-    player.xPos  += sin(PI/2-player.hDeg)/10 * playerSpeed;
-    
-    player.zPos += cos(PI/2-player.hDeg)/10* playerSpeed;
-      
-    //}
-    //else{
-      
-    //}
-  }
-  if (isRight) {
-    player.xPos  -= sin(PI/2-player.hDeg)/10* playerSpeed;
-    //if (player.zPosition -cos(PI/2-player.hDeg)/10* playerSpeed>1.5){
-    player.zPos -= cos(PI/2-player.hDeg)/10* playerSpeed;
-      
-    //}
-    //else{
-      
-    //}
-  }
-
-  if (isUp) {
-    player.xPos-= sin(player.hDeg)/10* playerSpeed;
-    //if (player.zPosition +cos(player.hDeg)/10* playerSpeed>1.5){
-    player.zPos += cos(player.hDeg)/10* playerSpeed;
-      
-    //}
-    //else{
-      
-    //}
-  }
-  if (isDown) {
-    player.xPos +=sin(player.hDeg)/10* playerSpeed;
-    //if (player.zPosition -cos(player.hDeg)/10* playerSpeed>1.5){
-    player.zPos -= cos(player.hDeg)/10* playerSpeed;
-    //}
-    //else{
-      
-    //}
-  }
-  if (isSpace && isUnderwater){
-    player.yPos += -2.5*(1.0/60);
-  }
-  else if (isSpace && player.onGround && !isUnderwater) {
-    player.yPos += -7*(1.0/60);
-    player.onGround = false;
+    if (isUp) {
+      player.xPos-= sin(player.hDeg)/10* playerSpeed;
+      //if (player.zPosition +cos(player.hDeg)/10* playerSpeed>1.5){
+      player.zPos += cos(player.hDeg)/10* playerSpeed;
+        
+      //}
+      //else{
+        
+      //}
+    }
+    if (isDown) {
+      player.xPos +=sin(player.hDeg)/10* playerSpeed;
+      //if (player.zPosition -cos(player.hDeg)/10* playerSpeed>1.5){
+      player.zPos -= cos(player.hDeg)/10* playerSpeed;
+      //}
+      //else{
+        
+      //}
+    }
+    if (isSpace && isUnderwater){
+      player.yPos += -2.5*(1.0/60);
+    }
+    else if (isSpace && player.onGround && !isUnderwater) {
+      player.yPos += -7*(1.0/60);
+      player.onGround = false;
+    }
   }
   
   //if (isShift) {

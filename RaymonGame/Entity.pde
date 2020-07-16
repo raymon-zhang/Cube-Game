@@ -8,6 +8,7 @@ public class Entity{
   float hitboxWidth, hitboxHeight, hitboxLength;
   
   float legRotation;
+  int health = 20;
   boolean onGround = false;
   boolean walking = false;
   boolean jumping = false;
@@ -16,7 +17,7 @@ public class Entity{
   
   PVector targetedPosition = new PVector(this.xPosition, this.zPosition);
   PVector delta = new PVector();
-  int legDirection = 2;
+  int legDirection = 5;
   float targetedRotation = PI;
   float txPos, tzPos;
   
