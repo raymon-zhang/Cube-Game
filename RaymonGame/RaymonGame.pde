@@ -10,7 +10,7 @@ import java.lang.reflect.*;
 
 PShader blockShader;
 
-boolean running, isUnderwater;
+boolean running;
 
 
 
@@ -24,6 +24,7 @@ SoundFile stone;
 SoundFile sand;
 SoundFile water;
 SoundFile diamond;
+SoundFile hurt;
 
 World c;
 
@@ -145,6 +146,7 @@ void setup() {
   //colorMode(RGB);
   
   loading = new SoundFile(this, "/sounds/Loading.mp3");
+  hurt = new SoundFile(this, "/sounds/hurt.mp3");
   //loading.play();
   
   //grass = new SoundFile(this, "/sounds/grass.mp3");
@@ -196,7 +198,9 @@ void draw() {
     checkKeys();
     checkMouse();
     
-    isUnderwater = false;
+    player.isUnderwater = false;
+    player.isUnderlava = false;
+    player.headUnderlava = false;
     shader(blockShader);
     perspective(radians(70), (float)width/ (float)height, 0.01f, 1000);
     updateEntities();

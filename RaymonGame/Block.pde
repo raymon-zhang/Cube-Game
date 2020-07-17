@@ -144,7 +144,7 @@ public class Block{
   
   
   public boolean isTransparent(){
-    return (this.blockType == 4 || this.blockType == 12 || this.blockType == 13 || this.blockType == 14);
+    return (this.blockType == 4 || this.blockType == 12 || this.blockType == 13 || this.blockType == 14 || this.blockType == 9);
   }
   public boolean isNature(){
     return (this.blockType == 12 || this.blockType == 13 || this.blockType == 14);

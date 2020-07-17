@@ -48,8 +48,8 @@ public class Panda extends Entity{
     shape(this.shape);
     
     //textSize(0.1);
-    stroke(255);
-    line(0,0,0, 0, -100, 0);
+    //stroke(255);
+    //line(0,0,0, 0, -100, 0);
     //text(this.targetedPosition.toString(), 0, -1, 0);
     
     translate(-0.09375, 0.4375, -0.40265);

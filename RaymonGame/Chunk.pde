@@ -294,7 +294,7 @@ public class Chunk{
         int highness = 128-((int)map(noise(((this.lowestXPos+ x)/75.0), (this.lowestZPos + y)/75.0), 0, 1, 5, 100));
         if(highness > WATERLEVEL){
             for(int water = WATERLEVEL; water < highness; water ++){
-              this.setBlock(4, x, water, y, false);
+              this.setBlock(9, x, water, y, false);
             }
           }
         if(highness < WATERLEVEL -6 &&((x<14 &&x > 1) &&(y<14 && y>1))){

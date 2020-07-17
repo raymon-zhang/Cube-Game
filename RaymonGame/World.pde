@@ -36,6 +36,7 @@ public class World {
     textureCoords.put(6, new PVector[]{new PVector(32, 16), new PVector(32, 16), new PVector(32, 16)});//oakplank
     textureCoords.put(7, new PVector[]{new PVector(48, 16), new PVector(64, 16), new PVector(32, 0)});//snow
     textureCoords.put(8, new PVector[]{new PVector(80, 16), new PVector(80, 16), new PVector(80, 16)});//gravel
+    textureCoords.put(9, new PVector[]{new PVector(176, 0), new PVector(176, 0), new PVector(176, 0)});//lava
     textureCoords.put(10, new PVector[]{new PVector(0, 16), new PVector (0, 16), new PVector(0, 16)});//diamondore
     textureCoords.put(11, new PVector[]{new PVector(96, 16), new PVector(96, 16), new PVector(96, 16)});//leaves
     textureCoords.put(12, new PVector[]{new PVector(112, 0), new PVector(112, 0), new PVector(112, 0)});//poppy flower
@@ -45,6 +46,7 @@ public class World {
     textureCoords.put(16, new PVector[]{new PVector(32, 0), new PVector (32, 0), new PVector(32, 0)});//dirt
     textureCoords.put(17, new PVector[]{new PVector(0, 32), new PVector (0, 32), new PVector(0, 32)});//ironore
     textureCoords.put(18, new PVector[]{new PVector(16, 32), new PVector (16, 32), new PVector(16, 32)});//goldore
+  
     
 
     

@@ -99,10 +99,12 @@ void checkKeys(){
         
       //}
     }
-    if (isSpace && isUnderwater){
+    if (isSpace && player.isUnderwater){
+      player.yPos += -2.5*(1.0/60);
+    }else if(isSpace && player.isUnderlava){
       player.yPos += -2.5*(1.0/60);
     }
-    else if (isSpace && player.onGround && !isUnderwater) {
+    else if (isSpace && player.onGround && !player.isUnderwater) {
       player.yPos += -7*(1.0/60);
       player.onGround = false;
     }

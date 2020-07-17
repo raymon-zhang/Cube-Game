@@ -1,11 +1,12 @@
 //Exteds entity class, handles player features
 public class Player extends Entity{
 
-  int selectedSlot;
+  int selectedSlot, damageCount;
   
   int blockDamage;
 
   boolean dead = false;
+  boolean isUnderwater, isUnderlava, headUnderlava, takingDamage;
   public ItemStack[] inventory, craftingGrid;
   public ItemStack outputSlot;
 
@@ -85,7 +86,11 @@ public class Player extends Entity{
       float zCenter = this.zPosition +  cos(this.hDeg) * sin(this.vDeg);
       //println(sqrt(pow(xPos, 2) + pow(zPos, 2)));
   
-  
+      if(this.takingDamage)this.damageCount += 1;
+      if(this.damageCount >30){
+        this.takingDamage = false;
+        this.damageCount = 0;
+      }
   
       stroke(255);
       strokeWeight(7);
@@ -129,7 +134,7 @@ public class Player extends Entity{
         this.dead = false;
         this.health = 20;
         noCursor();
-        popStyle();
+        
       }
       hint(ENABLE_DEPTH_TEST);
   
@@ -144,15 +149,28 @@ public class Player extends Entity{
     if (isUnderwater){
       image(underwater, 0,0,width, height);
       this.yPos *= 0.75;
-    }
-    for(int x = 0; x < 10; x++){
-      image(healthBack, width/2-364 + x*32, height-128, 36,36);
+    }else if(isUnderlava){
+      
+      this.takeDamage(3);
+      this.yPos *= 0.5;
       
     }
-    for(int x = 0; x < this.health; x+=2){
-      image(health1, width/2-364 + x*16, height-128, 36,36);
+    if(headUnderlava){
+      pushStyle();
+      fill(207, 16,32, 249);
+      noStroke();
+      rect(0,0,width, height);
+      popStyle();
+    }
+    for(int x = 0; x < 20; x+=2){
+      int rand;
+      if(this.health < 6)rand = (int)random(0,12);
+      else rand = 0;
+      image(healthBack, width/2-364 + x*16, height-128 - rand, 36,36);
+      if(x<this.health)image(health1, width/2-364 + x*16, height-128 - rand, 36,36);
       
     }
+    
     image(gui, width/2-364, height-88, 728, 88); 
     
     if(this.blockDamage >0){
@@ -350,7 +368,7 @@ public class Player extends Entity{
             
             if(vel.y>0){
               this.onGround = true;
-              this.health -= constrain((int)map(vel.y, 0.15, 0.85, 0,20),0,20);
+              takeDamage(constrain((int)map(vel.y, 0.2, 0.85, 0,20),0,20));
               rotate(PI);
               this.yPosition =yPos  - this.hitboxHeight;
               this.yPos = 0;
@@ -367,10 +385,16 @@ public class Player extends Entity{
     
     Block block = c.getBlockAt(floor(this.xPosition), floor(this.yPosition), floor(this.zPosition));
     if (block != null && block.blockType == 4){
-            this.gravity = 0.6;
-            isUnderwater = true;
+      this.gravity = 0.6;
+      this.isUnderwater = true;
+    }else if (block != null && block.blockType == 9){
+      this.headUnderlava = true;
     }
-    
+    block = c.getBlockAt(floor(this.xPosition), floor(this.yPosition+1), floor(this.zPosition));
+    if(block != null && block.blockType == 9){
+      this.gravity = 0.5;
+      this.isUnderlava = true;
+    }
   }
 
   public void checkSlots() {
@@ -383,7 +407,13 @@ public class Player extends Entity{
     }
     if (!correct)outputSlot = null;
   }
-  
+  public void takeDamage(int amount){
+    if(!this.takingDamage && amount > 0){
+      hurt.play();
+      this.health -= amount;
+      this.takingDamage = true;
+    }
+  }
   
   
   
@@ -460,7 +490,9 @@ public boolean button(int tX, int tY, int w, int h, PImage texture, PImage ctext
     fill(255);
     textSize(textSize);
     text(text, tX + w/2, tY + h/2); 
+    popStyle();
     return false;
+    
   }
   return false;
 }
