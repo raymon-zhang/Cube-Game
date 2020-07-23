@@ -35,9 +35,9 @@ public class Panda extends Entity{
     pushMatrix();
     //println("hi");
     
-   
+    pushStyle();
     //rotateY(radians(this.hDeg));
-    
+    tint(255, 0,0);
     translate(this.xPosition, this.yPosition, this.zPosition);
     rotateY(TWO_PI-this.hDeg);
     //println(this.hDeg);
@@ -67,6 +67,7 @@ public class Panda extends Entity{
     translate(-0.8125, 0,0);
     rotateX(radians(-2*this.legRotation));
     shape(this.legs);
+    popStyle();
     popMatrix();
     
     

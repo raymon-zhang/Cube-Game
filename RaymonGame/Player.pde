@@ -3,8 +3,11 @@ public class Player extends Entity{
 
   int selectedSlot, damageCount;
   
-  int blockDamage;
+  int blockDamage = 0;
 
+  boolean charged;
+  int bowCharge;
+  float pov = 70;
   boolean dead = false;
   boolean isUnderwater, isUnderlava, headUnderlava, takingDamage;
   public ItemStack[] inventory, craftingGrid;
@@ -25,6 +28,7 @@ public class Player extends Entity{
     this.inventory = new ItemStack[36];
     this.inventory[1] = new ItemStack(104, this);
     this.inventory[2] = new ItemStack(150, this);
+    this.inventory[3] = new ItemStack(151, 64, this);
     this.craftingGrid = new ItemStack[9];
 
     recipes = new ArrayList<Recipe>();
@@ -63,11 +67,14 @@ public class Player extends Entity{
       
       //checkCollisions();
       
-      if(frameCount % 60 == 0)this.health += 1;
+      if(frameCount % 60 == 0 && damageCount == 0)this.health += 1;
       
       if(this.health>20)this.health=20;
       
-      else if (this.health<=0)this.dead = true;
+      else if (this.health<=0){
+        this.dead = true;
+        die.play();
+      }
       
       //if (! (isLeft || isRight||isUp||isDown||isShift)) {
   
@@ -114,6 +121,7 @@ public class Player extends Entity{
       noStroke();
     }
     else{
+      this.pov -= 0.1;
       pushMatrix();
       
       hint(DISABLE_DEPTH_TEST);
@@ -134,7 +142,7 @@ public class Player extends Entity{
         this.dead = false;
         this.health = 20;
         noCursor();
-        
+        this.pov = 70;
       }
       hint(ENABLE_DEPTH_TEST);
   
@@ -164,9 +172,12 @@ public class Player extends Entity{
     }
     for(int x = 0; x < 20; x+=2){
       int rand;
+      
       if(this.health < 6)rand = (int)random(0,12);
+      else if(this.health == 20)rand = 12 - constrain((abs(x/2-((frameCount%60)/3))*6),0,12);
       else rand = 0;
       image(healthBack, width/2-364 + x*16, height-128 - rand, 36,36);
+      if(this.damageCount > 0 && this.damageCount % 10 >= 4)image(health3, width/2-364 + x*16, height-128 - rand, 36,36);
       if(x<this.health)image(health1, width/2-364 + x*16, height-128 - rand, 36,36);
       
     }
@@ -183,18 +194,20 @@ public class Player extends Entity{
       
       popStyle();
     }
-    
+    fill(255);
     image(indicator, width/2-368 + this.selectedSlot * 80, height-92, 96, 96);
 
     for (int slot = 0; slot < 9; slot ++) {
       if (player.inventory[slot] != null)player.inventory[slot].drawStack(new PVector(width/2-352 + slot * 80, height-76));
     }
-
+    
     if (debug) {
       textSize(30);
+      
       text("FPS: " + f, 30, 50);
-      text(this.xPosition + ", " + this.yPosition + ", " +this.zPosition, 30, 85);
+      text(this.xPosition + "/ " + this.yPosition + "/ " +this.zPosition, 30, 85);
       text("Speed: " + (sqrt(this.xPos * this.xPos + this.zPos * this.zPos)*f), 30, 120);
+      text("Facing: " + degrees(this.hDeg) + "/ " + degrees(this.vDeg), 30, 155);
     }
 
     if (drawingInventory) {
@@ -392,7 +405,7 @@ public class Player extends Entity{
     }
     block = c.getBlockAt(floor(this.xPosition), floor(this.yPosition+1), floor(this.zPosition));
     if(block != null && block.blockType == 9){
-      this.gravity = 0.5;
+      this.gravity = 0.8;
       this.isUnderlava = true;
     }
   }
@@ -451,6 +464,26 @@ public class Player extends Entity{
       chunk.betterGenerateMesh();
     
     
+  }
+  
+  public void SHOOTARROW(){
+    if(! this.charged){  
+      this.pov -= 0.4;
+      this.bowCharge += 1;
+      
+      
+      
+      if(this.bowCharge >= 40){
+        this.bowCharge = 0;
+        this.charged = true;
+        
+      }
+    }
+  }
+  public void ARROW(){
+    this.charged = false;
+    arrows.add(new Arrow(player.xPosition, player.yPosition -0.2, player.zPosition, new PVector( - sin(player.hDeg) * sin(player.vDeg)/100, -cos(player.vDeg)/100, cos(player.hDeg) * sin(player.vDeg)/100)));
+    this.pov = 70;
   }
 }
 

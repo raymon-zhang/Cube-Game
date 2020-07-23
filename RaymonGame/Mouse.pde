@@ -39,7 +39,7 @@ public void checkMouse(){
 }
 
 public void checkMouseClicked(){
-  for(;;delay(25)){
+  for(;;delay(16)){
     
     if(mousePressed&& !drawingInventory && !player.dead){ 
       if (mouseButton == LEFT){
@@ -50,11 +50,11 @@ public void checkMouseClicked(){
           }catch(Exception e){
             println(e);
           }
-          delay(75);
+          
         }
         else {
           player.BREAK();
-          delay(75);
+          
         }
         
       }else if(mouseButton == RIGHT){
@@ -65,7 +65,7 @@ public void checkMouseClicked(){
           }catch(Exception e){
             println(e);
           }
-          delay(75);
+          delay(100);
         }
       }
     }
@@ -85,7 +85,7 @@ public int getInventorySlot(){
      return (int)((mouseY-(height/2-260))/72)*3 + (int)((mouseX-(width/2+4))/72) + 36;
      
    }
-   else if(mouseX>=width/2 + 260&& mouseX<= width/2 + 332){
+   else if(mouseX>=width/2 + 260&& mouseX<= width/2 + 332 && mouseY>=height/2-188 && mouseY <= height/2-116){
      return 45;
    }
   }
@@ -101,6 +101,11 @@ void mousePressed(){
 }
 void mouseReleased(){
   player.blockDamage = 0;
+  player.bowCharge = 0;
+  player.pov = 70;
+  if(player.charged){
+    player.ARROW();
+  }
 }
 
 void mouseWheel(MouseEvent event){

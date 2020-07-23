@@ -1,0 +1,7 @@
+{
+    "player_hurt": "/sounds/hurt2.mp3",
+    "player_die": "/sounds/hurt.mp3",
+    "mob_death": "/sounds/death.mp3"
+
+
+}

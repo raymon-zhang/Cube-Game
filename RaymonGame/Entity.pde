@@ -5,6 +5,9 @@ public class Entity{
   float xPosition, yPosition, zPosition;
   float gravity = 0.35f;
   
+  boolean dead;
+  int deadCount = 0;
+  
   float hitboxWidth, hitboxHeight, hitboxLength;
   
   float legRotation;
@@ -40,74 +43,92 @@ public class Entity{
   }
   
   public void update(){
-    
+    if(! this.dead){
     //println(walking);
-    if (! debug){
-    
-      if(abs(this.targetedPosition.x- this.xPosition ) <= 2.0 && abs(this.targetedPosition.y - this.zPosition) <= 2.0){
-        //println("hi");
-        this.walking = false;
-        this.legRotation = 0;
-        this.xPos = 0;
-        this.zPos = 0;  
-        this.goToLocation(new PVector(player.xPosition + random(-100, 100), player.zPosition + random(-100, 100)));
-        
-      }else{
-        if(abs(this.legRotation) >= 45)this.legDirection = -this.legDirection;
-        this.legRotation += this.legDirection;
-        
-      }
-      if (abs(this.hDeg - this.targetedRotation) > radians(10)){
-        
-        if(this.hDeg - this.targetedRotation > radians(10)){
-          this.hDeg -= radians(5);
-        }
-        else if(this.targetedRotation -this.hDeg > radians(10)){
-          this.hDeg += radians(5);
-        }
-      }
-      else{
-        
-        this.xPos = txPos;
-        this.zPos = tzPos;
-        
-      }
-    }
-    else this.xPos = this.zPos = 0;
-    
-    this.yPos += gravity*(1f/60);
-    
-    if(this.jumping && this.onGround){
-      this.onGround = false;
-      this.yPos += -7*(1.0/60);
+      if (! debug){
       
-      //println("HI");
-      this.jumping = false;
+        if(abs(this.targetedPosition.x- this.xPosition ) <= 2.0 && abs(this.targetedPosition.y - this.zPosition) <= 2.0){
+          //println("hi");
+          this.walking = false;
+          this.legRotation = 0;
+          this.xPos = 0;
+          this.zPos = 0;  
+          this.goToLocation(new PVector(player.xPosition + random(-100, 100), player.zPosition + random(-100, 100)));
+          
+        }else{
+          if(abs(this.legRotation) >= 45)this.legDirection = -this.legDirection;
+          this.legRotation += this.legDirection;
+          
+        }
+        if (abs(this.hDeg - this.targetedRotation) > radians(10)){
+          
+          if(this.hDeg - this.targetedRotation > radians(10)){
+            this.hDeg -= radians(5);
+          }
+          else if(this.targetedRotation -this.hDeg > radians(10)){
+            this.hDeg += radians(5);
+          }
+        }
+        else{
+          
+          this.xPos = txPos;
+          this.zPos = tzPos;
+          
+        }
+      }
+      else this.xPos = this.zPos = 0;
+      
+      this.yPos += gravity*(1f/60);
+      
+      if(this.jumping && this.onGround){
+        this.onGround = false;
+        this.yPos += -7*(1.0/60);
+        
+        //println("HI");
+        this.jumping = false;
+        
+      }
+      
+      
+      
+      
+      this.xPosition += this.xPos;
+      this.checkCollisions(new PVector(this.xPos, 0,0));
+      
+      
+      this.yPosition += this.yPos;
+      this.checkCollisions(new PVector(0, this.yPos, 0));
+      this.zPosition += this.zPos;
+      this.checkCollisions(new PVector(0, 0, this.zPos));
+      
+      this.drawShape();
+      
+      //this.xPos *= 0.89;as
+  
+      //this.zPos *= 0.89;
+      beginShape();
+      stroke(255);
+      noFill();
+      vertex(this.xPosition - this.hitboxWidth/2.0, this.yPosition, this.zPosition - this.hitboxLength/2.0);
+      vertex(this.xPosition - this.hitboxWidth/2.0, this.yPosition, this.zPosition + this.hitboxLength/2.0);
+      vertex(this.xPosition + this.hitboxWidth/2.0, this.yPosition, this.zPosition + this.hitboxLength/2.0);
+      vertex(this.xPosition + this.hitboxWidth/2.0, this.yPosition, this.zPosition - this.hitboxLength/2.0);
+      endShape(CLOSE);
+      
+      
+    }else{
+      this.deadCount += 1;
+      
+      this.shape.rotate(radians(5), 0,0,1);
+      this.legs.rotate(radians(5), 0,0,1);
+      
+      //print("die");
+      if(this.deadCount > 18)deadentities.remove(this);
+      this.drawShape();
       
     }
-    
-    
-    
-    
-    this.xPosition += this.xPos;
-    this.checkCollisions(new PVector(this.xPos, 0,0));
-    
-    
-    this.yPosition += this.yPos;
-    this.checkCollisions(new PVector(0, this.yPos, 0));
-    this.zPosition += this.zPos;
-    this.checkCollisions(new PVector(0, 0, this.zPos));
-    
-    
-    
-    //this.xPos *= 0.89;
-
-    //this.zPos *= 0.89;
-    
-    this.drawShape();
     
   }
-  
    
   public void checkCollisions(PVector vel){
     //beginShape();
@@ -115,10 +136,10 @@ public class Entity{
     float xPosition = this.xPosition;
     float yPosition = this.yPosition;
     float zPosition = this.zPosition;
-    for(int x = floor(this.xPosition - this.hitboxWidth/2); x < xPosition + this.hitboxWidth/2; x++){
+    for(int x = floor(this.xPosition - this.hitboxWidth/2.0); x < xPosition + this.hitboxWidth/2.0; x++){
       //println(x);
       for(int y = floor(this.yPosition); y < yPosition +this.hitboxHeight; y++){
-        for(int z = floor(this.zPosition - this.hitboxLength/2); z < zPosition + this.hitboxLength/2; z++){
+        for(int z = floor(this.zPosition - this.hitboxLength/2.0); z < zPosition + this.hitboxLength/2.0; z++){
           
           //vertex(x,y,z);
           int xPos = floor(x);
@@ -178,15 +199,17 @@ public class Entity{
   public void drawShape(){
     pushMatrix();
     //println("hi");
-
+    tint(255);
    
     //rotateY(radians(this.hDeg));
     
     translate(this.xPosition, this.yPosition, this.zPosition);
+    stroke(255);
+    
     rotateY(TWO_PI-this.hDeg);
+    rotateX(TWO_PI-this.vDeg);
     //println(this.hDeg);
     translate(- this.hitboxWidth/2, 0, -this.hitboxLength/2);
-    
     shape(this.shape);
     
     popMatrix();
@@ -308,6 +331,16 @@ public class Entity{
     
     this.targetedPosition = location.copy();
       
+  }
+  public void die(){
+    this.dead = true;
+
+    this.shape.disableStyle();
+    this.legs.disableStyle();
+    deadentities.add(this);
+    entities.remove(this);
+    mob_death.play();
+    //println(deadentities);
   }
   
   

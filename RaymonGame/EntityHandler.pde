@@ -1,5 +1,7 @@
 //Handles mob spawns and other things
 public ArrayList<Entity> entities = new ArrayList<Entity>();
+public ArrayList<Entity> deadentities = new ArrayList<Entity>();
+public ArrayList<Arrow> arrows = new ArrayList<Arrow>();
 public String[] entityTypes = new String[]{"Pig", "Panda"};
 public void checkSpawnEntities(){
   if(frameCount %120 == 0 && entities.size()<20){
@@ -30,7 +32,27 @@ public void updateEntities(){
       if(entity == null)entities.remove(entity);
       if(dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)entities.remove(entity);
     }catch(Exception e){
-      //println(e);
+      println(e);
+    }
+  }
+  ArrayList<Arrow> newArrows = new ArrayList<Arrow>(arrows);
+  for(Arrow entity: newArrows){
+    try{
+      if(entity != null)entity.update();
+      if(entity == null)entities.remove(entity);
+      if(dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)entities.remove(entity);
+    }catch(Exception e){
+      println(e);
+    }
+  }
+  ArrayList<Entity> dead = new ArrayList<Entity>(deadentities);
+  for(Entity entity: dead){
+    try{
+      if(entity != null)entity.update();
+      if(entity == null)deadentities.remove(entity);
+      if(dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)deadentities.remove(entity);
+    }catch(Exception e){
+      println(e);
     }
   }
   
@@ -38,8 +60,7 @@ public void updateEntities(){
 
 public Entity getEntityAt(PVector position){
   for(Entity entity :entities){
-    if(position.x > entity.xPosition && position.x < entity.xPosition +entity.hitboxWidth && position.y > entity.yPosition && position.y < entity.yPosition + entity.hitboxHeight && position.z > entity.zPosition && position.z < entity.zPosition +entity.hitboxLength){
-      println("HI");
+    if(position.x > entity.xPosition-entity.hitboxWidth/2.0 && position.x < entity.xPosition +entity.hitboxWidth/2.0 && position.y > entity.yPosition && position.y < entity.yPosition + entity.hitboxHeight && position.z > entity.zPosition - entity.hitboxLength/2.0 && position.z < entity.zPosition +entity.hitboxLength/2.0){
       return entity;
     }
   }

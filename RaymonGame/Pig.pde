@@ -69,8 +69,8 @@ public class Pig extends Entity{
   public void drawShape(){
     pushMatrix();
     //println("hi");
-    
-   
+    pushStyle();
+    tint(255, 0, 0);
     //rotateY(radians(this.hDeg));
     
     translate(this.xPosition, this.yPosition, this.zPosition);
@@ -101,6 +101,7 @@ public class Pig extends Entity{
     translate(-0.4, 0,0);
     rotateX(radians(-2*this.legRotation));
     shape(this.legs);
+    popStyle();
     popMatrix();
     
     

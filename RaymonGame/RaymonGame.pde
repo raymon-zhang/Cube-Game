@@ -24,7 +24,7 @@ SoundFile stone;
 SoundFile sand;
 SoundFile water;
 SoundFile diamond;
-SoundFile hurt;
+SoundFile hurt, die, mob_death;
 
 World c;
 
@@ -44,15 +44,16 @@ boolean drawingUI;
 boolean debug;
 boolean drawingInventory;
 
-PImage gui, indicator, inventoryImage, overlay, highlight, testImage, panda, underwater, background;
-PImage icons, healthBack, health1, health2, death, buttonTexture, cbuttonTexture;
+PImage gui, indicator, inventoryImage, overlay, highlight, underwater, background;
+PImage icons, healthBack, health1, health2, death, buttonTexture, cbuttonTexture, health3;
+PImage testImage, panda, arrow;
 
 boolean mouseclicked, bmouseclicked;
 
 
 PMatrix originalMatrix;
 
-
+JSONObject sounds;
 
 public String loadStatus;
 
@@ -73,7 +74,7 @@ public Hashtable<Integer, BlockType> BlockTypes=  new Hashtable<Integer, BlockTy
 void setup() {
   fullScreen(P3D);
   
-  
+  sounds = loadJSONObject("/sounds/sounds.json");
 
   debug = false;
   drawingInventory = false;
@@ -95,6 +96,7 @@ void setup() {
   highlight = loadImage("textures/gui/highlight.png");
   testImage = loadImage("textures/entity/test.png");
   panda = loadImage("textures/entity/panda.png");
+  arrow = loadImage("textures/entity/arrow.png");
   underwater = loadImage("textures/underwater.png");
   background = loadImage("textures/gui/background.png");
   icons = loadImage("textures/gui/icons.png");
@@ -102,6 +104,7 @@ void setup() {
   healthBack = icons.get(0,0,9,9);
   health1 = icons.get(9,0,9,9);
   health2 = icons.get(9,0,5,9);
+  health3 = icons.get(18, 0, 9, 9);
   buttonTexture = icons.get(0, 9, 200, 20);
   cbuttonTexture = icons.get(0, 29, 200, 20);
   total_frames = 0;
@@ -110,7 +113,7 @@ void setup() {
   clouds = createShape();
   clouds.beginShape();
   clouds.noStroke();
-  clouds.tint(255, 128);
+  clouds.tint(255, 100);
   clouds.texture(cloud);
   clouds.vertex(0, 0, 0, 0, 0);
   clouds.vertex(0, 0, 3072, 0, 256);
@@ -146,7 +149,9 @@ void setup() {
   //colorMode(RGB);
   
   loading = new SoundFile(this, "/sounds/Loading.mp3");
-  hurt = new SoundFile(this, "/sounds/hurt.mp3");
+  hurt = new SoundFile(this, sounds.getString("player_hurt"));
+  die = new SoundFile(this, sounds.getString("player_die"));
+  mob_death = new SoundFile(this, sounds.getString("mob_death"));
   //loading.play();
   
   //grass = new SoundFile(this, "/sounds/grass.mp3");
@@ -156,7 +161,7 @@ void setup() {
   //diamond = new SoundFile(this, "/sounds/diamond.mp3");
   
   player = new Player(88, 50, 88);
-  test = new Pig(88, 50, 80);
+  test = new Arrow(88, 50, 80, new PVector(1,0));
   test2 = new Panda(80, 50, 88);
   
 
@@ -169,7 +174,7 @@ void setup() {
 
   lights();
 
-  frameRate(150);
+  //frameRate(150);
   
   myFont = createFont("Minecraft.ttf", 200);
   textFont(myFont);
@@ -190,7 +195,7 @@ void draw() {
     background(130, 202, 255);
     //if (time1 == 0) time1 = millis();
   
-    //shape(clouds);
+    
     //shape(clouds, -3072, 0);
     //shape(clouds2);
   
@@ -201,10 +206,15 @@ void draw() {
     player.isUnderwater = false;
     player.isUnderlava = false;
     player.headUnderlava = false;
+    perspective(radians(player.pov), (float)width/ (float)height, 0.01f, 1000);
+    shape(clouds);
     shader(blockShader);
-    perspective(radians(70), (float)width/ (float)height, 0.01f, 1000);
+    
+    
     updateEntities();
+    test.update();
     c.drawWorld();
+    
     resetShader();
     drawingUI = true;
     checkSpawnEntities();
@@ -243,15 +253,8 @@ void draw() {
   bmouseclicked = false;
 }
 
-
-
-//public void exit() {
-//  int x = millis()-time1;
-//  println("Total Frames: " + total_frames);
-//  println("Total Seconds: " + x/1000);
-//  println( total_frames /( x/1000));
-//  running = false;
-//  //println("hi");
-//  super.exit();
+void loadThread(){
   
-//}
+  
+  
+}
