@@ -12,7 +12,7 @@ PShader blockShader;
 
 boolean running;
 
-
+float MONSTER_SPAWN_RATE = 0.5;
 
 int WORLDSIZE = 19;
 int WATERLEVEL = 96;
@@ -39,14 +39,17 @@ Chunk playerChunk;
 Point pMouse;
 Point mouse;
 
+String[] funny;
+
+String toast;
 
 boolean drawingUI;
 boolean debug;
 boolean drawingInventory;
 
-PImage gui, indicator, inventoryImage, overlay, highlight, underwater, background;
-PImage icons, healthBack, health1, health2, death, buttonTexture, cbuttonTexture, health3;
-PImage testImage, panda, arrow;
+PImage gui, indicator, inventoryImage, overlay, highlight, underwater, background, logo;
+PImage icons, healthBack, health1, health2, death, buttonTexture, cbuttonTexture, health3, bk;
+PImage testImage, panda, arrow, monster;
 
 boolean mouseclicked, bmouseclicked;
 
@@ -61,7 +64,7 @@ float f;
 
 PFont myFont;
 
-
+PShape bowShape;
 int total_frames;
 int time1;
 
@@ -74,6 +77,8 @@ public Hashtable<Integer, BlockType> BlockTypes=  new Hashtable<Integer, BlockTy
 void setup() {
   fullScreen(P3D);
   
+  bowShape = loadShape("/textures/bow_model2.obj");
+  
   sounds = loadJSONObject("/sounds/sounds.json");
 
   debug = false;
@@ -85,7 +90,10 @@ void setup() {
   
   blockShader = loadShader("/shaders/Frag.glsl", "/shaders/Vert.glsl");
 
-
+  if(hour() >= 18){
+    MONSTER_SPAWN_RATE = 1;
+  }
+  print(MONSTER_SPAWN_RATE);
   //filter(POSTERIZE, 200);
 
   cloud = loadImage("/textures/clouds.png");
@@ -97,10 +105,14 @@ void setup() {
   testImage = loadImage("textures/entity/test.png");
   panda = loadImage("textures/entity/panda.png");
   arrow = loadImage("textures/entity/arrow.png");
+  monster = loadImage("textures/entity/skeleton.png");
   underwater = loadImage("textures/underwater.png");
   background = loadImage("textures/gui/background.png");
   icons = loadImage("textures/gui/icons.png");
   death = loadImage("textures/dead.png");
+  logo = loadImage("textures/logo.png");
+  bk = loadImage("textures/bk.png");
+  bk.resize(width, height);
   healthBack = icons.get(0,0,9,9);
   health1 = icons.get(9,0,9,9);
   health2 = icons.get(9,0,5,9);
@@ -134,9 +146,9 @@ void setup() {
 
   noCursor();
   
-
-
-
+  funny = loadStrings("/texts/funny.txt");
+  int rand = (int)random(funny.length);
+  toast = funny[rand];
   try {
     mouseControl = new Robot();
   }
@@ -159,14 +171,7 @@ void setup() {
   //sand = new SoundFile(this, "/sounds/sand.mp3");
   //water = new SoundFile(this, "/sounds/water.mp3");
   //diamond = new SoundFile(this, "/sounds/diamond.mp3");
-  
   player = new Player(88, 50, 88);
-  test = new Arrow(88, 50, 80, new PVector(1,0));
-  test2 = new Panda(80, 50, 88);
-  
-
-  
-  c = new World(WORLDSIZE);
 
   noStroke();
   noSmooth();
@@ -180,9 +185,7 @@ void setup() {
   textFont(myFont);
   textAlign(RIGHT);
   
-  
-  thread("checkChunks");
-  thread("checkMouseClicked");
+  entities.add(new Monster(80, 50, 80));
   //thread("checkPlayerChunk");  
   
   time1 = millis();
@@ -190,71 +193,65 @@ void setup() {
 
 
 void draw() {
-  try{
-    total_frames += 1;
-    background(130, 202, 255);
-    //if (time1 == 0) time1 = millis();
+  //try{
+  //  background(130, 202, 255);
+  //  //if (time1 == 0) time1 = millis();
   
     
-    //shape(clouds, -3072, 0);
-    //shape(clouds2);
+  //  //shape(clouds, -3072, 0);
+  //  //shape(clouds2);
   
     
-    checkKeys();
-    checkMouse();
+  //  checkKeys();
+  //  checkMouse();
     
-    player.isUnderwater = false;
-    player.isUnderlava = false;
-    player.headUnderlava = false;
-    perspective(radians(player.pov), (float)width/ (float)height, 0.01f, 1000);
-    shape(clouds);
-    shader(blockShader);
+  //  player.isUnderwater = false;
+  //  player.isUnderlava = false;
+  //  player.headUnderlava = false;
+  //  perspective(radians(player.pov), (float)width/ (float)height, 0.01f, 1000);
+  //  shape(clouds);
+  //  shader(blockShader);
     
     
-    updateEntities();
-    test.update();
-    c.drawWorld();
+  //  updateEntities();
+  //  test.update();
+  //  c.drawWorld();
     
-    resetShader();
-    drawingUI = true;
-    checkSpawnEntities();
+  //  resetShader();
+  //  drawingUI = true;
+  //  checkSpawnEntities();
    
-    perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
+  //  perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
     
-    player.updateCamera();
+  //  player.updateCamera();
     
-    drawingUI = false;
-    f = frameRate;
+  //  drawingUI = false;
+  //  f = frameRate;
       
      
     
-    pMouse.x = mouse.x;
-    pMouse.y = mouse.y;
-  }catch(Exception e){
-    perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
-    pushMatrix();
-    hint(DISABLE_DEPTH_TEST);
-    resetMatrix();
-    applyMatrix(originalMatrix);
-    tint(100);
-    for(int x = 0; x<width; x+=128){
-      for(int y = 0; y<height; y+=128){
-        image(background, x, y, 128, 128);
-      }
-    }
+  //  pMouse.x = mouse.x;
+  //  pMouse.y = mouse.y;
+  //}catch(Exception e){
+  //  perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
+  //  pushMatrix();
+  //  hint(DISABLE_DEPTH_TEST);
+  //  resetMatrix();
+  //  applyMatrix(originalMatrix);
+  //  tint(100);
+  //  for(int x = 0; x<width; x+=128){
+  //    for(int y = 0; y<height; y+=128){
+  //      image(background, x, y, 128, 128);
+  //    }
+  //  }
     
-    //fill(255, 0,0);
-    textSize(50);
-    textAlign(CENTER);
-    text("There was an error.", width/2, height/2-50);
-    text(e.toString(),width/2, height/2 + 50);
-    noLoop();
-  }
-  bmouseclicked = false;
-}
-
-void loadThread(){
-  
-  
-  
+  //  //fill(255, 0,0);
+  //  textSize(50);
+  //  textAlign(CENTER);
+  //  text("There was an error.", width/2, height/2-50);
+  //  text(e.toString(),width/2, height/2 + 50);
+  //  noLoop();
+  //}
+  //bmouseclicked = false;
+  drawGameFrame();
 }

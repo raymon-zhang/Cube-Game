@@ -1,67 +1,10 @@
-public class Arrow extends Entity{
+public class MonsterArrow extends Arrow{
   
-  PVector vel;
-  Boolean onGround = false;
-  float pVDeg;
-  public Arrow(float xPos, float yPos, float zPos, PVector vel){
-    super(xPos, yPos, zPos);
+  public MonsterArrow(float xPos, float yPos, float zPos, PVector vel){
+    super(xPos, yPos, zPos, vel);
+    this.hDeg = new PVector(vel.x, vel.z).heading() - PI/2;
     
-    this.vel = vel.setMag(0.45);
-    
-    this.hDeg = player.hDeg ;
-    this.vDeg = 0;
-    this.xPos = vel.x;
-    this.zPos = vel.z;
-    this.yPos = vel.y;
-    
-    this.shape = createShape();
-    this.shape.beginShape(TRIANGLE);
-    this.shape.noStroke();
-    this.shape.noTint();
-    this.shape.noFill();
-    this.shape.texture(arrow);
-    
-    this.shape.vertex(2.5/16.0, 0, 0, 0, 0);
-    this.shape.vertex(2.5/16.0, 0, 16/16.0, 16, 0);
-    this.shape.vertex(2.5/16.0, 5/16.0, 16/16.0, 16, 5);
-    this.shape.vertex(2.5/16.0, 5/16.0, 0, 0, 5);
-    this.shape.vertex(2.5/16.0, 0, 0, 0, 0);
-    this.shape.vertex(2.5/16.0, 5/16.0, 16/16.0, 16, 5);
-    
-    this.shape.vertex(0, 2.5/16.0, 0, 0, 0);
-    this.shape.vertex(5/16.0, 2.5/16.0, 0, 0, 5);
-    this.shape.vertex(5/16.0, 2.5/16.0, 16/16.0, 16, 5);
-    this.shape.vertex(0, 2.5/16.0, 16/16.0, 16, 0);
-    this.shape.vertex(0, 2.5/16.0, 0, 0, 0);
-    this.shape.vertex(5/16.0, 2.5/16.0, 16/16.0, 16, 5);
-    
-    this.shape.vertex(0, 0, 1/16.0, 0, 5);
-    this.shape.vertex(5/16.0, 0, 1/16.0, 5, 5);
-    this.shape.vertex(5/16.0, 5/16.0, 1/16.0, 5, 10);
-    this.shape.vertex(0, 5/16.0, 1/16.0, 0, 10);
-    this.shape.vertex(0, 0, 1/16.0, 0, 5);
-    this.shape.vertex(5/16.0, 5/16.0, 1/16.0, 5, 10);
-    
-    if(degrees(this.hDeg)%180 > 45 && degrees(this.hDeg)%180 <135){
-      this.shape.translate(5.5/16.0, -1/16.0, -5.5/16.0);
-      this.hitboxWidth = 1;
-      this.hitboxHeight = 3/16.0;
-      this.hitboxLength = 1/16.0;
-      
-    }else{
-      this.hitboxWidth = 1/16.0;
-      this.hitboxHeight = 3/16.0;
-      this.hitboxLength = 16/16.0;
-      this.shape.translate(-2/16.0, -1/16.0, 0);
-    }
-    
-    
-    
-    
-
-    this.shape.endShape();
   }
-  
   public void update(){
     if (! debug){
       if(! this.onGround){
@@ -74,8 +17,9 @@ public class Arrow extends Entity{
         float d = new PVector(this.xPos, this.zPos).mag();
         this.vDeg = atan(this.yPos/d);
         this.checkCollisions(new PVector(this.xPos, this.yPos, this.zPos));
-        Entity tentity = getEntityAt(new PVector(this.xPosition, this.yPosition, this.zPosition));
-        if(tentity != null)tentity.die();
+        if(this.xPosition > player.xPosition-player.hitboxWidth/2.0 && this.xPosition < player.xPosition +player.hitboxWidth/2.0 && this.yPosition > player.yPosition && this.yPosition < player.yPosition + player.hitboxHeight && zPosition > player.zPosition - player.hitboxLength/2.0 && zPosition < player.zPosition +player.hitboxLength/2.0){
+          player.takeDamage(3);
+        }
         
         this.yPos += gravity*(1f/260);
       }
@@ -89,8 +33,10 @@ public class Arrow extends Entity{
         float d = new PVector(this.xPos, this.zPos).mag();
         this.vDeg = atan(this.yPos/d);
         this.checkCollisions(new PVector(this.xPos, this.yPos, this.zPos));
-        Entity tentity = getEntityAt(new PVector(this.xPosition, this.yPosition, this.zPosition));
-        if(tentity != null)tentity.die();
+        if(this.xPosition > player.xPosition-player.hitboxWidth/2.0 && this.xPosition < player.xPosition +player.hitboxWidth/2.0 && this.yPosition > player.yPosition && this.yPosition < player.yPosition + player.hitboxHeight && zPosition > player.zPosition - player.hitboxLength/2.0 && zPosition < player.zPosition +player.hitboxLength/2.0){
+          player.takeDamage(3);
+          arrows.remove(this);
+        }
         
         this.yPos += gravity*(1f/260);
       }
@@ -100,7 +46,6 @@ public class Arrow extends Entity{
     }
     
   }
-  
   public void checkCollisions(PVector vel){
     //beginShape();
     //stroke(255);
@@ -164,7 +109,8 @@ public class Arrow extends Entity{
               
             }
             
-            
+            arrows.remove(this);
+
             
             
           }
@@ -176,7 +122,6 @@ public class Arrow extends Entity{
     //endShape(CLOSE);
     
   }
-  
   
   
 }

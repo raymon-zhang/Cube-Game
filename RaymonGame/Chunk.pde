@@ -288,7 +288,7 @@ public class Chunk{
   public String toString(){
     return("Chunk at " + this.lowestXPos + ", " + this.lowestZPos);
   }
-  public void decorate(){
+  public void decorate(boolean nat){
     for (int x = 0; x< 16; x++) {
       for (int y = 0; y<16; y++) {
         int highness = 128-((int)map(noise(((this.lowestXPos+ x)/75.0), (this.lowestZPos + y)/75.0), 0, 1, 5, 100));
@@ -297,7 +297,120 @@ public class Chunk{
               this.setBlock(4, x, water, y, false);
             }
           }
-        if(highness < WATERLEVEL -6 &&((x<14 &&x > 1) &&(y<14 && y>1))){
+        if(highness < WATERLEVEL -6 &&((x<14 &&x > 1) &&(y<14 && y>1)) && nat){
+          float random = random(0, 20);
+          //println(random);
+          if(random < 0.3){
+            generateTree(highness, x, y);
+            
+            
+          }
+          else if (random<0.6){
+            this.setBlock(12, x, highness-1, y, false);
+          }
+          else if(random<1){
+            this.setBlock(13, x, highness-1, y, false);
+          }
+          else if(random <3){
+            this.setBlock(14, x, highness-1, y, false);
+          }
+          
+        }  
+        
+        for (int h = highness; h<highness+3; h++) {
+          
+          
+          if(highness > WATERLEVEL - 6){
+            this.setBlock(5, x, h, y, false);
+          }
+          else if(noise((this.lowestXPos + x)/20.0, (128-h)/20.0, (this.lowestZPos + y)/20.0) > 0.3)this.setBlock(1, x, h, y, false);
+        }
+        for(int h = highness+3; h < 128; h++){
+          if(noise((this.lowestXPos + x)/20.0, (128-h)/20.0, (this.lowestZPos + y)/20.0) > 0.3){
+            this.setBlock(2, x, h, y, false);
+          }
+        }
+      }
+    }
+    this.generateOres();
+  }
+  public void decorateFlat(){
+    for (int x = 0; x< 16; x++) {
+      for (int y = 0; y<16; y++) {
+        int highness = 80;
+        
+        for (int h = highness; h<highness+3; h++) {
+          this.setBlock(1, x, h, y, false);
+        }
+        for(int h = highness+3; h < 128; h++){
+          this.setBlock(2, x, h, y, false);
+        }
+      }
+    }
+    
+  }
+  
+  public void decorateExtreme(boolean nat){
+    for (int x = 0; x< 16; x++) {
+      for (int y = 0; y<16; y++) {
+        float nx = ((this.lowestXPos+ x)/50.0);
+        float nz = ((this.lowestZPos + y)/50.0);
+        float e = 
+                  1 * noise(1 * nx, 1 * nz) + 0.5;
+            
+
+        e = pow(e, 5);
+        int highness = 128-((int)map(e, 0.03125, 7.59375, 10, 127));
+        if(highness > WATERLEVEL){
+            for(int water = WATERLEVEL; water < highness; water ++){
+              this.setBlock(4, x, water, y, false);
+            }
+        }
+        if(highness < WATERLEVEL -6 &&((x<14 &&x > 1) &&(y<14 && y>1)) && nat){
+          float random = random(0, 20);
+          //println(random);
+          if(random < 0.1){
+            generateTree(highness, x, y);
+            
+            
+          }
+          else if (random<0.4){
+            this.setBlock(12, x, highness-1, y, false);
+          }
+          else if(random<0.8){
+            this.setBlock(13, x, highness-1, y, false);
+          }
+          else if(random <2.8){
+            this.setBlock(14, x, highness-1, y, false);
+          }
+          
+        }  
+        for (int h = highness; h<highness+3; h++) {
+          
+          
+          if(highness > WATERLEVEL - 6){
+            this.setBlock(5, x, h, y, false);
+          }
+          else this.setBlock(1, x, h, y, false);
+        }
+        for(int h = highness+3; h < 128; h++){
+          this.setBlock(2, x, h, y, false);
+        }
+      }
+      
+    }
+    
+  }
+  public void decorateIsland(boolean nat){
+    for (int x = 0; x< 16; x++) {
+      for (int y = 0; y<16; y++) {
+        int highness = 128-((int)map(noise(((this.lowestXPos+ x)/50.0), (this.lowestZPos + y)/50.0), 0, 1, 50, 100));
+        if(highness > WATERLEVEL){
+            for(int water = WATERLEVEL; water < highness; water ++){
+              this.setBlock(4, x, water, y, false);
+            }
+          }
+        if(highness < WATERLEVEL -6 &&((x<14 &&x > 1) &&(y<14 && y>1)) && nat){
           float random = random(0, 20);
           //println(random);
           if(random < 0.3){

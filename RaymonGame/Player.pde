@@ -190,7 +190,7 @@ public class Player extends Entity{
       noStroke();
       rect(width/2-20, height/2+12, 40, 5);
 
-      rect(width/2-20, height/2+12 , this.blockDamage, 5);
+      rect(width/2-20, height/2+12 , (int)map(this.blockDamage, 0, 180, 0, 40), 5);
       
       popStyle();
     }
@@ -208,6 +208,8 @@ public class Player extends Entity{
       text(this.xPosition + "/ " + this.yPosition + "/ " +this.zPosition, 30, 85);
       text("Speed: " + (sqrt(this.xPos * this.xPos + this.zPos * this.zPos)*f), 30, 120);
       text("Facing: " + degrees(this.hDeg) + "/ " + degrees(this.vDeg), 30, 155);
+      text("Graphics: " + PGraphicsOpenGL.OPENGL_RENDERER, 30, 190);
+      text("OpenGL version: " + PGraphicsOpenGL.OPENGL_VERSION, 30, 225);
     }
 
     if (drawingInventory) {
@@ -441,7 +443,7 @@ public class Player extends Entity{
     }
       
     
-    if(this.blockDamage >= 40)breakBlock();
+    if(this.blockDamage >= 180)breakBlock();
   }
   public void PLACE(){
     placeBlock();
@@ -502,30 +504,3 @@ public class Player extends Entity{
   
   
 //}
-
-public boolean button(int tX, int tY, int w, int h, PImage texture, PImage ctexture, String text, int textSize){
-  if(mouseX > tX && mouseX < tX + w && mouseY > tY && mouseY < tY + h ){
-    image(ctexture, tX, tY, w, h);
-    pushStyle();
-    textAlign(CENTER, CENTER);
-    fill(255);
-    textSize(textSize);
-    text(text, tX + w/2, tY + h/2);
-    popStyle();
-    if( bmouseclicked){
-      return true;
-    }
-  }
-  else{
-    image(texture, tX, tY, w, h);
-    pushStyle();
-    textAlign(CENTER, CENTER);
-    fill(255);
-    textSize(textSize);
-    text(text, tX + w/2, tY + h/2); 
-    popStyle();
-    return false;
-    
-  }
-  return false;
-}

@@ -2,17 +2,18 @@
 public ArrayList<Entity> entities = new ArrayList<Entity>();
 public ArrayList<Entity> deadentities = new ArrayList<Entity>();
 public ArrayList<Arrow> arrows = new ArrayList<Arrow>();
-public String[] entityTypes = new String[]{"Pig", "Panda"};
+public String[] entityTypes = new String[]{"Pig", "Panda", "Monster"};
+
 public void checkSpawnEntities(){
-  if(frameCount %120 == 0 && entities.size()<20){
+  if(frameCount %120 == 0 && entities.size()<50){
     try{
       Entity newEntity;
       float randomType = random(0, entityTypes.length-1);
       float px = player.xPosition + random(-100, 100);
       float pz = player.zPosition + random(-100, 100);
-      if(randomType <= 0.5)newEntity = new Pig(px,c.getHighestBlockAt(floor(px),floor(pz)) -1, pz);
-      else if(randomType <= 1)newEntity = new Panda(px,c.getHighestBlockAt(floor(px),floor(pz))-5, pz);
-      else newEntity = new Panda(px,c.getHighestBlockAt(floor(px),floor(pz))-1, pz);
+      if(randomType <= MONSTER_SPAWN_RATE)newEntity = new Monster(px,c.getHighestBlockAt(floor(px),floor(pz)) -5, pz);
+      else if(randomType <= MONSTER_SPAWN_RATE + 0.5)newEntity = new Panda(px,c.getHighestBlockAt(floor(px),floor(pz))-5, pz);
+      else newEntity = new Pig(px,c.getHighestBlockAt(floor(px),floor(pz))-1, pz);
       entities.add(newEntity);
      
     }catch(Exception e){
@@ -52,6 +53,7 @@ public void updateEntities(){
       if(entity == null)deadentities.remove(entity);
       if(dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)deadentities.remove(entity);
     }catch(Exception e){
+      println("dead error");
       println(e);
     }
   }

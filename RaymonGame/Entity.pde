@@ -1,7 +1,7 @@
 //A class that represents all things that have hitboxes, and are not fixed to the world grid.
 public class Entity{
   float xPos, yPos, zPos;
-  float vDeg, hDeg;
+  float vDeg, hDeg, dDeg;
   float xPosition, yPosition, zPosition;
   float gravity = 0.35f;
   
@@ -31,6 +31,7 @@ public class Entity{
     this.zPos = 0;
     this.hDeg = 0;
     this.vDeg = 0;
+    this.dDeg = 0;
     this.xPosition = xPos;
     this.yPosition = yPos;
     this.zPosition = zPos;
@@ -46,35 +47,8 @@ public class Entity{
     if(! this.dead){
     //println(walking);
       if (! debug){
-      
-        if(abs(this.targetedPosition.x- this.xPosition ) <= 2.0 && abs(this.targetedPosition.y - this.zPosition) <= 2.0){
-          //println("hi");
-          this.walking = false;
-          this.legRotation = 0;
-          this.xPos = 0;
-          this.zPos = 0;  
-          this.goToLocation(new PVector(player.xPosition + random(-100, 100), player.zPosition + random(-100, 100)));
-          
-        }else{
-          if(abs(this.legRotation) >= 45)this.legDirection = -this.legDirection;
-          this.legRotation += this.legDirection;
-          
-        }
-        if (abs(this.hDeg - this.targetedRotation) > radians(10)){
-          
-          if(this.hDeg - this.targetedRotation > radians(10)){
-            this.hDeg -= radians(5);
-          }
-          else if(this.targetedRotation -this.hDeg > radians(10)){
-            this.hDeg += radians(5);
-          }
-        }
-        else{
-          
-          this.xPos = txPos;
-          this.zPos = tzPos;
-          
-        }
+        this.wander();
+        
       }
       else this.xPos = this.zPos = 0;
       
@@ -106,21 +80,15 @@ public class Entity{
       //this.xPos *= 0.89;as
   
       //this.zPos *= 0.89;
-      beginShape();
-      stroke(255);
-      noFill();
-      vertex(this.xPosition - this.hitboxWidth/2.0, this.yPosition, this.zPosition - this.hitboxLength/2.0);
-      vertex(this.xPosition - this.hitboxWidth/2.0, this.yPosition, this.zPosition + this.hitboxLength/2.0);
-      vertex(this.xPosition + this.hitboxWidth/2.0, this.yPosition, this.zPosition + this.hitboxLength/2.0);
-      vertex(this.xPosition + this.hitboxWidth/2.0, this.yPosition, this.zPosition - this.hitboxLength/2.0);
-      endShape(CLOSE);
+      
       
       
     }else{
       this.deadCount += 1;
-      
-      this.shape.rotate(radians(5), 0,0,1);
-      this.legs.rotate(radians(5), 0,0,1);
+      this.shape.translate(0, -this.hitboxHeight, 0);
+      this.shape.rotate(radians(5), 0, 0, 1);
+      this.shape.translate(0, this.hitboxHeight, 0);
+      this.dDeg += radians(5);
       
       //print("die");
       if(this.deadCount > 18)deadentities.remove(this);
@@ -259,7 +227,7 @@ public class Entity{
     this.shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y);
     this.shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z, textureCoords.x, textureCoords.y - dimensions.y);
     this.shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x +centerDimensions.x, textureCoords.y);
-    this.shape.tint(102);
+
     this.shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x, textureCoords.y + centerDimensions.y + dimensions.y);
     this.shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x + centerDimensions.x, textureCoords.y + centerDimensions.y + dimensions.y);
     this.shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z + lengths.z, textureCoords.x + centerDimensions.x, textureCoords.y + centerDimensions.y);
@@ -309,7 +277,7 @@ public class Entity{
     shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x, textureCoords.y);
     shape.vertex(cornerCoords.x, cornerCoords.y, cornerCoords.z, textureCoords.x, textureCoords.y - dimensions.y);
     shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y, cornerCoords.z + lengths.z, textureCoords.x +centerDimensions.x, textureCoords.y);
-    shape.tint(102);
+
     shape.vertex(cornerCoords.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x, textureCoords.y + centerDimensions.y + dimensions.y);
     
     shape.vertex(cornerCoords.x + lengths.x, cornerCoords.y + lengths.y, cornerCoords.z, textureCoords.x + centerDimensions.x, textureCoords.y + centerDimensions.y + dimensions.y);
@@ -342,7 +310,37 @@ public class Entity{
     mob_death.play();
     //println(deadentities);
   }
-  
+  public void wander(){
+    if(abs(this.targetedPosition.x- this.xPosition ) <= 2.0 && abs(this.targetedPosition.y - this.zPosition) <= 2.0){
+      //println("hi");
+      this.walking = false;
+      this.legRotation = 0;
+      this.xPos = 0;
+      this.zPos = 0;  
+      this.goToLocation(new PVector(player.xPosition + random(-100, 100), player.zPosition + random(-100, 100)));
+      
+    }else{
+      if(abs(this.legRotation) >= 45)this.legDirection = -this.legDirection;
+      this.legRotation += this.legDirection;
+      
+    }
+    if (abs(this.hDeg - this.targetedRotation) > radians(10)){
+      
+      if(this.hDeg - this.targetedRotation > radians(10)){
+        this.hDeg -= radians(5);
+      }
+      else if(this.targetedRotation -this.hDeg > radians(10)){
+        this.hDeg += radians(5);
+      }
+    }
+    else{
+      
+      this.xPos = txPos;
+      this.zPos = tzPos;
+      
+    }
+    
+  }
   
   
   

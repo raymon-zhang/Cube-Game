@@ -181,7 +181,7 @@ public void checkChunks() {
         Chunk dummy = c.getChunkAt((px) + x, (pz)+y) ;
         if(dummy== null){
           Chunk newChunk = new Chunk((px + x)*16, 0, (pz + y)*16, c);
-          newChunk.decorate();
+          decorateChunk(newChunk);
 
           regenerate.add(newChunk);
           c.chunkMemory.add(newChunk);
@@ -225,7 +225,7 @@ public void checkChunks() {
         Chunk dummy = c.getChunkAt((px) + y, (pz)-x) ;
         if(dummy== null){
           Chunk newChunk = new Chunk((px + y)*16, 0, (pz -x)*16, c);
-          newChunk.decorate();
+          decorateChunk(newChunk);
 
           regenerate.add(newChunk);
           c.chunkMemory.add(newChunk);
@@ -269,7 +269,7 @@ public void checkChunks() {
         Chunk dummy = c.getChunkAt((px) - x, (pz)-y) ;
         if(dummy== null){
           Chunk newChunk = new Chunk((px - x)*16, 0, (pz - y)*16, c);
-          newChunk.decorate();
+          decorateChunk(newChunk);
 
           regenerate.add(newChunk);
           c.chunkMemory.add(newChunk);
@@ -313,7 +313,7 @@ public void checkChunks() {
         Chunk dummy = c.getChunkAt((px) - y, (pz)+x) ;
         if(dummy== null){
           Chunk newChunk = new Chunk((px - y)*16, 0, (pz +x)*16, c);
-          newChunk.decorate();
+          decorateChunk(newChunk);
 
           regenerate.add(newChunk);
           c.chunkMemory.add(newChunk);

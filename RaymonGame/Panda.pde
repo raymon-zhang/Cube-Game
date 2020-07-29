@@ -39,6 +39,7 @@ public class Panda extends Entity{
     //rotateY(radians(this.hDeg));
     tint(255, 0,0);
     translate(this.xPosition, this.yPosition, this.zPosition);
+    
     rotateY(TWO_PI-this.hDeg);
     //println(this.hDeg);
     translate(- this.hitboxWidth/2, 0, -this.hitboxLength/2);
@@ -46,7 +47,9 @@ public class Panda extends Entity{
     
     
     shape(this.shape);
-    
+    translate(0, this.hitboxHeight, 0);
+    rotate(this.dDeg, 0, 0, 1);
+    translate(0, -this.hitboxHeight, 0);
     //textSize(0.1);
     //stroke(255);
     //line(0,0,0, 0, -100, 0);

@@ -41,7 +41,7 @@ public void checkMouse(){
 public void checkMouseClicked(){
   for(;;delay(16)){
     
-    if(mousePressed&& !drawingInventory && !player.dead){ 
+    if(mousePressed&& !drawingInventory && !player.dead && state == GameState.PLAYING_GAME){ 
       if (mouseButton == LEFT){
         if(player.inventory[player.selectedSlot]!= null){
           ItemType item = ItemTypes.get(player.inventory[player.selectedSlot].itemType);
@@ -100,11 +100,13 @@ void mousePressed(){
   bmouseclicked = true;
 }
 void mouseReleased(){
-  player.blockDamage = 0;
-  player.bowCharge = 0;
-  player.pov = 70;
-  if(player.charged){
-    player.ARROW();
+  if(state == GameState.PLAYING_GAME){
+    player.blockDamage = 0;
+    player.bowCharge = 0;
+    player.pov = 70;
+    if(player.charged){
+      player.ARROW();
+    }
   }
 }
 
