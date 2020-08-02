@@ -86,7 +86,7 @@ public void handleError(Exception e){
       image(background, x, y, 128, 128);
     }
   }
-  
+  popMatrix();
   //fill(255, 0,0);
   textSize(50);
   textAlign(CENTER);

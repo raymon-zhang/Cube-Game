@@ -314,16 +314,25 @@ public class Chunk{
           else if(random <3){
             this.setBlock(14, x, highness-1, y, false);
           }
+          else if(random < 3.3){
+            this.setBlock(19, x, highness-1, y, false);
+          }
+          else if(random < 3.6){
+            this.setBlock(20, x, highness-1, y, false);
+          }
           
         }  
-        
-        for (int h = highness; h<highness+3; h++) {
-          
-          
-          if(highness > WATERLEVEL - 6){
+        if(highness > WATERLEVEL - 6){
+          for (int h = highness; h<highness+2; h++) {
             this.setBlock(5, x, h, y, false);
           }
-          else if(noise((this.lowestXPos + x)/20.0, (128-h)/20.0, (this.lowestZPos + y)/20.0) > 0.3)this.setBlock(1, x, h, y, false);
+          for (int h = highness+2; h<highness+3; h++) {
+            this.setBlock(8, x, h, y, false);
+          }
+        }else{
+          for (int h = highness; h<highness+3; h++) {
+            if(noise((this.lowestXPos + x)/20.0, (128-h)/20.0, (this.lowestZPos + y)/20.0) > 0.3)this.setBlock(1, x, h, y, false);
+          }
         }
         for(int h = highness+3; h < 128; h++){
           if(noise((this.lowestXPos + x)/20.0, (128-h)/20.0, (this.lowestZPos + y)/20.0) > 0.3){

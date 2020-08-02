@@ -46,8 +46,13 @@ public class World {
     textureCoords.put(16, new PVector[]{new PVector(32, 0), new PVector (32, 0), new PVector(32, 0)});//dirt
     textureCoords.put(17, new PVector[]{new PVector(0, 32), new PVector (0, 32), new PVector(0, 32)});//ironore
     textureCoords.put(18, new PVector[]{new PVector(16, 32), new PVector (16, 32), new PVector(16, 32)});//goldore
-  
-    
+    textureCoords.put(19, new PVector[]{new PVector(112, 16), new PVector (112, 16), new PVector(112, 16)});//blueorchid
+    textureCoords.put(20, new PVector[]{new PVector(128, 16), new PVector(128, 16), new PVector(128, 16)});//daisy
+    textureCoords.put(21, new PVector[]{new PVector(32, 32), new PVector (32, 32), new PVector(32, 32)});//whiteconcretepowder
+    textureCoords.put(22, new PVector[]{new PVector(48, 32), new PVector (48, 32), new PVector(48, 32)});//blackconcretepowder
+    textureCoords.put(23, new PVector[]{new PVector(64, 32), new PVector (64, 32), new PVector(64, 32)});//redconcretepowder
+    textureCoords.put(24, new PVector[]{new PVector(80, 32), new PVector (80, 32), new PVector(80, 32)});//blueconcretepowder
+    textureCoords.put(25, new PVector[]{new PVector(96, 32), new PVector (96, 32), new PVector(96, 32)});//yellowconcretepowder
 
     
     //for (int x = 0;x < chunkMemory.length; x++){

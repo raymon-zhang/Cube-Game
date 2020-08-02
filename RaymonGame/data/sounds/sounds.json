@@ -1,7 +1,8 @@
 {
     "player_hurt": "/sounds/hurt2.mp3",
     "player_die": "/sounds/hurt.mp3",
-    "mob_death": "/sounds/death.mp3"
-
+    "mob_death": "/sounds/death.mp3", 
+    "bow_shot": "/sounds/bow.wav",
+    "bow_hit": "/sounds/bow_hit.wav"
 
 }

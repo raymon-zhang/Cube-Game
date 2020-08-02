@@ -5,6 +5,8 @@ public class Entity{
   float xPosition, yPosition, zPosition;
   float gravity = 0.35f;
   
+  String[] drops;
+  
   boolean dead;
   int deadCount = 0;
   
@@ -39,6 +41,7 @@ public class Entity{
     this.hitboxHeight = 1.5;
     this.hitboxLength = 0.5;
     this.legRotation = 0;
+    this.drops = new String[2];
     
     this.targetedPosition = new PVector(this.xPosition, this.zPosition);
   }
@@ -308,6 +311,10 @@ public class Entity{
     deadentities.add(this);
     entities.remove(this);
     mob_death.play();
+    int rand = (int)random(this.drops.length);
+    if (this.drops[rand] != null){
+      player.addToInventory(Integer.parseInt(this.drops[rand].substring(0,3)), Integer.parseInt(this.drops[rand].substring(3)));
+    }
     //println(deadentities);
   }
   public void wander(){

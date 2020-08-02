@@ -1,11 +1,13 @@
 public class Monster extends Entity{
   int bowCharge;
   PShape arms;
+  float speed;
   public Monster(float xPos, float yPos, float zPos){
     super(xPos, yPos, zPos);
     this.hitboxWidth = 0.5;
     this.hitboxHeight = 2;
     this.hitboxLength = 0.5;
+    this.drops = new String[]{"15101", "15102", "15103", "15103", "15103", "15104", "15105", "15106", "11601", "11601", "11601", null, null, null, null, null, null, null, null, null};
     this.bowCharge = 0;
     this.shape = createShape();
     this.shape.beginShape(TRIANGLE);
@@ -49,29 +51,32 @@ public class Monster extends Entity{
     translate(- this.hitboxWidth/2, 0, -this.hitboxLength/2);
     
     
-    pushMatrix();
+    
     shape(this.shape);
     
     //draw first arm, rotate outward
-    translate(0, 8/16.0, 4/16.0);
-    rotateX(radians(80));
-    rotate(-radians(10), 0, 0, 1);
-    shape(this.arms);
-    //draw second arm, rotate left
-    rotate(radians(10), 0, 0, 1);
-    pushMatrix();
-    translate(10/16.0, 0, 0);
-    rotate(radians(20), 0, 0, 1);
-    shape(this.arms);
-    popMatrix();
-    
-    //draw bow, rotate upright
-    translate(0, 12/16.0, 0);
-    rotateX(-radians(80));
-    translate(3/16.0, 0, -1/16.0);
-    rotate(radians(10), 0, 0, 1);
-    shape(bowShape);
-    popMatrix();
+    if(!this.dead){
+      pushMatrix();
+      translate(0, 8/16.0, 4/16.0);
+      rotateX(radians(80));
+      rotate(-radians(10), 0, 0, 1);
+      shape(this.arms);
+      //draw second arm, rotate left
+      rotate(radians(10), 0, 0, 1);
+      pushMatrix();
+      translate(10/16.0, 0, 0);
+      rotate(radians(20), 0, 0, 1);
+      shape(this.arms);
+      popMatrix();
+      
+      //draw bow, rotate upright
+      translate(0, 12/16.0, 0);
+      rotateX(-radians(80));
+      translate(3/16.0, 0, -1/16.0);
+      rotate(radians(10), 0, 0, 1);
+      shape(bowShape);
+      popMatrix();
+    }
     //draw legs
     translate(0, this.hitboxHeight, 0);
     rotate(this.dDeg, 0, 0, 1);
@@ -114,9 +119,9 @@ public class Monster extends Entity{
           }
         }else{ 
           if(abs(this.legRotation) >= 35)this.legDirection = -this.legDirection;
-          this.legRotation += this.legDirection;
+          this.legRotation += this.legDirection * 1.5;
           delta = new PVector(-(this.xPosition - player.xPosition), -(this.zPosition - player.zPosition));
-          delta.setMag(0.04);
+          delta.setMag(0.08);
           this.hDeg = delta.heading() - PI/2;
           this.xPos = delta.x;
           this.zPos = delta.y;

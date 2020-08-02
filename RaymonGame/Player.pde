@@ -26,9 +26,10 @@ public class Player extends Entity{
     perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
 
     this.inventory = new ItemStack[36];
+    this.inventory[0] = new ItemStack(116, this);
     this.inventory[1] = new ItemStack(104, this);
-    this.inventory[2] = new ItemStack(150, this);
-    this.inventory[3] = new ItemStack(151, 64, this);
+    this.inventory[2] = new ItemStack(112, this);
+    this.inventory[3] = new ItemStack(151, 1, this);
     this.craftingGrid = new ItemStack[9];
 
     recipes = new ArrayList<Recipe>();
@@ -430,12 +431,52 @@ public class Player extends Entity{
     }
   }
   
-  
+  //inventory functions
+  public void addToInventory(int drop){
+    for (int x = 0; x < this.inventory.length; x++){
+      if(this.inventory[x] == null){
+        this.inventory[x] = new ItemStack(drop, this);
+        return;
+      }
+      else if (this.inventory[x].itemType == drop){
+        if(this.inventory[x].amount<64)this.inventory[x].amount ++;
+        else continue;
+        return;
+      }
+    }
+  }
+  public void addToInventory(int drop, int amount){
+    int deposited = amount;
+    for (int x = 0; x < this.inventory.length; x++){
+      if(this.inventory[x] == null){
+        this.inventory[x] = new ItemStack(drop, deposited, this);
+        return;
+      }
+      else if (this.inventory[x].itemType == drop){
+        if(this.inventory[x].amount<=64-deposited)this.inventory[x].amount += deposited;
+        else{
+          int off = 64-this.inventory[x].amount;
+          this.inventory[x].amount += off;
+          deposited -= off;
+        }
+        return;
+      }
+    }
+  }
+  public void useItem(){
+    if(this.inventory[this.selectedSlot].amount > 1){
+      this.inventory[this.selectedSlot].amount -= 1;
+    }
+    else this.inventory[this.selectedSlot] = null;
+  }
+  public ItemStack getSelectedStack(){
+    return this.inventory[this.selectedSlot];
+  }
   
   //item functions
   public void BREAK(){
-    if(player.inventory[player.selectedSlot]!= null){
-      ItemType item = ItemTypes.get(player.inventory[player.selectedSlot].itemType);
+    if(player.getSelectedStack()!= null){
+      ItemType item = ItemTypes.get(player.getSelectedStack().itemType);
       this.blockDamage += item.breakingSpeed;
     }else{
       
@@ -448,44 +489,65 @@ public class Player extends Entity{
   public void PLACE(){
     placeBlock();
   }
-  public void MOVEFORWARD(){
-    this.xPos = 0.1;
-  }
+  
   public void NONE(){
   }
   
   public void PLACETREE(){
     
-      int[] coords = findTargetedBlock();
-      Chunk chunk = c.getChunkAt(coords[0],coords[1]);
+    int[] coords = findTargetedBlock();
+    Chunk chunk = c.getChunkAt(coords[0],coords[1]);
+    useItem();
     try{
       chunk.generateTree(coords[3],coords[2],coords[4]);
     }catch(Exception e){
       //its ok
     }
-      chunk.betterGenerateMesh();
+    chunk.betterGenerateMesh();
     
     
   }
   
   public void SHOOTARROW(){
     if(! this.charged){  
-      this.pov -= 0.4;
-      this.bowCharge += 1;
-      
-      
-      
-      if(this.bowCharge >= 40){
-        this.bowCharge = 0;
-        this.charged = true;
+      for( ItemStack stack: this.inventory){
+        if (stack != null && stack.itemType == 151){
+          this.pov -= 0.4;
+          this.bowCharge += 1;
         
+        
+        
+          if(this.bowCharge >= 40){
+            this.bowCharge = 0;
+            this.charged = true;
+            
+          }
+          break;
+        }
       }
     }
   }
   public void ARROW(){
     this.charged = false;
     arrows.add(new Arrow(player.xPosition, player.yPosition -0.2, player.zPosition, new PVector( - sin(player.hDeg) * sin(player.vDeg)/100, -cos(player.vDeg)/100, cos(player.hDeg) * sin(player.vDeg)/100)));
+    int count = 0;
+    for( ItemStack stack: this.inventory){
+      if (stack != null && stack.itemType == 151){
+        if (stack.amount > 1)stack.amount -= 1;
+        else player.inventory[count] = null;
+        break;
+      }
+      count++;
+    }
+    
     this.pov = 70;
+  }
+  public void KILL(){
+    Entity targeted = findTargetedEntity();
+    if(targeted != null){
+      targeted.die();
+      delay(1000);
+    }
   }
 }
 

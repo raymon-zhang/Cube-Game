@@ -43,8 +43,8 @@ public void checkMouseClicked(){
     
     if(mousePressed&& !drawingInventory && !player.dead && state == GameState.PLAYING_GAME){ 
       if (mouseButton == LEFT){
-        if(player.inventory[player.selectedSlot]!= null){
-          ItemType item = ItemTypes.get(player.inventory[player.selectedSlot].itemType);
+        if(player.getSelectedStack()!= null){
+          ItemType item = ItemTypes.get(player.getSelectedStack().itemType);
           try{
             item.functionLeft.invoke(player);
           }catch(Exception e){
@@ -58,8 +58,8 @@ public void checkMouseClicked(){
         }
         
       }else if(mouseButton == RIGHT){
-        if(player.inventory[player.selectedSlot]!= null){
-          ItemType item = ItemTypes.get(player.inventory[player.selectedSlot].itemType);
+        if(player.getSelectedStack()!= null){
+          ItemType item = ItemTypes.get(player.getSelectedStack().itemType);
           try{
             item.functionRight.invoke(player);
           }catch(Exception e){

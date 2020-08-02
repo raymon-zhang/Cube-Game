@@ -5,7 +5,7 @@ public class Arrow extends Entity{
   float pVDeg;
   public Arrow(float xPos, float yPos, float zPos, PVector vel){
     super(xPos, yPos, zPos);
-    
+    bowSound.play();
     this.vel = vel.setMag(0.45);
     
     this.hDeg = player.hDeg ;
@@ -165,7 +165,7 @@ public class Arrow extends Entity{
             }
             
             
-            
+            arrowSound.play();
             
           }
           

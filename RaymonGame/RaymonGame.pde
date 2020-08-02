@@ -24,7 +24,7 @@ SoundFile stone;
 SoundFile sand;
 SoundFile water;
 SoundFile diamond;
-SoundFile hurt, die, mob_death;
+SoundFile hurt, die, mob_death, bowSound, arrowSound;
 
 World c;
 
@@ -77,6 +77,8 @@ public Hashtable<Integer, BlockType> BlockTypes=  new Hashtable<Integer, BlockTy
 void setup() {
   fullScreen(P3D);
   
+  
+
   bowShape = loadShape("/textures/bow_model2.obj");
   
   sounds = loadJSONObject("/sounds/sounds.json");
@@ -164,6 +166,8 @@ void setup() {
   hurt = new SoundFile(this, sounds.getString("player_hurt"));
   die = new SoundFile(this, sounds.getString("player_die"));
   mob_death = new SoundFile(this, sounds.getString("mob_death"));
+  bowSound = new SoundFile(this, sounds.getString("bow_shot"));
+  arrowSound = new SoundFile(this, sounds.getString("bow_hit"));
   //loading.play();
   
   //grass = new SoundFile(this, "/sounds/grass.mp3");

@@ -144,10 +144,13 @@ public class Block{
   
   
   public boolean isTransparent(){
-    return (this.blockType == 4 || this.blockType == 12 || this.blockType == 13 || this.blockType == 14 || this.blockType == 9);
+    return (this.blockType == 4 || this.blockType == 12 || this.blockType == 13 || this.blockType == 14 || this.blockType == 9 || this.blockType == 19 || this.blockType == 20);
   }
   public boolean isNature(){
-    return (this.blockType == 12 || this.blockType == 13 || this.blockType == 14);
+    return (this.blockType == 12 || this.blockType == 13 || this.blockType == 14 || this.blockType == 19 || this.blockType == 20);
+  }
+  public boolean isLiquid(){
+    return (this.blockType == 4 || this.blockType == 9);
   }
   
   

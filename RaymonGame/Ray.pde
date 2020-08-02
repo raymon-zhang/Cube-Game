@@ -11,7 +11,7 @@ public void breakBlock(){
   
   int counter = 0;
   try{
-    while ((c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null ||c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16].isTransparent())&&getEntityAt(new PVector(xCenter, yCenter, zCenter))==null){
+    while ((c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16] == null ||c.getChunkAt(floor(xCenter/16),floor(zCenter/16)).blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ))*16].isLiquid())){
       //println("Step");
       //println(floor(xCenter )-(floor(xCenter/16) )*16);
       yCenter += yDelta;
@@ -22,32 +22,16 @@ public void breakBlock(){
       
     }
     if(counter <1200){
-      Entity targetedEntity = getEntityAt(new PVector(xCenter, yCenter, zCenter));
-      if(targetedEntity == null){
-        Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
-       
-        Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
-        chunk.removeBlock((floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
-        BlockType blocktype = BlockTypes.get(block.blockType);
-        int drop = blocktype.dropped;
-  
-        
-        for (int x = 0; x < player.inventory.length; x++){
-          if(player.inventory[x] == null){
-            player.inventory[x] = new ItemStack(drop, player);
-            return;
-          }
-          else if (player.inventory[x].itemType == drop){
-            if(player.inventory[x].amount<64)player.inventory[x].amount ++;
-            else continue;
-            return;
-          }
-        }
-      }else{
-        entities.remove(targetedEntity);
-        
-        
-      }
+      
+      Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
+     
+      Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
+      chunk.removeBlock((floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
+      BlockType blocktype = BlockTypes.get(block.blockType);
+      int drop = blocktype.dropped;
+
+      
+      player.addToInventory(drop);
 
     }
   }catch(Exception e){
@@ -88,14 +72,9 @@ public void placeBlock(){
    
       Chunk chunk = c.getChunkAt(floor(xCenter/16),floor(zCenter/16));
       //Block block = chunk.blocks[floor(xCenter )-(floor(xCenter/16) )*16][floor( yCenter)][(floor(zCenter))-(floor(zCenter/16 ) )*16];
-      try{
-        chunk.setBlock( player.inventory[player.selectedSlot].itemType,(floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
-        if(player.inventory[player.selectedSlot].amount > 1){
-          player.inventory[player.selectedSlot].amount -= 1;
-        }
-        else player.inventory[player.selectedSlot] = null;
-      }catch(NullPointerException e){
-        
+      if (player.getSelectedStack() != null){
+        chunk.setBlock( player.getSelectedStack().itemType,(floor(xCenter )-(floor(xCenter/16) )*16), floor( yCenter), (floor(zCenter))-(floor(zCenter/16 ) )*16, true);
+        player.useItem();
       }
       
     }
@@ -148,4 +127,29 @@ public int[] findTargetedBlock(){
     println(floor(xCenter )-(floor(xCenter/16) )*16);
   }
   return nums;
+}
+
+public Entity findTargetedEntity(){
+  float yDelta = - cos(player.vDeg)/100;
+  float xDelta = - sin(player.hDeg) * sin(player.vDeg)/100;
+  float zDelta = + cos(player.hDeg) * sin(player.vDeg)/100;
+    
+  float yCenter = player.yPosition + yDelta;
+  float xCenter = player.xPosition + xDelta;
+  float zCenter = player.zPosition +  zDelta;
+  
+  int counter = 0;
+  
+  while (getEntityAt(new PVector(xCenter, yCenter, zCenter))==null && counter < 600){
+    //println("Step");
+    //println(floor(xCenter )-(floor(xCenter/16) )*16);
+    yCenter += yDelta;
+    xCenter += xDelta;
+    zCenter += zDelta;
+    
+    counter ++;
+    
+  }
+    
+  return getEntityAt(new PVector(xCenter, yCenter, zCenter));  
 }
