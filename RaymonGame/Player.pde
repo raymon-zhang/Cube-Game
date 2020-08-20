@@ -29,7 +29,7 @@ public class Player extends Entity{
     this.inventory[0] = new ItemStack(116, this);
     this.inventory[1] = new ItemStack(104, this);
     this.inventory[2] = new ItemStack(112, this);
-    this.inventory[3] = new ItemStack(151, 1, this);
+    this.inventory[3] = new ItemStack(160, 1, this);
     this.craftingGrid = new ItemStack[9];
 
     recipes = new ArrayList<Recipe>();
@@ -153,6 +153,10 @@ public class Player extends Entity{
     
   }
 
+ 
+    
+    
+  
   public void drawGui() {
     textAlign(LEFT, TOP);
     if (isUnderwater){
@@ -486,8 +490,13 @@ public class Player extends Entity{
     
     if(this.blockDamage >= 180)breakBlock();
   }
+  
+  
   public void PLACE(){
     placeBlock();
+  }
+  public void PLACELIQUID(){
+    placeLiquid();
   }
   
   public void NONE(){
@@ -548,6 +557,11 @@ public class Player extends Entity{
       targeted.die();
       delay(1000);
     }
+  }
+  
+  public void BUCKET(){
+    getLiquid();
+    delay(100);
   }
 }
 

@@ -29,6 +29,7 @@ public void drawGameFrame(){
 public void drawPlayingFrame(){
   try{
     background(130, 202, 255);
+    
     //if (time1 == 0) time1 = millis();
   
     
@@ -42,6 +43,8 @@ public void drawPlayingFrame(){
     player.isUnderwater = false;
     player.isUnderlava = false;
     player.headUnderlava = false;
+    
+    
     perspective(radians(player.pov), (float)width/ (float)height, 0.01f, 1000);
     shape(clouds);
     shader(blockShader);
@@ -49,11 +52,11 @@ public void drawPlayingFrame(){
     
     updateEntities();
     c.drawWorld();
-    
+
     resetShader();
     drawingUI = true;
     checkSpawnEntities();
-   
+    
     perspective(PI/3f, float(width)/float(height), 0.01f, 1000f);
     
     player.updateCamera();
@@ -66,6 +69,7 @@ public void drawPlayingFrame(){
     pMouse.x = mouse.x;
     pMouse.y = mouse.y;
     bmouseclicked = false;
+    
   }catch(Exception e){
     handleError(e);
   }

@@ -8,6 +8,7 @@ Robot mouseControl;
 import java.io.*;
 import java.lang.reflect.*;
 
+
 PShader blockShader;
 
 boolean running;
@@ -71,6 +72,7 @@ int time1;
 Entity test, test2;
 
 
+
 public Hashtable<Integer, ItemType> ItemTypes=  new Hashtable<Integer, ItemType>();
 public Hashtable<Integer, BlockType> BlockTypes=  new Hashtable<Integer, BlockType>();
 
@@ -95,7 +97,6 @@ void setup() {
   if(hour() >= 18){
     MONSTER_SPAWN_RATE = 1;
   }
-  print(MONSTER_SPAWN_RATE);
   //filter(POSTERIZE, 200);
 
   cloud = loadImage("/textures/clouds.png");

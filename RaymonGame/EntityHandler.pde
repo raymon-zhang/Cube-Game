@@ -31,30 +31,28 @@ public void updateEntities(){
     try{
       if(entity != null)entity.update();
       if(entity == null)entities.remove(entity);
-      if(dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)entities.remove(entity);
+      if(entity != null && dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)entities.remove(entity);
     }catch(Exception e){
-      println(e);
     }
   }
   ArrayList<Arrow> newArrows = new ArrayList<Arrow>(arrows);
   for(Arrow entity: newArrows){
     try{
       if(entity != null)entity.update();
-      if(entity == null)entities.remove(entity);
-      if(dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)entities.remove(entity);
+      else entities.remove(entity);
+      if(entity != null && dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)entities.remove(entity);
     }catch(Exception e){
-      println(e);
+
     }
   }
   ArrayList<Entity> dead = new ArrayList<Entity>(deadentities);
   for(Entity entity: dead){
     try{
       if(entity != null)entity.update();
-      if(entity == null)deadentities.remove(entity);
-      if(dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)deadentities.remove(entity);
+      else deadentities.remove(entity);
+      if(entity != null && dist(entity.xPosition, entity.zPosition, player.xPosition, player.zPosition) >141)deadentities.remove(entity);
     }catch(Exception e){
-      println("dead error");
-      println(e);
+      
     }
   }
   
