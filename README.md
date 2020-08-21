@@ -1,6 +1,14 @@
 # Cube-Game
 Voxel game using processing.
 
+
+# Playing the game
+To play the game, click the Clone/Download button. 
+Once the game has downloaded, unzip it to anywhere.
+Go inside the game folder: RaymonGame.
+Then choose the folder coresponding to your os.
+Once inside, run the game.
+
 # Hi
 Hello
 # Instructions for adding blocks
