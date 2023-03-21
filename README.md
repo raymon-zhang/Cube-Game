@@ -1,5 +1,5 @@
 # Cube-Game
-This is a 3d voxel game made using Processing, based off of Minecraft.
+This is a 3d voxel game made I made during covid, using Processing. It is heavily based off of Minecraft.
 
 
 # Playing the game
