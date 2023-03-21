@@ -1,4 +1,0 @@
-25
-64
-BREAK
-PLACE
